@@ -13,19 +13,19 @@ import java.util.UUID;
 public class RegelMapper
 {
 
-    public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall)
-    {
-        return ImmutableRegelResponse.builder()
-                .id(cloudevent.id())
-                .kundbehovsflodeId(kundbehovsflodeId)
-                .kogitoparentprociid(cloudevent.kogitoparentprociid())
-                .kogitorootprociid(cloudevent.kogitorootprociid())
-                .kogitoprocid(cloudevent.kogitoprocid())
-                .kogitorootprocid(cloudevent.kogitorootprocid())
-                .kogitoprocinstanceid(cloudevent.kogitoprocinstanceid())
-                .kogitoprocist(cloudevent.kogitoprocist())
-                .kogitoprocversion(cloudevent.kogitoprocversion())
-                .utfall(utfall)
-                .build();
-    }
+   public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall)
+   {
+      return ImmutableRegelResponse.builder()
+            .id(cloudevent.id())
+            .kundbehovsflodeId(kundbehovsflodeId)
+            .kogitoparentprociid(cloudevent.kogitoparentprociid())
+            .kogitorootprociid(cloudevent.kogitorootprociid())
+            .kogitoprocid(cloudevent.kogitoprocid())
+            .kogitorootprocid(cloudevent.kogitorootprocid())
+            .kogitoprocinstanceid(cloudevent.kogitoprocinstanceid())
+            .kogitoprocist(cloudevent.kogitoprocist())
+            .kogitoprocversion(cloudevent.kogitoprocversion())
+            .utfall(utfall)
+            .build();
+   }
 }
