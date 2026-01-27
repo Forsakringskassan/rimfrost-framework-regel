@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.0.2 (2026-01-27)
+
+### Bug Fixes
+
+-  RegelKafkaProducer saknades ([75bb0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/75bb0abf28dd042) Ulf Slunga)  
+
 ## 0.0.1 (2026-01-27)
 
 ### Bug Fixes
