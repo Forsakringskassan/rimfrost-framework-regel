@@ -6,22 +6,22 @@ import java.util.UUID;
 @Value.Immutable
 public interface RegelDataRequest
 {
-    UUID id();
+   UUID id();
 
-    UUID kundbehovsflodeId();
+   UUID kundbehovsflodeId();
 
-    String kogitorootprocid();
+   String kogitorootprocid();
 
-    UUID kogitorootprociid();
+   UUID kogitorootprociid();
 
-    UUID kogitoparentprociid();
+   UUID kogitoparentprociid();
 
-    String kogitoprocid();
+   String kogitoprocid();
 
-    UUID kogitoprocinstanceid();
+   UUID kogitoprocinstanceid();
 
-    String kogitoprocist();
+   String kogitoprocist();
 
-    String kogitoprocversion();
+   String kogitoprocversion();
 
 }
