@@ -23,4 +23,6 @@ public interface CloudEventData
 
    String kogitoprocversion();
 
+   String type();
+
 }

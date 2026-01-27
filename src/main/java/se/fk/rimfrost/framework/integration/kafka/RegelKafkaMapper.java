@@ -27,7 +27,7 @@ public class RegelKafkaMapper
       response.setKogitoprocversion(regelResponse.kogitoprocversion());
       response.setSpecversion(SpecVersion.NUMBER_1_DOT_0);
       response.setSource(source);
-      response.setType("regel-responses");
+      response.setType(regelResponse.type());
       response.setKogitoproctype(KogitoProcType.BPMN);
       response.setData(data);
 

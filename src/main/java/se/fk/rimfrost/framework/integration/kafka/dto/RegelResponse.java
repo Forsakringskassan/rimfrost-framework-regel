@@ -29,4 +29,6 @@ public interface RegelResponse
 
    Utfall utfall();
 
+   String type();
+
 }

@@ -21,6 +21,7 @@ public class RegelKafkaMapper
             .kogitoprocist(rtfRequest.getKogitoprocist())
             .kogitoprocversion(rtfRequest.getKogitoprocversion())
             .kundbehovsflodeId(UUID.fromString(rtfRequest.getData().getKundbehovsflodeId()))
+            .type(rtfRequest.getType())
             .build();
    }
 
