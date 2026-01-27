@@ -3,56 +3,33 @@ package se.fk.rimfrost.framework.logic.config;
 @SuppressWarnings("unused")
 public class Uppgift
 {
-   private String namn;
-   private String beskrivning;
-   private String verksamhetslogik;
-   private String roll;
-
+   private String version;
    private String path;
+   private String aktivitet;
 
    public Uppgift()
    {
       // required by SnakeYAML
    }
 
-   public String getNamn()
+   public String getVersion()
    {
-      return namn;
+      return version;
    }
 
-   public void setNamn(String namn)
+   public void setVersion(String version)
    {
-      this.namn = namn;
+      this.version = version;
    }
 
-   public String getBeskrivning()
+   public String getAktivitet()
    {
-      return beskrivning;
+      return aktivitet;
    }
 
-   public void setBeskrivning(String beskrivning)
+   public void setAktivitet(String aktivitet)
    {
-      this.beskrivning = beskrivning;
-   }
-
-   public String getVerksamhetslogik()
-   {
-      return verksamhetslogik;
-   }
-
-   public void setVerksamhetslogik(String verksamhetslogik)
-   {
-      this.verksamhetslogik = verksamhetslogik;
-   }
-
-   public String getRoll()
-   {
-      return roll;
-   }
-
-   public void setRoll(String roll)
-   {
-      this.roll = roll;
+      this.aktivitet = aktivitet;
    }
 
    public String getPath()
