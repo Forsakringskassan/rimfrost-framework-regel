@@ -10,21 +10,23 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 @ApplicationScoped
-public class RegelMapper {
+public class RegelMapper
+{
 
-    public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall) {
-        return ImmutableRegelResponse.builder()
-                .id(cloudevent.id())
-                .kundbehovsflodeId(kundbehovsflodeId)
-                .kogitoparentprociid(cloudevent.kogitoparentprociid())
-                .kogitorootprociid(cloudevent.kogitorootprociid())
-                .kogitoprocid(cloudevent.kogitoprocid())
-                .kogitorootprocid(cloudevent.kogitorootprocid())
-                .kogitoprocinstanceid(cloudevent.kogitoprocinstanceid())
-                .kogitoprocist(cloudevent.kogitoprocist())
-                .kogitoprocversion(cloudevent.kogitoprocversion())
-                .utfall(utfall)
-                .type(cloudevent.type())
-                .build();
-    }
+   public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall)
+   {
+      return ImmutableRegelResponse.builder()
+            .id(cloudevent.id())
+            .kundbehovsflodeId(kundbehovsflodeId)
+            .kogitoparentprociid(cloudevent.kogitoparentprociid())
+            .kogitorootprociid(cloudevent.kogitorootprociid())
+            .kogitoprocid(cloudevent.kogitoprocid())
+            .kogitorootprocid(cloudevent.kogitorootprocid())
+            .kogitoprocinstanceid(cloudevent.kogitoprocinstanceid())
+            .kogitoprocist(cloudevent.kogitoprocist())
+            .kogitoprocversion(cloudevent.kogitoprocversion())
+            .utfall(utfall)
+            .type(cloudevent.type())
+            .build();
+   }
 }
