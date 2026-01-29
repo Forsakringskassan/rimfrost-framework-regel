@@ -31,4 +31,6 @@ public interface RegelResponse
 
    String type();
 
+   String source();
+
 }

@@ -27,6 +27,7 @@ public class RegelMapper
             .kogitoprocversion(cloudevent.kogitoprocversion())
             .utfall(utfall)
             .type(cloudevent.type())
+            .source(cloudevent.source())
             .build();
    }
 }
