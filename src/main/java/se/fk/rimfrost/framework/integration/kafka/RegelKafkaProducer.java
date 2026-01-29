@@ -8,8 +8,6 @@ import org.eclipse.microprofile.reactive.messaging.OnOverflow;
 import se.fk.rimfrost.framework.integration.kafka.dto.RegelResponse;
 import se.fk.rimfrost.regel.common.RegelResponseMessagePayload;
 
-import java.util.UUID;
-
 @ApplicationScoped
 public class RegelKafkaProducer
 {
@@ -21,9 +19,9 @@ public class RegelKafkaProducer
    @OnOverflow(value = OnOverflow.Strategy.BUFFER, bufferSize = 1024)
    Emitter<RegelResponseMessagePayload> regelResponseEmitter;
 
-   public void sendRegelResponse(RegelResponse regelResponse, String source)
+   public void sendRegelResponse(RegelResponse regelResponse)
    {
-      var response = mapper.toRegelResponseMessagePayload(regelResponse, source);
+      var response = mapper.toRegelResponseMessagePayload(regelResponse);
       regelResponseEmitter.send(response);
    }
 

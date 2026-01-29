@@ -25,4 +25,5 @@ public interface CloudEventData
 
    String type();
 
+   String source();
 }
