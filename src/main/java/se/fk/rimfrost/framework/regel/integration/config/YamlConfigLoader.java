@@ -1,4 +1,4 @@
-package se.fk.rimfrost.framework.integration.config;
+package se.fk.rimfrost.framework.regel.integration.config;
 
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;

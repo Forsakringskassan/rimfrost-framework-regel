@@ -1,36 +1,29 @@
-package se.fk.rimfrost.framework.integration.kafka.dto;
+package se.fk.rimfrost.framework.regel.logic.entity;
 
 import org.immutables.value.Value;
-import se.fk.rimfrost.regel.common.Utfall;
-
 import java.util.UUID;
 
 @Value.Immutable
-public interface RegelResponse
+public interface CloudEventData
 {
 
    UUID id();
-
-   UUID kundbehovsflodeId();
-
-   String kogitorootprocid();
 
    UUID kogitorootprociid();
 
    UUID kogitoparentprociid();
 
-   String kogitoprocid();
-
    UUID kogitoprocinstanceid();
+
+   String kogitorootprocid();
+
+   String kogitoprocid();
 
    String kogitoprocist();
 
    String kogitoprocversion();
 
-   Utfall utfall();
-
    String type();
 
    String source();
-
 }

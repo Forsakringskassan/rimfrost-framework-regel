@@ -1,9 +1,9 @@
-package se.fk.rimfrost.framework.logic;
+package se.fk.rimfrost.framework.regel.logic;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.integration.kafka.dto.ImmutableRegelResponse;
-import se.fk.rimfrost.framework.integration.kafka.dto.RegelResponse;
-import se.fk.rimfrost.framework.logic.entity.CloudEventData;
+import se.fk.rimfrost.framework.regel.integration.kafka.dto.ImmutableRegelResponse;
+import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
+import se.fk.rimfrost.framework.regel.logic.entity.CloudEventData;
 import se.fk.rimfrost.regel.common.Utfall;
 
 import java.util.UUID;
