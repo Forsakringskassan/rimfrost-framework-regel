@@ -1,4 +1,4 @@
-package se.fk.rimfrost.framework.presentation.kafka;
+package se.fk.rimfrost.framework.regel.presentation.kafka;
 
 import io.quarkus.kafka.client.serialization.ObjectMapperDeserializer;
 import se.fk.rimfrost.regel.common.RegelRequestMessagePayload;

@@ -1,7 +1,7 @@
-package se.fk.rimfrost.framework.integration.kafka;
+package se.fk.rimfrost.framework.regel.integration.kafka;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.integration.kafka.dto.RegelResponse;
+import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
 import se.fk.rimfrost.regel.common.*;
 
 @SuppressWarnings("unused")

@@ -1,10 +1,10 @@
-package se.fk.rimfrost.framework.integration.config;
+package se.fk.rimfrost.framework.regel.integration.config;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.quarkus.runtime.Startup;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.logic.config.RegelConfig;
+import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import java.nio.file.Path;
 
 @SuppressWarnings("unused")

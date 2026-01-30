@@ -1,4 +1,4 @@
-package se.fk.rimfrost.framework.logic.config;
+package se.fk.rimfrost.framework.regel.logic.config;
 
 @SuppressWarnings("unused")
 public class Uppgift

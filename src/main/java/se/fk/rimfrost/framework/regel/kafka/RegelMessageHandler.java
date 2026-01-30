@@ -1,4 +1,4 @@
-package se.fk.rimfrost.framework.presentation.kafka;
+package se.fk.rimfrost.framework.regel.presentation.kafka;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
