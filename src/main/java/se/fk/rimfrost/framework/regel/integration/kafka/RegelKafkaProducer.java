@@ -6,7 +6,7 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.OnOverflow;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
-import se.fk.rimfrost.regel.common.RegelResponseMessagePayload;
+import se.fk.rimfrost.framework.regel.RegelResponseMessagePayload;
 
 @ApplicationScoped
 public class RegelKafkaProducer
