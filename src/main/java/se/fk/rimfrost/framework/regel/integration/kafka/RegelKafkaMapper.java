@@ -2,7 +2,10 @@ package se.fk.rimfrost.framework.regel.integration.kafka;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
-import se.fk.rimfrost.regel.common.*;
+import se.fk.rimfrost.framework.regel.KogitoProcType;
+import se.fk.rimfrost.framework.regel.RegelResponseMessagePayload;
+import se.fk.rimfrost.framework.regel.RegelResponseMessagePayloadData;
+import se.fk.rimfrost.framework.regel.SpecVersion;
 
 @SuppressWarnings("unused")
 @ApplicationScoped

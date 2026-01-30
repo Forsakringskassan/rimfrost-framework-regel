@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import se.fk.github.logging.callerinfo.model.MDCKeys;
-import se.fk.rimfrost.regel.common.RegelRequestMessagePayload;
+import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 
 @ApplicationScoped
 public class RegelMessageHandler

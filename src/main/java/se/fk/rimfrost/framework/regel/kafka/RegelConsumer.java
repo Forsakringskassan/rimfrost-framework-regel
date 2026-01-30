@@ -4,7 +4,7 @@ import io.smallrye.common.annotation.Blocking;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
-import se.fk.rimfrost.regel.common.RegelRequestMessagePayload;
+import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 
 @SuppressWarnings("unused")
 @ApplicationScoped
