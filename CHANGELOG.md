@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.0.4 (2026-01-30)
+
+### Bug Fixes
+
+-  update to groupid se.fk.rimfrost.framework.regel ([00448](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/00448a2b2808ab0) Nils Elveros)  
+
 ## 0.0.3 (2026-01-29)
 
 ### Bug Fixes
