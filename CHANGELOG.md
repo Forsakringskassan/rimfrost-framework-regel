@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.0.5 (2026-02-02)
+
+### Bug Fixes
+
+-  files in correct directory ([eaee6](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/eaee6ddb8366c5b) Nils Elveros)  
+-  Replace regel.common imports with framework.regel imports ([cc137](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/cc137e57c41bae6) Lars Persson)  
+
 ## 0.0.4 (2026-01-30)
 
 ### Bug Fixes
