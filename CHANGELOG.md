@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.0 (2026-02-02)
+
+### Features
+
+-  Add support for GET/PUT rest operations against kundbehovsflode ([4994c](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4994c91dad9b1a7) Lars Persson)  
+
 ## 0.0.5 (2026-02-02)
 
 ### Bug Fixes
