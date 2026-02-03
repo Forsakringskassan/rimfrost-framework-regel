@@ -1,9 +1,10 @@
 package se.fk.rimfrost.framework.regel.integration.kundbehovsflode;
 
+import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.KundbehovsflodeResponse;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.GetKundbehovsflodeResponse;
 
 @SuppressWarnings("unused")
-public interface KundbehovsflodeResponseMapper<T>
+public interface KundbehovsflodeResponseMapper
 {
-   T toKundbehovsflodeResponse(GetKundbehovsflodeResponse apiResponse);
+   KundbehovsflodeResponse toKundbehovsflodeResponse(GetKundbehovsflodeResponse apiResponse);
 }

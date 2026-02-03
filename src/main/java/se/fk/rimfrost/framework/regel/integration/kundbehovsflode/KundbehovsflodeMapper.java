@@ -1,12 +1,8 @@
 package se.fk.rimfrost.framework.regel.integration.kundbehovsflode;
 
 import java.util.ArrayList;
-
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.DefaultKundbehovsflodeResponse;
-import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.DefaultUpdateKundbehovsflodeRequest;
-import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.ImmutableErsattning;
-import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.ImmutableDefaultKundbehovsflodeResponse;
+import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto.*;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.GetKundbehovsflodeResponse;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Lagrum;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutKundbehovsflodeRequest;
@@ -17,13 +13,13 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.UppgiftStatus;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgiftspecifikation;
 
 @ApplicationScoped
-public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper<DefaultUpdateKundbehovsflodeRequest>,
-      KundbehovsflodeResponseMapper<DefaultKundbehovsflodeResponse>
+public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper,
+      KundbehovsflodeResponseMapper
 {
    @Override
-   public DefaultKundbehovsflodeResponse toKundbehovsflodeResponse(GetKundbehovsflodeResponse apiResponse)
+   public KundbehovsflodeResponse toKundbehovsflodeResponse(GetKundbehovsflodeResponse apiResponse)
    {
-      var responseBuilder = ImmutableDefaultKundbehovsflodeResponse.builder()
+      var responseBuilder = ImmutableKundbehovsflodeResponse.builder()
             .personnummer(apiResponse.getKundbehovsflode().getKundbehov().getKundbehovsroll().getFirst().getIndivid().getId())
             .formanstyp(apiResponse.getKundbehovsflode().getKundbehov().getFormanstyp())
             .kundbehovsflodeId(apiResponse.getKundbehovsflode().getId());
@@ -44,7 +40,7 @@ public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper
    }
 
    @Override
-   public PutKundbehovsflodeRequest toKundbehovsflodeRequest(DefaultUpdateKundbehovsflodeRequest request,
+   public PutKundbehovsflodeRequest toKundbehovsflodeRequest(UpdateKundbehovsflodeRequest request,
          GetKundbehovsflodeResponse apiResponse)
    {
       var lagrum = new Lagrum();
@@ -119,16 +115,11 @@ public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper
    private UppgiftStatus mapUppgiftStatus(
          se.fk.rimfrost.framework.regel.logic.dto.UppgiftStatus uppgiftStatus)
    {
-      switch (uppgiftStatus)
-      {
-         case TILLDELAD:
-            return UppgiftStatus.TILLDELAD;
-         case AVSLUTAD:
-            return UppgiftStatus.AVSLUTAD;
-         case PLANERAD:
-            return UppgiftStatus.PLANERAD;
-         default:
-            throw new InternalError("Could not map UppgiftStatus: " + uppgiftStatus);
-      }
+       return switch (uppgiftStatus) {
+           case TILLDELAD -> UppgiftStatus.TILLDELAD;
+           case AVSLUTAD -> UppgiftStatus.AVSLUTAD;
+           case PLANERAD -> UppgiftStatus.PLANERAD;
+           default -> throw new InternalError("Could not map UppgiftStatus: " + uppgiftStatus);
+       };
    }
 }

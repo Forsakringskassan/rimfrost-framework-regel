@@ -3,13 +3,11 @@ package se.fk.rimfrost.framework.regel.integration.kundbehovsflode.dto;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
 import org.immutables.value.Value;
-
 import jakarta.annotation.Nullable;
 
 @Value.Immutable
-public interface DefaultKundbehovsflodeResponse
+public interface KundbehovsflodeResponse
 {
 
    UUID kundbehovsflodeId();
@@ -21,7 +19,7 @@ public interface DefaultKundbehovsflodeResponse
    List<Ersattning> ersattning();
 
    @Value.Immutable
-   public interface Ersattning
+   interface Ersattning
    {
 
       UUID ersattningsId();
