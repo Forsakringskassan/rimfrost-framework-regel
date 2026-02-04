@@ -2,6 +2,20 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.1 (2026-02-04)
+
+### Bug Fixes
+
+-  Skippa generic DTOs (behövs ej) ([538c3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/538c31ab051b30a) Ulf Slunga)  
+
+### Other changes
+
+**spotless apply**
+
+
+[cc261](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/cc261eb71ee2a0b) Ulf Slunga *2026-02-04 06:20:04*
+
+
 ## 0.1.0 (2026-02-02)
 
 ### Features
