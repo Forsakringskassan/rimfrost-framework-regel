@@ -7,5 +7,6 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutKundbehovsf
 @SuppressWarnings("unused")
 public interface UpdateKundbehovsflodeRequestMapper
 {
-   PutKundbehovsflodeRequest toKundbehovsflodeRequest(UpdateKundbehovsflodeRequest request, GetKundbehovsflodeResponse apiResponse);
+   PutKundbehovsflodeRequest toKundbehovsflodeRequest(UpdateKundbehovsflodeRequest request,
+         GetKundbehovsflodeResponse apiResponse);
 }
