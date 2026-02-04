@@ -13,10 +13,8 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.UppgiftStatus;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgiftspecifikation;
 
 @ApplicationScoped
-public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper,
-      KundbehovsflodeResponseMapper
+public class KundbehovsflodeMapper
 {
-   @Override
    public KundbehovsflodeResponse toKundbehovsflodeResponse(GetKundbehovsflodeResponse apiResponse)
    {
       var responseBuilder = ImmutableKundbehovsflodeResponse.builder()
@@ -39,7 +37,6 @@ public class KundbehovsflodeMapper implements UpdateKundbehovsflodeRequestMapper
       return responseBuilder.build();
    }
 
-   @Override
    public PutKundbehovsflodeRequest toKundbehovsflodeRequest(UpdateKundbehovsflodeRequest request,
          GetKundbehovsflodeResponse apiResponse)
    {
