@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.2 (2026-02-04)
+
+### Bug Fixes
+
+-  tar bort onödiga interface ([687d2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/687d20b4432eed0) Ulf Slunga)  
+-  Move kafka folder to presentation/kafka in order to match declared package ([0a829](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0a82920ca641f66) Lars Persson)  
+
 ## 0.1.1 (2026-02-04)
 
 ### Bug Fixes
