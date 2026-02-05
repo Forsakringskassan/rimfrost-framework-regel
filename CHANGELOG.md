@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.3 (2026-02-05)
+
+### Bug Fixes
+
+-  lägger till RegelData till ramverket ([cbef3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/cbef311d0ead95c) Ulf Slunga)  
+
 ## 0.1.2 (2026-02-04)
 
 ### Bug Fixes
