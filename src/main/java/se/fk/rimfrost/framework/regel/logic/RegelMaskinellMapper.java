@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @SuppressWarnings("unused")
 @ApplicationScoped
-public class RegelMapper
+public class RegelMaskinellMapper
 {
 
    public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall)
