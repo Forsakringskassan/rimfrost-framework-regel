@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.5 (2026-02-09)
+
+### Bug Fixes
+
+-  Rework config discovery handling ([ba2df](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ba2df031beb4faf) Lars Persson)  
+
 ## 0.1.4 (2026-02-09)
 
 ### Bug Fixes
