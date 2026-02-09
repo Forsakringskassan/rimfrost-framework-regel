@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.6 (2026-02-09)
+
+### Bug Fixes
+
+-  Lägger till regelhantering till ramverket ([4d28f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4d28f89b2a0e068) Ulf Slunga)  
+
 ## 0.1.5 (2026-02-09)
 
 ### Bug Fixes
