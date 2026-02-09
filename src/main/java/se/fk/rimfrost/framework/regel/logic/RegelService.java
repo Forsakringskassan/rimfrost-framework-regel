@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.integration.config.RegelConfigProviderYaml;
 import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
 import se.fk.rimfrost.framework.regel.integration.kundbehovsflode.KundbehovsflodeAdapter;
@@ -14,18 +15,18 @@ import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 @SuppressWarnings("unused")
-public abstract class RegelMaskinellService implements RegelRequestHandlerInterface
+public class RegelService implements RegelRequestHandlerInterface
 {
-   private static final Logger LOGGER = LoggerFactory.getLogger(RegelMaskinellService.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(RegelService.class);
 
    @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
-   String responseTopic;
+   protected String responseTopic;
 
    @ConfigProperty(name = "kafka.source")
-   String kafkaSource;
+   protected String kafkaSource;
 
    @Inject
-   protected RegelMaskinellMapper regelMapper;
+   protected RegelMapper regelMapper;
 
    @Inject
    protected KundbehovsflodeAdapter kundbehovsflodeAdapter;
@@ -38,11 +39,32 @@ public abstract class RegelMaskinellService implements RegelRequestHandlerInterf
 
    protected RegelConfig regelConfig;
 
-   public abstract void handleRegelRequest(RegelDataRequest request);
+   public void handleRegelRequest(RegelDataRequest request)
+   {
+
+   }
 
    @PostConstruct
    void init()
    {
       this.regelConfig = regelConfigProvider.getConfig();
+   }
+
+   public void sendResponse(RegelDataRequest request, Utfall utfall)
+   {
+      var cloudevent = ImmutableCloudEventData.builder()
+            .id(request.id())
+            .kogitoparentprociid(request.kogitoparentprociid())
+            .kogitoprocid(request.kogitoprocid())
+            .kogitoprocinstanceid(request.kogitoprocinstanceid())
+            .kogitoprocist(request.kogitoprocist())
+            .kogitoprocversion(request.kogitoprocversion())
+            .kogitorootprocid(request.kogitorootprocid())
+            .kogitorootprociid(request.kogitorootprociid())
+            .type(request.type())
+            .source(kafkaSource)
+            .build();
+      var regelResponse = regelMapper.toRegelResponse(request.kundbehovsflodeId(), cloudevent, utfall);
+      regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 }
