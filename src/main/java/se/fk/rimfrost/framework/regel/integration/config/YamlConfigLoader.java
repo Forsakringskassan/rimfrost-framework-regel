@@ -35,20 +35,4 @@ public final class YamlConfigLoader
          throw new RuntimeException("Failed to load YAML config: " + path, e);
       }
    }
-
-   public static <T> T loadFromClasspath(String resource, Class<T> type)
-   {
-      try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(resource))
-      {
-         if (is == null)
-         {
-            throw new IllegalStateException("YAML config not found on classpath: " + resource);
-         }
-         return new Yaml().loadAs(is, type);
-      }
-      catch (IOException e)
-      {
-         throw new RuntimeException("Failed to load YAML config: " + resource, e);
-      }
-   }
 }
