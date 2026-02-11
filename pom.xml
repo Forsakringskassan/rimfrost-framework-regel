@@ -63,6 +63,11 @@
       <artifactId>snakeyaml</artifactId>
       <version>2.5</version>
     </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.kundbehovsflode</groupId>
+      <artifactId>rimfrost-framework-kundbehovsflode-adapter</artifactId>
+      <version>0.0.2</version>
+    </dependency>
   </dependencies>
 
   <repositories>
