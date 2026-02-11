@@ -1,0 +1,133 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$title: RegelSchema
+type: object
+
+required:
+  - uppgift
+  - specifikation
+  - regel
+  - lagrum
+
+additionalProperties: false
+
+properties:
+
+  uppgift:
+    type: object
+    required:
+      - version
+      - path
+      - aktivitet
+    additionalProperties: false
+    properties:
+      version:
+        type: string
+        pattern: "^[0-9]+\\.[0-9]+$"
+      path:
+        type: string
+      aktivitet:
+        type: string
+      metadata:
+        type: object
+        additionalProperties: true
+
+  specifikation:
+    type: object
+    required:
+      - id
+      - version
+      - namn
+      - uppgiftbeskrivning
+      - verksamhetslogik
+      - roll
+      - applikationsId
+      - applikationsversion
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        format: uuid
+      version:
+        type: string
+        pattern: "^[0-9]+\\.[0-9]+$"
+      namn:
+        type: string
+      uppgiftbeskrivning:
+        type: string
+      verksamhetslogik:
+        type: string
+      roll:
+        type: string
+      applikationsId:
+        type: string
+      applikationsversion:
+        type: string
+
+      metadata:
+        type: object
+        additionalProperties: true
+
+  regel:
+    type: object
+    required:
+      - id
+      - version
+      - namn
+      - beskrivning
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        format: uuid
+      version:
+        type: string
+        pattern: "^[0-9]+\\.[0-9]+$"
+      namn:
+        type: string
+      beskrivning:
+        type: string
+
+      metadata:
+        type: object
+        additionalProperties: true
+
+  lagrum:
+    type: object
+    required:
+      - id
+      - version
+      - giltigFom
+      - forfattning
+      - kapitel
+      - paragraf
+      - stycke
+      - punkt
+    additionalProperties: false
+    properties:
+      id:
+        type: string
+        format: uuid
+      version:
+        type: string
+        pattern: "^[0-9]+\\.[0-9]+$"
+      giltigFom:
+        type: string
+        format: date
+      forfattning:
+        type: string
+      kapitel:
+        type: integer
+        minimum: 1
+      paragraf:
+        type: integer
+        minimum: 1
+      stycke:
+        type: integer
+        minimum: 1
+      punkt:
+        type: integer
+        minimum: 1
+
+      metadata:
+        type: object
+        additionalProperties: true
