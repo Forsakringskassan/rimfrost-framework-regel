@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.8 (2026-02-11)
+
+### Bug Fixes
+
+-  Lägger till kundbehovsflöde adapter ([eb275](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/eb275eb72aad897) Ulf Slunga)  
+-  lägger till schema för config-filen ([d0ee0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/d0ee0526262849d) Ulf Slunga)  
+
 ## 0.1.7 (2026-02-11)
 
 ### Bug Fixes
