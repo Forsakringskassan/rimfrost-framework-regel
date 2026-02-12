@@ -6,7 +6,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.KundbehovsflodeAdapter;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.KundbehovsflodeMapper;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.integration.config.RegelConfigProviderYaml;
 import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
