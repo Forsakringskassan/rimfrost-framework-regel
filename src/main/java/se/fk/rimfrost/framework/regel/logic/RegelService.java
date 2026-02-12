@@ -30,9 +30,6 @@ public class RegelService implements RegelRequestHandlerInterface
    protected RegelMapper regelMapper;
 
    @Inject
-   protected KundbehovsflodeMapper kundbehovsflodeMapper;
-
-   @Inject
    protected KundbehovsflodeAdapter kundbehovsflodeAdapter;
 
    @Inject
