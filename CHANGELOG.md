@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.9 (2026-02-12)
+
+### Bug Fixes
+
+-  UtokadUppgiftBeskrivning -> UtokadUppgiftsbeskrivning ([5f2ed](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/5f2ed008b5a5395) Lars Persson)  
+
 ## 0.1.8 (2026-02-11)
 
 ### Bug Fixes
