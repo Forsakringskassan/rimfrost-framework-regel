@@ -10,7 +10,7 @@ public class RegelConfig
    private Specifikation specifikation;
    private Regel regel;
    private Lagrum lagrum;
-   private UtokadUppgiftBeskrivning utokadUppgiftBeskrivning;
+   private UtokadUppgiftsbeskrivning utokadUppgiftsbeskrivning;
 
    public RegelConfig()
    {
@@ -74,15 +74,15 @@ public class RegelConfig
    }
 
    @SuppressFBWarnings("EI_EXPOSE_REP")
-   public UtokadUppgiftBeskrivning getUtokadUppgiftBeskrivning()
+   public UtokadUppgiftsbeskrivning getUtokadUppgiftsbeskrivning()
    {
-      return utokadUppgiftBeskrivning;
+      return utokadUppgiftsbeskrivning;
    }
 
    @SuppressFBWarnings("EI_EXPOSE_REP")
-   public void setUtokadUppgiftBeskrivning(UtokadUppgiftBeskrivning utokadUppgiftBeskrivning)
+   public void setUtokadUppgiftsbeskrivning(UtokadUppgiftsbeskrivning utokadUppgiftsbeskrivning)
    {
-      this.utokadUppgiftBeskrivning = utokadUppgiftBeskrivning;
+      this.utokadUppgiftsbeskrivning = utokadUppgiftsbeskrivning;
    }
 
 }

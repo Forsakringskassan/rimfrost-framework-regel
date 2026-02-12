@@ -1,11 +1,11 @@
 package se.fk.rimfrost.framework.regel.logic.config;
 
 @SuppressWarnings("unused")
-public class UtokadUppgiftBeskrivning
+public class UtokadUppgiftsbeskrivning
 {
    private String beskrivning;
 
-   public UtokadUppgiftBeskrivning()
+   public UtokadUppgiftsbeskrivning()
    {
       // required by SnakeYAML
    }
