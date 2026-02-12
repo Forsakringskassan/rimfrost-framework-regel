@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.11 (2026-02-12)
+
+### Bug Fixes
+
+-  removed unused import ([0b0a5](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0b0a5744a76afcb) Nils Elveros)  
+-  Add kundbehovsflode mapping and removed dependency towrads kundbehovsflode openapi ([0715f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0715f0b8455df1b) Nils Elveros)  
+
 ## 0.1.10 (2026-02-12)
 
 ### Bug Fixes
