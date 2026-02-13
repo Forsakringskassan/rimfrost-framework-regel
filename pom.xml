@@ -61,7 +61,7 @@
     <dependency>
       <groupId>se.fk.rimfrost.framework.kundbehovsflode</groupId>
       <artifactId>rimfrost-framework-kundbehovsflode-adapter</artifactId>
-      <version>0.0.3</version>
+      <version>0.0.4</version>
     </dependency>
   </dependencies>
 
