@@ -15,8 +15,6 @@ public interface RegelData
 
    UUID kundbehovsflodeId();
 
-   UUID cloudeventId();
-
    @Nullable
    UUID uppgiftId();
 
