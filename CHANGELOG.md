@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.1.12 (2026-02-13)
+
+### Bug Fixes
+
+-  bumpar kundbehovsflöde adapter för att fixa beslutsutfall null ([1f1f2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/1f1f2a02a26ff2c) Ulf Slunga)  
+
 ## 0.1.11 (2026-02-12)
 
 ### Bug Fixes
