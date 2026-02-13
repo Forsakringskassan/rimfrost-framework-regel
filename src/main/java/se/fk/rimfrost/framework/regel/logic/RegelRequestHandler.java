@@ -56,29 +56,32 @@ public class RegelRequestHandler implements RegelRequestHandlerInterface
    }
 
    @Override
-   public void handleRegelRequest(RegelDataRequest request) {
-      var kundbehovsResponse = kundbehovsflodeAdapter.getKundbehovsflodeInfo(ImmutableKundbehovsflodeRequest.builder().kundbehovsflodeId(request.kundbehovsflodeId()).build());
-      
+   public void handleRegelRequest(RegelDataRequest request)
+   {
+      var kundbehovsResponse = kundbehovsflodeAdapter.getKundbehovsflodeInfo(
+            ImmutableKundbehovsflodeRequest.builder().kundbehovsflodeId(request.kundbehovsflodeId()).build());
+
       var processRegelResponse = regelService.processRegel(kundbehovsResponse);
 
       var cloudevent = createCloudEvent(request);
 
       var regelData = ImmutableRegelData.builder()
-                  .kundbehovsflodeId(request.kundbehovsflodeId())
-                  .skapadTs(OffsetDateTime.now())
-                  .planeradTs(OffsetDateTime.now())
-                  .uppgiftStatus(UppgiftStatus.AVSLUTAD)
-                  .fssaInformation(FSSAinformation.HANDLAGGNING_PAGAR)
-                  .ersattningar(processRegelResponse.ersattningar())
-                  .underlag(processRegelResponse.underlag())
-                  .build();
+            .kundbehovsflodeId(request.kundbehovsflodeId())
+            .skapadTs(OffsetDateTime.now())
+            .planeradTs(OffsetDateTime.now())
+            .uppgiftStatus(UppgiftStatus.AVSLUTAD)
+            .fssaInformation(FSSAinformation.HANDLAGGNING_PAGAR)
+            .ersattningar(processRegelResponse.ersattningar())
+            .underlag(processRegelResponse.underlag())
+            .build();
 
       updateKundbehovsFlode(regelData);
       sendResponse(regelData, cloudevent, decideUtfall(regelData));
    }
-  
-   private CloudEventData createCloudEvent(RegelDataRequest request) {
-          return ImmutableCloudEventData.builder()
+
+   private CloudEventData createCloudEvent(RegelDataRequest request)
+   {
+      return ImmutableCloudEventData.builder()
             .id(request.id())
             .kogitoparentprociid(request.kogitoparentprociid())
             .kogitoprocid(request.kogitoprocid())
@@ -98,7 +101,8 @@ public class RegelRequestHandler implements RegelRequestHandlerInterface
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   private void updateKundbehovsFlode(RegelData regelData) {
+   private void updateKundbehovsFlode(RegelData regelData)
+   {
       kundbehovsflodeAdapter.updateKundbehovsflodeInfo(regelMapper.toUpdateKundbehovsflodeRequest(regelData, regelConfig));
    }
 
