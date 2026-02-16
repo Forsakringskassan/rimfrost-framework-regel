@@ -2,6 +2,24 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.2.0 (2026-02-16)
+
+### Features
+
+-  Update RegelRequestHandler and interface for rule implementation ([70dfb](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/70dfbb71db2eb56) Nils Elveros)  
+
+### Bug Fixes
+
+-  spotless ([80b49](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/80b4997079cce4f) Nils Elveros)  
+
+### Other changes
+
+**renamed class and removed applicationscope**
+
+
+[36394](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/36394ba58fcc16a) Nils Elveros *2026-02-16 09:00:05*
+
+
 ## 0.1.12 (2026-02-13)
 
 ### Bug Fixes
