@@ -24,10 +24,9 @@ import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 @SuppressWarnings("unused")
-@ApplicationScoped
-public class RegelRequestHandler implements RegelRequestHandlerInterface
+public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInterface
 {
-   private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandler.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
 
    @ConfigProperty(name = "kafka.source")
    private String kafkaSource;
