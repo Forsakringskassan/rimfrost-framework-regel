@@ -78,7 +78,7 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
       sendResponse(regelData, cloudevent, decideUtfall(regelData));
    }
 
-   private CloudEventData createCloudEvent(RegelDataRequest request)
+   protected CloudEventData createCloudEvent(RegelDataRequest request)
    {
       return ImmutableCloudEventData.builder()
             .id(request.id())
@@ -94,13 +94,13 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
             .build();
    }
 
-   private void sendResponse(RegelData regelData, CloudEventData cloudEventData, Utfall utfall)
+   protected void sendResponse(RegelData regelData, CloudEventData cloudEventData, Utfall utfall)
    {
       var regelResponse = regelMapper.toRegelResponse(regelData.kundbehovsflodeId(), cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   private void updateKundbehovsFlode(RegelData regelData)
+   protected void updateKundbehovsFlode(RegelData regelData)
    {
       kundbehovsflodeAdapter.updateKundbehovsflodeInfo(regelMapper.toUpdateKundbehovsflodeRequest(regelData, regelConfig));
    }
