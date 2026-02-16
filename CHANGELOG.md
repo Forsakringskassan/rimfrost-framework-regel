@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.2.1 (2026-02-16)
+
+### Bug Fixes
+
+-  sendResponse och updateKundbehovsflodeInfo protected för reusability ([22aa0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/22aa0558f99ca28) Ulf Slunga)  
+
 ## 0.2.0 (2026-02-16)
 
 ### Features
