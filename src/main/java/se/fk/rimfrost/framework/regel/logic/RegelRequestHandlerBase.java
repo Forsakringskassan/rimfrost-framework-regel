@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
@@ -48,8 +49,15 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
 
    protected RegelConfig regelConfig;
 
+   /*
+    * Note: The name of the @PostConstruct method should if
+    * possible be kept as init<classname> in order to avoid
+    * being shadowed by any @PostConstruct methods in any
+    * inheriting class that happens to have the same method
+    * name.
+    */
    @PostConstruct
-   void init()
+   private void initRegelRequestHandlerBase()
    {
       this.regelConfig = regelConfigProvider.getConfig();
    }
