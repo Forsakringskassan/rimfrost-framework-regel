@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.2.2 (2026-02-17)
+
+### Bug Fixes
+
+-  Rename init -> initRegelRequestHandlerBase to avoid shadowing by child classes ([cf628](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/cf628e156981efc) Lars Persson)  
+
 ## 0.2.1 (2026-02-16)
 
 ### Bug Fixes
