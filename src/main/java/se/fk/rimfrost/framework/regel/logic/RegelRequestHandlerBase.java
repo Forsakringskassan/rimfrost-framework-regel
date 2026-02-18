@@ -25,7 +25,7 @@ import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 @SuppressWarnings("unused")
-public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInterface
+public abstract class RegelRequestHandlerBase
 {
    private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
 
@@ -44,9 +44,6 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
    @Inject
    protected RegelKafkaProducer regelKafkaProducer;
 
-   @Inject
-   private RegelServiceInterface regelService;
-
    protected RegelConfig regelConfig;
 
    /*
@@ -60,30 +57,6 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
    private void initRegelRequestHandlerBase()
    {
       this.regelConfig = regelConfigProvider.getConfig();
-   }
-
-   @Override
-   public void handleRegelRequest(RegelDataRequest request)
-   {
-      var kundbehovsResponse = kundbehovsflodeAdapter.getKundbehovsflodeInfo(
-            ImmutableKundbehovsflodeRequest.builder().kundbehovsflodeId(request.kundbehovsflodeId()).build());
-
-      var processRegelResponse = regelService.processRegel(kundbehovsResponse);
-
-      var cloudevent = createCloudEvent(request);
-
-      var regelData = ImmutableRegelData.builder()
-            .kundbehovsflodeId(request.kundbehovsflodeId())
-            .skapadTs(OffsetDateTime.now())
-            .planeradTs(OffsetDateTime.now())
-            .uppgiftStatus(UppgiftStatus.AVSLUTAD)
-            .fssaInformation(FSSAinformation.HANDLAGGNING_PAGAR)
-            .ersattningar(processRegelResponse.ersattningar())
-            .underlag(processRegelResponse.underlag())
-            .build();
-
-      updateKundbehovsFlode(regelData);
-      sendResponse(regelData, cloudevent, decideUtfall(regelData));
    }
 
    protected CloudEventData createCloudEvent(RegelDataRequest request)
@@ -111,11 +84,6 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
    protected void updateKundbehovsFlode(RegelData regelData)
    {
       kundbehovsflodeAdapter.updateKundbehovsflodeInfo(regelMapper.toUpdateKundbehovsflodeRequest(regelData, regelConfig));
-   }
-
-   private Utfall decideUtfall(RegelData regelData)
-   {
-      return regelData.ersattningar().stream().allMatch(e -> e.beslutsutfall() == Beslutsutfall.JA) ? Utfall.JA : Utfall.NEJ;
    }
 
 }
