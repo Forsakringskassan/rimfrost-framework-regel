@@ -2,6 +2,20 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.2.3 (2026-02-18)
+
+### Bug Fixes
+
+-  FKPOC-400 handleRegelRequest i separat framework för maskinell regel ([46bec](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/46bec6e92786281) Ulf Slunga)  
+
+### Other changes
+
+**regelService injectas i extendande klasser istället**
+
+
+[bc4c3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/bc4c3b89c76b11e) Ulf Slunga *2026-02-18 12:25:56*
+
+
 ## 0.2.2 (2026-02-17)
 
 ### Bug Fixes
