@@ -44,9 +44,6 @@ public abstract class RegelRequestHandlerBase
    @Inject
    protected RegelKafkaProducer regelKafkaProducer;
 
-   @Inject
-   protected RegelServiceInterface regelService;
-
    protected RegelConfig regelConfig;
 
    /*
