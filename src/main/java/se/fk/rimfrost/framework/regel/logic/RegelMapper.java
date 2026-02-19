@@ -32,6 +32,7 @@ import se.fk.rimfrost.framework.regel.Utfall;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -117,14 +118,14 @@ public class RegelMapper
             .build();
 
       var uppgift = ImmutableUpdateKundbehovsflodeUppgift.builder()
-            .id(UUID.randomUUID())
+            .id(regelResult.uppgiftId())
             .version(regelConfig.getUppgift().getVersion())
-            .skapadTs(OffsetDateTime.now())
-            .utfordTs(OffsetDateTime.now())
-            .planeradTs(OffsetDateTime.now())
-            .uppgiftStatus(UppgiftStatus.AVSLUTAD)
+            .skapadTs(regelResult.skapadTs())
+            .utfordTs(regelResult.utfordTs())
+            .planeradTs(regelResult.planeradTs())
+            .uppgiftStatus(mapUppgiftStatus(regelResult.uppgiftStatus()))
             .aktivitet(regelConfig.getUppgift().getAktivitet())
-            .fsSAinformation(FSSAinformation.HANDLAGGNING_PAGAR)
+            .fsSAinformation(mapFssaInformation(regelResult.fssaInformation()))
             .specifikation(specifikation)
             .build();
 
@@ -164,12 +165,30 @@ public class RegelMapper
       return switch(verksamhetslogik){case"A"->Verksamhetslogik.A;case"B"->Verksamhetslogik.B;case"C"->Verksamhetslogik.C;default->throw new InternalError("Could not map verksamhetslogik: "+verksamhetslogik);};
    }
 
-   public PatchErsattningRequest toPatchKundbehovsflodeRequest(UUID kundbehovsflodeId, RegelResult regelResult)
+   private UppgiftStatus mapUppgiftStatus(se.fk.rimfrost.framework.regel.logic.dto.UppgiftStatus uppgiftStatus) {
+          return switch (uppgiftStatus) {
+           case TILLDELAD -> UppgiftStatus.TILLDELAD;
+           case AVSLUTAD -> UppgiftStatus.AVSLUTAD;
+           case PLANERAD -> UppgiftStatus.PLANERAD;
+           default -> throw new InternalError("Could not map UppgiftStatus: " + uppgiftStatus);
+       };
+      }
+
+   private FSSAinformation mapFssaInformation(se.fk.rimfrost.framework.regel.logic.dto.FSSAinformation fssaInformation) {
+            return switch (fssaInformation) {
+            case HANDLAGGNING_PAGAR -> FSSAinformation.HANDLAGGNING_PAGAR;
+            case VANTAR_PA_INFO_FRAN_ANNAN_PART -> FSSAinformation.VANTAR_PA_INFO_FRAN_ANNAN_PART;
+            case VANTAR_PA_INFO_FRAN_KUND -> FSSAinformation.VANTAR_PA_INFO_FRAN_KUND;
+            default -> throw new InternalError("Could not map fssaInformation: " + fssaInformation);
+        };
+}
+
+   public PatchErsattningRequest toPatchKundbehovsflodeRequest(UUID kundbehovsflodeId, List<ErsattningData> ersattningar)
    {
       var requestBuilder = ImmutablePatchErsattningRequest.builder()
             .kundbehovsflodeId(kundbehovsflodeId);
 
-      for (ErsattningData ersattning : regelResult.ersattningar())
+      for (ErsattningData ersattning : ersattningar)
       {
          var updateErsattning = ImmutableUpdateKundbehovsflodeErsattning.builder()
                .beslutsutfall(mapBeslutsutfall(ersattning.beslutsutfall()))

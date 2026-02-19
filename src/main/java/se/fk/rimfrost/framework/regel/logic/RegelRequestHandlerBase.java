@@ -28,7 +28,7 @@ import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInte
 public abstract class RegelRequestHandlerBase
 {
    @ConfigProperty(name = "kafka.source")
-   protected String kafkaSource;
+   private String kafkaSource;
 
    @Inject
    protected RegelMapper regelMapper;
@@ -81,7 +81,7 @@ public abstract class RegelRequestHandlerBase
 
    protected void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
    {
-      var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult);
+      var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult.ersattningar());
       var putRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, regelResult, regelConfig);
       kundbehovsflodeAdapter.patchKundbehovsflode(patchRequest);
       kundbehovsflodeAdapter.putKundbehovsflode(putRequest);
