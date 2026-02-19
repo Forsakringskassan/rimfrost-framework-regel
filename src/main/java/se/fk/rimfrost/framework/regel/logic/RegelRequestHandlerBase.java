@@ -42,9 +42,6 @@ public abstract class RegelRequestHandlerBase
    @Inject
    protected RegelKafkaProducer regelKafkaProducer;
 
-   @Inject
-   protected RegelServiceInterface regelService;
-
    protected RegelConfig regelConfig;
 
    /*
@@ -60,20 +57,7 @@ public abstract class RegelRequestHandlerBase
       this.regelConfig = regelConfigProvider.getConfig();
    }
 
-   public void handleRegelRequest(RegelDataRequest request)
-   {
-      var cloudevent = createCloudEvent(request);
-
-      var kundbehovsResponse = kundbehovsflodeAdapter.getKundbehovsflodeInfo(
-            ImmutableKundbehovsflodeRequest.builder().kundbehovsflodeId(request.kundbehovsflodeId()).build());
-
-      var regelResult = regelService.processRegel(regelMapper.toProcessRegelRequest(kundbehovsResponse));
-
-      updateKundbehovsFlode(request.kundbehovsflodeId(), regelResult);
-      sendResponse(request.kundbehovsflodeId(), cloudevent, regelResult.utfall());
-   }
-
-   private CloudEventData createCloudEvent(RegelDataRequest request)
+   protected CloudEventData createCloudEvent(RegelDataRequest request)
    {
       return ImmutableCloudEventData.builder()
             .id(request.id())
@@ -89,13 +73,13 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   private void sendResponse(UUID kundbehovsflodeId, CloudEventData cloudEventData, Utfall utfall)
+   protected void sendResponse(UUID kundbehovsflodeId, CloudEventData cloudEventData, Utfall utfall)
    {
       var regelResponse = regelMapper.toRegelResponse(kundbehovsflodeId, cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   private void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
+   protected void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
    {
       var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult);
       var putRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, regelResult, regelConfig);
