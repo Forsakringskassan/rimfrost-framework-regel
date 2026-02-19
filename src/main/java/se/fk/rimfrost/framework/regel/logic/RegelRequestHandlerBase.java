@@ -19,7 +19,7 @@ import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.dto.Beslutsutfall;
 import se.fk.rimfrost.framework.regel.logic.dto.FSSAinformation;
-import se.fk.rimfrost.framework.regel.logic.dto.RegelResultRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.dto.UppgiftStatus;
 import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
@@ -60,7 +60,7 @@ public abstract class RegelRequestHandlerBase
       this.regelConfig = regelConfigProvider.getConfig();
    }
 
-   public void handleRegelRequest(RegelResultRequest request)
+   public void handleRegelRequest(RegelDataRequest request)
    {
       var cloudevent = createCloudEvent(request);
 
@@ -73,7 +73,7 @@ public abstract class RegelRequestHandlerBase
       sendResponse(request.kundbehovsflodeId(), cloudevent, regelResult.utfall());
    }
 
-   private CloudEventData createCloudEvent(RegelResultRequest request)
+   private CloudEventData createCloudEvent(RegelDataRequest request)
    {
       return ImmutableCloudEventData.builder()
             .id(request.id())

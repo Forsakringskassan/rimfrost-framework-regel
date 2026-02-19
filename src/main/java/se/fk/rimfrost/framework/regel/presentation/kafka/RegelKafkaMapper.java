@@ -1,17 +1,17 @@
 package se.fk.rimfrost.framework.regel.presentation.kafka;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelResultRequest;
-import se.fk.rimfrost.framework.regel.logic.dto.RegelResultRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
 import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 import java.util.UUID;
 
 @ApplicationScoped
 public class RegelKafkaMapper
 {
-   public RegelResultRequest toRegelResultRequest(RegelRequestMessagePayload rtfRequest)
+   public RegelDataRequest toRegelDataRequest(RegelRequestMessagePayload rtfRequest)
    {
-      return ImmutableRegelResultRequest.builder()
+      return ImmutableRegelDataRequest.builder()
             .id(UUID.fromString(rtfRequest.getId()))
             .kogitorootprociid(UUID.fromString(rtfRequest.getKogitorootprociid()))
             .kogitorootprocid(rtfRequest.getKogitorootprocid())
