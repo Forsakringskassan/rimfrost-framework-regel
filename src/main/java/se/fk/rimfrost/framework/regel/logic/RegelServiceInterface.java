@@ -1,10 +1,11 @@
 package se.fk.rimfrost.framework.regel.logic;
 
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.KundbehovsflodeResponse;
+import se.fk.rimfrost.framework.regel.logic.dto.ProcessRegelRequest;
+import se.fk.rimfrost.framework.regel.logic.entity.RegelResult;
 
 public interface RegelServiceInterface
 {
 
-   ProcessRegelResponse processRegel(KundbehovsflodeResponse regelData);
+   RegelResult processRegel(ProcessRegelRequest regelResult);
 
 }

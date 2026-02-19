@@ -6,7 +6,7 @@ import jakarta.inject.Inject;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
@@ -27,8 +27,6 @@ import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInte
 @SuppressWarnings("unused")
 public abstract class RegelRequestHandlerBase
 {
-   private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
-
    @ConfigProperty(name = "kafka.source")
    private String kafkaSource;
 
@@ -75,15 +73,18 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   protected void sendResponse(RegelData regelData, CloudEventData cloudEventData, Utfall utfall)
+   protected void sendResponse(UUID kundbehovsflodeId, CloudEventData cloudEventData, Utfall utfall)
    {
-      var regelResponse = regelMapper.toRegelResponse(regelData.kundbehovsflodeId(), cloudEventData, utfall);
+      var regelResponse = regelMapper.toRegelResponse(kundbehovsflodeId, cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   protected void updateKundbehovsFlode(RegelData regelData)
+   protected void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
    {
-      kundbehovsflodeAdapter.updateKundbehovsflodeInfo(regelMapper.toUpdateKundbehovsflodeRequest(regelData, regelConfig));
+      var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult.ersattningar());
+      var putRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, regelResult, regelConfig);
+      kundbehovsflodeAdapter.patchKundbehovsflode(patchRequest);
+      kundbehovsflodeAdapter.putKundbehovsflode(putRequest);
    }
 
 }
