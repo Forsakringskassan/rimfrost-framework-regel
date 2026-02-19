@@ -2,6 +2,26 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.0 (2026-02-19)
+
+### Features
+
+-  Updated kundbehovsadapter with new patch and put ([83a11](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/83a1193bc24bd43) Nils Elveros)  
+
+### Bug Fixes
+
+-  some small changes ([37e2c](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/37e2cb12db604bd) Nils Elveros)  
+-  moving some stuff to framework-regel-maskinell ([9a81d](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/9a81d63633ec13c) Nils Elveros)  
+-  renamed file ([7783d](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/7783d4c03f3d3b6) Nils Elveros)  
+
+### Other changes
+
+**Merge branch 'main' into feat/fkpoc-403-use-new-kundbehovsadapter**
+
+
+[ce09e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ce09e581cbcdc99) Nils Elveros *2026-02-19 09:16:25*
+
+
 ## 0.2.3 (2026-02-18)
 
 ### Bug Fixes
