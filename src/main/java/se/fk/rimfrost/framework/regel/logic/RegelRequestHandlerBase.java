@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.dto.Beslutsutfall;
 import se.fk.rimfrost.framework.regel.logic.dto.FSSAinformation;
-import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelResultRequest;
 import se.fk.rimfrost.framework.regel.logic.dto.UppgiftStatus;
 import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
@@ -32,21 +33,21 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
    private String kafkaSource;
 
    @Inject
-   protected RegelMapper regelMapper;
+   private RegelMapper regelMapper;
 
    @Inject
    protected KundbehovsflodeAdapter kundbehovsflodeAdapter;
 
    @Inject
-   protected RegelConfigProviderYaml regelConfigProvider;
+   private RegelConfigProviderYaml regelConfigProvider;
 
    @Inject
-   protected RegelKafkaProducer regelKafkaProducer;
+   private RegelKafkaProducer regelKafkaProducer;
 
    @Inject
    private RegelServiceInterface regelService;
 
-   protected RegelConfig regelConfig;
+   private RegelConfig regelConfig;
 
    @PostConstruct
    void init()
@@ -55,30 +56,20 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
    }
 
    @Override
-   public void handleRegelRequest(RegelDataRequest request)
+   public void handleRegelRequest(RegelResultRequest request)
    {
+      var cloudevent = createCloudEvent(request);
+
       var kundbehovsResponse = kundbehovsflodeAdapter.getKundbehovsflodeInfo(
             ImmutableKundbehovsflodeRequest.builder().kundbehovsflodeId(request.kundbehovsflodeId()).build());
 
-      var processRegelResponse = regelService.processRegel(kundbehovsResponse);
+      var regelResult = regelService.processRegel(regelMapper.toProcessRegelRequest(kundbehovsResponse));
 
-      var cloudevent = createCloudEvent(request);
-
-      var regelData = ImmutableRegelData.builder()
-            .kundbehovsflodeId(request.kundbehovsflodeId())
-            .skapadTs(OffsetDateTime.now())
-            .planeradTs(OffsetDateTime.now())
-            .uppgiftStatus(UppgiftStatus.AVSLUTAD)
-            .fssaInformation(FSSAinformation.HANDLAGGNING_PAGAR)
-            .ersattningar(processRegelResponse.ersattningar())
-            .underlag(processRegelResponse.underlag())
-            .build();
-
-      updateKundbehovsFlode(regelData);
-      sendResponse(regelData, cloudevent, decideUtfall(regelData));
+      updateKundbehovsFlode(request.kundbehovsflodeId(), regelResult);
+      sendResponse(request.kundbehovsflodeId(), cloudevent, regelResult.utfall());
    }
 
-   protected CloudEventData createCloudEvent(RegelDataRequest request)
+   private CloudEventData createCloudEvent(RegelResultRequest request)
    {
       return ImmutableCloudEventData.builder()
             .id(request.id())
@@ -94,20 +85,18 @@ public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInte
             .build();
    }
 
-   protected void sendResponse(RegelData regelData, CloudEventData cloudEventData, Utfall utfall)
+   private void sendResponse(UUID kundbehovsflodeId, CloudEventData cloudEventData, Utfall utfall)
    {
-      var regelResponse = regelMapper.toRegelResponse(regelData.kundbehovsflodeId(), cloudEventData, utfall);
+      var regelResponse = regelMapper.toRegelResponse(kundbehovsflodeId, cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   protected void updateKundbehovsFlode(RegelData regelData)
+   private void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
    {
-      kundbehovsflodeAdapter.updateKundbehovsflodeInfo(regelMapper.toUpdateKundbehovsflodeRequest(regelData, regelConfig));
-   }
-
-   private Utfall decideUtfall(RegelData regelData)
-   {
-      return regelData.ersattningar().stream().allMatch(e -> e.beslutsutfall() == Beslutsutfall.JA) ? Utfall.JA : Utfall.NEJ;
+      var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult);
+      var putRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, regelResult, regelConfig);
+      kundbehovsflodeAdapter.patchKundbehovsflode(patchRequest);
+      kundbehovsflodeAdapter.putKundbehovsflode(putRequest);
    }
 
 }

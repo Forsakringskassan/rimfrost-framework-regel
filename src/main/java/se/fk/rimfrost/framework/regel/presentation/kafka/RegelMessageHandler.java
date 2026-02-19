@@ -35,7 +35,7 @@ public class RegelMessageHandler
                payload.getData().getKundbehovsflodeId());
 
          // Map to service request and delegate
-         var request = mapper.toRegelDataRequest(payload);
+         var request = mapper.toRegelResultRequest(payload);
          regelRequestHandlerInterface.handleRegelRequest(request);
 
       }

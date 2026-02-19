@@ -1,8 +1,8 @@
 package se.fk.rimfrost.framework.regel.presentation.kafka;
 
-import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelResultRequest;
 
 public interface RegelRequestHandlerInterface
 {
-   void handleRegelRequest(RegelDataRequest request);
+   void handleRegelRequest(RegelResultRequest request);
 }
