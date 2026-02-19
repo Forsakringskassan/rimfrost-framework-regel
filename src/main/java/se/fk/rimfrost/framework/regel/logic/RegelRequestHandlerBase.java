@@ -25,37 +25,41 @@ import se.fk.rimfrost.framework.regel.logic.entity.*;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 @SuppressWarnings("unused")
-public abstract class RegelRequestHandlerBase implements RegelRequestHandlerInterface
+public abstract class RegelRequestHandlerBase
 {
-   private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
-
    @ConfigProperty(name = "kafka.source")
-   private String kafkaSource;
+   protected String kafkaSource;
 
    @Inject
-   private RegelMapper regelMapper;
+   protected RegelMapper regelMapper;
 
    @Inject
    protected KundbehovsflodeAdapter kundbehovsflodeAdapter;
 
    @Inject
-   private RegelConfigProviderYaml regelConfigProvider;
+   protected RegelConfigProviderYaml regelConfigProvider;
 
    @Inject
-   private RegelKafkaProducer regelKafkaProducer;
+   protected RegelKafkaProducer regelKafkaProducer;
 
    @Inject
-   private RegelServiceInterface regelService;
+   protected RegelServiceInterface regelService;
 
-   private RegelConfig regelConfig;
+   protected RegelConfig regelConfig;
 
+   /*
+    * Note: The name of the @PostConstruct method should if
+    * possible be kept as init<classname> in order to avoid
+    * being shadowed by any @PostConstruct methods in any
+    * inheriting class that happens to have the same method
+    * name.
+    */
    @PostConstruct
-   void init()
+   private void initRegelRequestHandlerBase()
    {
       this.regelConfig = regelConfigProvider.getConfig();
    }
 
-   @Override
    public void handleRegelRequest(RegelResultRequest request)
    {
       var cloudevent = createCloudEvent(request);
