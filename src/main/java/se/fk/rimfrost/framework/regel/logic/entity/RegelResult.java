@@ -15,23 +15,8 @@ import java.util.UUID;
 @Value.Immutable
 public interface RegelResult
 {
-   @Nullable
-   UUID uppgiftId();
-
-   @Nullable
-   UUID utforarId();
-
-   OffsetDateTime skapadTs();
-
-   @Nullable
-   OffsetDateTime utfordTs();
-
-   @Nullable
-   OffsetDateTime planeradTs();
-
-   UppgiftStatus uppgiftStatus();
-
-   FSSAinformation fssaInformation();
+   @NotNull
+   UppgiftData uppgiftData();
 
    @NotNull
    List<ErsattningData> ersattningar();
