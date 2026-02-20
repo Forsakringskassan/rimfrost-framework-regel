@@ -4,13 +4,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.ImmutableRegelResponse;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
-import se.fk.rimfrost.framework.regel.logic.dto.ImmutableErsattning;
-import se.fk.rimfrost.framework.regel.logic.dto.ImmutableProcessRegelRequest;
-import se.fk.rimfrost.framework.regel.logic.dto.ProcessRegelRequest;
 import se.fk.rimfrost.framework.regel.logic.entity.CloudEventData;
 import se.fk.rimfrost.framework.regel.logic.entity.ErsattningData;
 import se.fk.rimfrost.framework.regel.logic.entity.ImmutableRegelResult;
-import se.fk.rimfrost.framework.regel.logic.entity.RegelResult;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Beslutsutfall;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.FSSAinformation;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutablePatchErsattningRequest;
@@ -21,17 +17,16 @@ import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundb
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeSpecifikation;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeUnderlag;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeUppgift;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.KundbehovsflodeResponse;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.PatchErsattningRequest;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.PutKundbehovsflodeUppgiftRequest;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Roll;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.UppgiftStatus;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Verksamhetslogik;
 import se.fk.rimfrost.framework.regel.Utfall;
+import se.fk.rimfrost.framework.regel.logic.entity.Underlag;
+import se.fk.rimfrost.framework.regel.logic.entity.UppgiftData;
 
-import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -59,30 +54,8 @@ public class RegelMapper
             .build();
    }
 
-   public ProcessRegelRequest toProcessRegelRequest(KundbehovsflodeResponse kundbehovsflodeResponse)
-   {
-      return ImmutableProcessRegelRequest.builder()
-            .kundbehovsflodeId(kundbehovsflodeResponse.kundbehovsflodeId())
-            .personnummer(kundbehovsflodeResponse.personnummer())
-            .formanstyp(kundbehovsflodeResponse.formanstyp())
-            .ersattning(
-                  kundbehovsflodeResponse.ersattning()
-                        .stream()
-                        .map(e -> ImmutableErsattning.builder()
-                              .ersattningsId(e.ersattningsId())
-                              .ersattningsTyp(e.ersattningsTyp())
-                              .omfattningsProcent(e.omfattningsProcent())
-                              .belopp(e.belopp())
-                              .berakningsgrund(e.berakningsgrund())
-                              .beslutsutfall(e.beslutsutfall())
-                              .franOchMed(e.franOchMed())
-                              .tillOchMed(e.tillOchMed())
-                              .build())
-                        .collect(Collectors.toList()))
-            .build();
-   }
-
-   public PutKundbehovsflodeUppgiftRequest toPutKundbehovsflodeRequest(UUID kundbehovsflodeId, RegelResult regelResult,
+   public PutKundbehovsflodeUppgiftRequest toPutKundbehovsflodeRequest(UUID kundbehovsflodeId, UppgiftData uppgiftData,
+         List<Underlag> uppgiftUnderlag,
          RegelConfig regelConfig)
    {
       var lagrum = ImmutableUpdateKundbehovsflodeLagrum.builder()
@@ -118,14 +91,14 @@ public class RegelMapper
             .build();
 
       var uppgift = ImmutableUpdateKundbehovsflodeUppgift.builder()
-            .id(regelResult.uppgiftId())
+            .id(uppgiftData.uppgiftId())
             .version(regelConfig.getUppgift().getVersion())
-            .skapadTs(regelResult.skapadTs())
-            .utfordTs(regelResult.utfordTs())
-            .planeradTs(regelResult.planeradTs())
-            .uppgiftStatus(mapUppgiftStatus(regelResult.uppgiftStatus()))
+            .skapadTs(uppgiftData.skapadTs())
+            .utfordTs(uppgiftData.utfordTs())
+            .planeradTs(uppgiftData.planeradTs())
+            .uppgiftStatus(mapUppgiftStatus(uppgiftData.uppgiftStatus()))
             .aktivitet(regelConfig.getUppgift().getAktivitet())
-            .fsSAinformation(mapFssaInformation(regelResult.fssaInformation()))
+            .fsSAinformation(mapFssaInformation(uppgiftData.fssaInformation()))
             .specifikation(specifikation)
             .build();
 
@@ -133,7 +106,7 @@ public class RegelMapper
             .kundbehovsflodeId(kundbehovsflodeId)
             .uppgift(uppgift);
 
-      for (var rtfUnderlag : regelResult.underlag())
+      for (var rtfUnderlag : uppgiftUnderlag)
       {
          var underlag = ImmutableUpdateKundbehovsflodeUnderlag.builder()
                .typ(rtfUnderlag.typ())

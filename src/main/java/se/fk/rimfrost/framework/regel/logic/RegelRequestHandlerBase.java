@@ -1,28 +1,19 @@
 package se.fk.rimfrost.framework.regel.logic;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import se.fk.rimfrost.framework.kundbehovsflode.adapter.KundbehovsflodeAdapter;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableKundbehovsflodeRequest;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.integration.config.RegelConfigProviderYaml;
 import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
-import se.fk.rimfrost.framework.regel.logic.dto.Beslutsutfall;
-import se.fk.rimfrost.framework.regel.logic.dto.FSSAinformation;
 import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
-import se.fk.rimfrost.framework.regel.logic.dto.UppgiftStatus;
 import se.fk.rimfrost.framework.regel.logic.entity.*;
-import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 @SuppressWarnings("unused")
 public abstract class RegelRequestHandlerBase
@@ -79,12 +70,16 @@ public abstract class RegelRequestHandlerBase
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   protected void updateKundbehovsFlode(UUID kundbehovsflodeId, RegelResult regelResult)
+   protected void patchKundbehovsflode(UUID kundbehovsflodeId, List<ErsattningData> ersattningar)
    {
-      var patchRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, regelResult.ersattningar());
-      var putRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, regelResult, regelConfig);
-      kundbehovsflodeAdapter.patchKundbehovsflode(patchRequest);
-      kundbehovsflodeAdapter.putKundbehovsflode(putRequest);
+      var patchKundbehovsflodeRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, ersattningar);
+      kundbehovsflodeAdapter.patchKundbehovsflode(patchKundbehovsflodeRequest);
    }
 
+   protected void putKundbehovsflode(UUID kundbehovsflodeId, UppgiftData uppgiftData, List<Underlag> underlag)
+   {
+      var putKundbehovsflodeRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, uppgiftData, underlag,
+            regelConfig);
+      kundbehovsflodeAdapter.putKundbehovsflode(putKundbehovsflodeRequest);
+   }
 }
