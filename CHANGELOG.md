@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.1 (2026-02-20)
+
+### Bug Fixes
+
+-  Update functionality to work with manual framework ([235f6](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/235f6456f89f36b) Lars Persson)  
+
 ## 0.3.0 (2026-02-19)
 
 ### Features
