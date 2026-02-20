@@ -26,7 +26,8 @@ nb-configuration.xml
 .env
 
 /build/
-/target/
+core/target/
+test-base/target
 src/generated-source
 
 # Plugin directory
