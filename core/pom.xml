@@ -16,15 +16,8 @@
 
   <name>Rimfrost Framework regel</name>
 
-  <distributionManagement>
-    <repository>
-      <id>github--Forsakringskassan--repository</id>
-      <url>https://maven.pkg.github.com/Forsakringskassan/repository</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
-    <violations.maxViolations>1</violations.maxViolations>
+    <violations.maxViolations>0</violations.maxViolations>
     <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
   </properties>
 
