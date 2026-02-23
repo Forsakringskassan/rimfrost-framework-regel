@@ -1,35 +1,18 @@
 package se.fk.rimfrost.framework.regel.logic;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.*;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.ImmutableRegelResponse;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.entity.CloudEventData;
 import se.fk.rimfrost.framework.regel.logic.entity.ErsattningData;
-import se.fk.rimfrost.framework.regel.logic.entity.ImmutableRegelResult;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Beslutsutfall;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.FSSAinformation;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutablePatchErsattningRequest;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutablePutKundbehovsflodeUppgiftRequest;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeErsattning;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeLagrum;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeRegel;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeSpecifikation;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeUnderlag;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.ImmutableUpdateKundbehovsflodeUppgift;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.PatchErsattningRequest;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.PutKundbehovsflodeUppgiftRequest;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Roll;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.UppgiftStatus;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.Verksamhetslogik;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.logic.entity.Underlag;
 import se.fk.rimfrost.framework.regel.logic.entity.UppgiftData;
-
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 @ApplicationScoped
