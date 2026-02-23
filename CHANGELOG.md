@@ -2,6 +2,35 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.4 (2026-02-23)
+
+### Bug Fixes
+
+-  FKPOC-406 lägger till base-class för test & delat upp i multi-naven repo ([18faf](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/18faf5dac9b17ec) Ulf Slunga)  
+
+### Other changes
+
+**Tar bort dependency jersey-apache-connector och lägger till kundbehovsflode-artifakt till application.properties**
+
+
+[fca0f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/fca0fe0a65929f2) Ulf Slunga *2026-02-23 13:59:22*
+
+**Tar bort RegelServiceInterface.java och ProcessRegelRequest.java**
+
+
+[e5312](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e5312590da6d700) Ulf Slunga *2026-02-23 13:19:08*
+
+**Ny kundbehovsflöde adapter samt använder jersey apache connector**
+
+
+[4f0e9](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4f0e92421b92d8c) Ulf Slunga *2026-02-23 13:19:08*
+
+**spotless apply**
+
+
+[2e4c3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/2e4c31acf201ece) Ulf Slunga *2026-02-23 13:19:08*
+
+
 ## 0.3.3 (2026-02-23)
 
 ### Bug Fixes
