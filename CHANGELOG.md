@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.2 (2026-02-23)
+
+### Bug Fixes
+
+-  Set utforarId on kundbehovsflode PUT request ([0d2d5](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0d2d5393c5f75a9) Lars Persson)  
+
 ## 0.3.1 (2026-02-20)
 
 ### Bug Fixes
