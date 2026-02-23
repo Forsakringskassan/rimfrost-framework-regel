@@ -100,6 +100,7 @@ public class RegelMapper
             .aktivitet(regelConfig.getUppgift().getAktivitet())
             .fsSAinformation(mapFssaInformation(uppgiftData.fssaInformation()))
             .specifikation(specifikation)
+            .utforarId(uppgiftData.utforarId())
             .build();
 
       var requestBuilder = ImmutablePutKundbehovsflodeUppgiftRequest.builder()
