@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.5 (2026-02-23)
+
+### Bug Fixes
+
+-  dependency management till parent pom ([dc0c8](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/dc0c80c2e0d33d3) Ulf Slunga)  
+
 ## 0.3.4 (2026-02-23)
 
 ### Bug Fixes
