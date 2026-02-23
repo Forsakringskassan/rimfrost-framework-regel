@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.3 (2026-02-23)
+
+### Bug Fixes
+
+-  update kundbehovadapter version ([85d5d](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/85d5d41a1f59cda) Nils Elveros)  
+
 ## 0.3.2 (2026-02-23)
 
 ### Bug Fixes
