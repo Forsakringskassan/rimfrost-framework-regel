@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.8 (2026-02-24)
+
+### Bug Fixes
+
+-  Remove explicit kundbehovsflode jaxrs dependency ([897ec](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/897ec80bf73a222) Lars Persson)  
+
 ## 0.3.7 (2026-02-24)
 
 ### Bug Fixes
