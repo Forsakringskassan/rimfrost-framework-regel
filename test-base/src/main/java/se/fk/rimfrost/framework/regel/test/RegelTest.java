@@ -1,5 +1,8 @@
 package se.fk.rimfrost.framework.regel.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import io.smallrye.reactive.messaging.memory.InMemoryConnector;
@@ -7,6 +10,7 @@ import jakarta.inject.Inject;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.spi.Connector;
+import org.junit.jupiter.api.BeforeAll;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,14 +18,27 @@ import static com.github.tomakehurst.wiremock.client.WireMock.anyRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
+@SuppressWarnings("unused")
 public abstract class RegelTest
 {
 
    protected static final String regelRequestsChannel = "regel-requests";
+   protected static final String regelResponsesChannel = "regel-responses";
+   protected static final String kundbehovsflodeEndpoint = "/kundbehovsflode/";
+   protected static final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule())
+         .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+   protected static WireMockServer wiremockServer;
 
    @Inject
    @Connector("smallrye-in-memory")
    protected InMemoryConnector inMemoryConnector;
+
+   @BeforeAll
+   static void setup()
+   {
+      wiremockServer = AbstractWireMockTestResource.getWireMockServer();
+   }
 
    protected List<LoggedRequest> waitForWireMockRequest(
          WireMockServer server,

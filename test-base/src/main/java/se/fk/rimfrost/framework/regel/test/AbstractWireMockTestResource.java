@@ -9,16 +9,17 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 public abstract class AbstractWireMockTestResource implements QuarkusTestResourceLifecycleManager
 {
 
-   private WireMockServer wireMockServer;
+   private static WireMockServer wireMockServer;
 
-   @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "Test infrastructure exposes WireMockServer intentionally")
-   public WireMockServer getWireMockServer()
+   @SuppressFBWarnings(value = "MS_EXPOSE_REP", justification = "Static WireMockServer is intentional test infrastructure")
+   public static WireMockServer getWireMockServer()
    {
       return wireMockServer;
    }
 
    protected abstract Map<String, String> getProperties();
 
+   @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Static lifecycle managed intentionally by Quarkus test resource")
    @Override
    public Map<String, String> start()
    {
