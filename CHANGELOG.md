@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.7 (2026-02-24)
+
+### Bug Fixes
+
+-  flytta test-definitioner från framework maskinell ([dbcc7](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/dbcc717f7dbd4eb) Ulf Slunga)  
+
 ## 0.3.6 (2026-02-24)
 
 ### Bug Fixes
