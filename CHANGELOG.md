@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.6 (2026-02-24)
+
+### Bug Fixes
+
+-  bump adapter version ([e0a6f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e0a6f8502d9bcc2) Nils Elveros)  
+
 ## 0.3.5 (2026-02-23)
 
 ### Bug Fixes
