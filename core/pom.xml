@@ -82,7 +82,7 @@
     <dependency>
       <groupId>se.fk.rimfrost.framework.kundbehovsflode</groupId>
       <artifactId>rimfrost-framework-kundbehovsflode-adapter</artifactId>
-      <version>0.1.1</version>
+      <version>0.1.2</version>
     </dependency>
     <dependency>
       <groupId>se.fk.maven</groupId>
