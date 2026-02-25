@@ -12,5 +12,6 @@ public class DefaultRegelRequestHandler implements RegelRequestHandlerInterface
    @Override
    public void handleRegelRequest(RegelDataRequest request)
    {
+      throw new IllegalStateException("handleRegelRequest has to be implemented by rule!");
    }
 }
