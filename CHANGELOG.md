@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.9 (2026-02-25)
+
+### Bug Fixes
+
+-  quarkus.build.skip för core pom.xml ([0394a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0394a2d9bf9c22f) Ulf Slunga)  
+
 ## 0.3.8 (2026-02-24)
 
 ### Bug Fixes
