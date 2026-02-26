@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.10 (2026-02-26)
+
+### Bug Fixes
+
+-  set responsetopic as type ([6018f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6018f05d629124e) Nils Elveros)  
+-  added logger to kafkaproducer ([76842](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/76842e9029bb162) Nils Elveros)  
+
 ## 0.3.9 (2026-02-25)
 
 ### Bug Fixes
