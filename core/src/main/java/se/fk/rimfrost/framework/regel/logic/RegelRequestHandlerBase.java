@@ -21,6 +21,9 @@ public abstract class RegelRequestHandlerBase
    @ConfigProperty(name = "kafka.source")
    private String kafkaSource;
 
+   @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
+   private String responseTopic;
+
    @Inject
    protected RegelMapper regelMapper;
 
@@ -59,7 +62,7 @@ public abstract class RegelRequestHandlerBase
             .kogitoprocversion(request.kogitoprocversion())
             .kogitorootprocid(request.kogitorootprocid())
             .kogitorootprociid(request.kogitorootprociid())
-            .type(request.type())
+            .type(responseTopic)
             .source(kafkaSource)
             .build();
    }
