@@ -15,7 +15,7 @@ public class RegelKafkaMapper
    public RegelResponseMessagePayload toRegelResponseMessagePayload(RegelResponse regelResponse)
    {
       var data = new RegelResponseMessagePayloadData();
-      data.setKundbehovsflodeId(regelResponse.kundbehovsflodeId().toString());
+      data.setHandlaggningId(regelResponse.handlaggningId().toString());
       data.setUtfall(regelResponse.utfall());
 
       var response = new RegelResponseMessagePayload();

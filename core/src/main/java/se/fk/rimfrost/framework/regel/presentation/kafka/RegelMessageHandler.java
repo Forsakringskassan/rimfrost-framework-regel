@@ -28,11 +28,11 @@ public class RegelMessageHandler
       try
       {
          // Put process ID in MDC for logging
-         MDC.put(MDCKeys.PROCESSID.name(), payload.getData().getKundbehovsflodeId());
+         MDC.put(MDCKeys.PROCESSID.name(), payload.getData().getHandlaggningId());
 
          LOGGER.info(
-               "RegelRequestMessagePayload received with KundbehovsflodeId: {}",
-               payload.getData().getKundbehovsflodeId());
+               "RegelRequestMessagePayload received with HandlaggningId: {}",
+               payload.getData().getHandlaggningId());
 
          // Map to service request and delegate
          var request = mapper.toRegelDataRequest(payload);

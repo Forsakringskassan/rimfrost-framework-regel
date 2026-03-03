@@ -31,7 +31,7 @@ public class RegelKafkaProducer
    public void sendRegelResponse(RegelResponse regelResponse)
    {
       var response = mapper.toRegelResponseMessagePayload(regelResponse);
-      LOGGER.info("Sending RegelResponse for kundbehovsflode {} to topic {}", regelResponse.kundbehovsflodeId(), topic);
+      LOGGER.info("Sending RegelResponse for handlaggning {} to topic {}", regelResponse.handlaggningId(), topic);
       regelResponseEmitter.send(response);
    }
 

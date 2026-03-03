@@ -1,7 +1,7 @@
 package se.fk.rimfrost.framework.regel.logic;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.dto.*;
+import se.fk.rimfrost.framework.handlaggning.adapter.dto.*;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.ImmutableRegelResponse;
 import se.fk.rimfrost.framework.regel.integration.kafka.dto.RegelResponse;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
@@ -19,11 +19,11 @@ import java.util.UUID;
 public class RegelMapper
 {
 
-   public RegelResponse toRegelResponse(UUID kundbehovsflodeId, CloudEventData cloudevent, Utfall utfall)
+   public RegelResponse toRegelResponse(UUID handlaggningId, CloudEventData cloudevent, Utfall utfall)
    {
       return ImmutableRegelResponse.builder()
             .id(cloudevent.id())
-            .kundbehovsflodeId(kundbehovsflodeId)
+            .handlaggningId(handlaggningId)
             .kogitoparentprociid(cloudevent.kogitoparentprociid())
             .kogitorootprociid(cloudevent.kogitorootprociid())
             .kogitoprocid(cloudevent.kogitoprocid())
@@ -37,11 +37,11 @@ public class RegelMapper
             .build();
    }
 
-   public PutKundbehovsflodeUppgiftRequest toPutKundbehovsflodeRequest(UUID kundbehovsflodeId, UppgiftData uppgiftData,
+   public PutHandlaggningUppgiftRequest toPutHandlaggningRequest(UUID handlaggningId, UppgiftData uppgiftData,
          List<Underlag> uppgiftUnderlag,
          RegelConfig regelConfig)
    {
-      var lagrum = ImmutableUpdateKundbehovsflodeLagrum.builder()
+      var lagrum = ImmutableUpdateHandlaggningLagrum.builder()
             .id(regelConfig.getLagrum().getId())
             .version(regelConfig.getLagrum().getVersion())
             .forfattning(regelConfig.getLagrum().getForfattning())
@@ -52,7 +52,7 @@ public class RegelMapper
             .punkt(regelConfig.getLagrum().getPunkt())
             .build();
 
-      var regel = ImmutableUpdateKundbehovsflodeRegel.builder()
+      var regel = ImmutableUpdateHandlaggningRegel.builder()
             .id(regelConfig.getRegel().getId())
             .beskrivning(regelConfig.getRegel().getBeskrivning())
             .namn(regelConfig.getRegel().getNamn())
@@ -60,7 +60,7 @@ public class RegelMapper
             .lagrum(lagrum)
             .build();
 
-      var specifikation = ImmutableUpdateKundbehovsflodeSpecifikation.builder()
+      var specifikation = ImmutableUpdateHandlaggningSpecifikation.builder()
             .id(regelConfig.getSpecifikation().getId())
             .version(regelConfig.getSpecifikation().getVersion())
             .namn(regelConfig.getSpecifikation().getNamn())
@@ -73,7 +73,7 @@ public class RegelMapper
             .regel(regel)
             .build();
 
-      var uppgift = ImmutableUpdateKundbehovsflodeUppgift.builder()
+      var uppgift = ImmutableUpdateHandlaggningUppgift.builder()
             .id(uppgiftData.uppgiftId())
             .version(regelConfig.getUppgift().getVersion())
             .skapadTs(uppgiftData.skapadTs())
@@ -86,13 +86,13 @@ public class RegelMapper
             .utforarId(uppgiftData.utforarId())
             .build();
 
-      var requestBuilder = ImmutablePutKundbehovsflodeUppgiftRequest.builder()
-            .kundbehovsflodeId(kundbehovsflodeId)
+      var requestBuilder = ImmutablePutHandlaggningUppgiftRequest.builder()
+            .handlaggningId(handlaggningId)
             .uppgift(uppgift);
 
       for (var rtfUnderlag : uppgiftUnderlag)
       {
-         var underlag = ImmutableUpdateKundbehovsflodeUnderlag.builder()
+         var underlag = ImmutableUpdateHandlaggningUnderlag.builder()
                .typ(rtfUnderlag.typ())
                .version(rtfUnderlag.version())
                .data(rtfUnderlag.data())
@@ -140,14 +140,14 @@ public class RegelMapper
         };
 }
 
-   public PatchErsattningRequest toPatchKundbehovsflodeRequest(UUID kundbehovsflodeId, List<ErsattningData> ersattningar)
+   public PatchErsattningRequest toPatchHandlaggningRequest(UUID handlaggningId, List<ErsattningData> ersattningar)
    {
       var requestBuilder = ImmutablePatchErsattningRequest.builder()
-            .kundbehovsflodeId(kundbehovsflodeId);
+            .handlaggningId(handlaggningId);
 
       for (ErsattningData ersattning : ersattningar)
       {
-         var updateErsattning = ImmutableUpdateKundbehovsflodeErsattning.builder()
+         var updateErsattning = ImmutableUpdateHandlaggningErsattning.builder()
                .beslutsutfall(mapBeslutsutfall(ersattning.beslutsutfall()))
                .ersattningId(ersattning.id())
                .avslagsanledning(ersattning.avslagsanledning())

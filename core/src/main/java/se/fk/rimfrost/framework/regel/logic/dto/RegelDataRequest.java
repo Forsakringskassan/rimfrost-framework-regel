@@ -8,7 +8,7 @@ public interface RegelDataRequest
 {
    UUID id();
 
-   UUID kundbehovsflodeId();
+   UUID handlaggningId();
 
    String kogitorootprocid();
 

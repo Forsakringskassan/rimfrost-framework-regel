@@ -11,7 +11,7 @@ public interface RegelResponse
 
    UUID id();
 
-   UUID kundbehovsflodeId();
+   UUID handlaggningId();
 
    String kogitorootprocid();
 
