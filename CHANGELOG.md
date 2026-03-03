@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.11 (2026-03-03)
+
+### Bug Fixes
+
+-  Rename kundbehovsflode to handlaggning ([30bd6](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/30bd63288e178b0) Lars Persson)  
+
 ## 0.3.10 (2026-02-26)
 
 ### Bug Fixes
