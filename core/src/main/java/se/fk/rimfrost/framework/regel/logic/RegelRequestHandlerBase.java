@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import se.fk.rimfrost.framework.kundbehovsflode.adapter.KundbehovsflodeAdapter;
+import se.fk.rimfrost.framework.handlaggning.adapter.HandlaggningAdapter;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.integration.config.RegelConfigProviderYaml;
 import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
@@ -28,7 +28,7 @@ public abstract class RegelRequestHandlerBase
    protected RegelMapper regelMapper;
 
    @Inject
-   protected KundbehovsflodeAdapter kundbehovsflodeAdapter;
+   protected HandlaggningAdapter handlaggningAdapter;
 
    @Inject
    protected RegelConfigProviderYaml regelConfigProvider;
@@ -67,22 +67,22 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   protected void sendResponse(UUID kundbehovsflodeId, CloudEventData cloudEventData, Utfall utfall)
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
    {
-      var regelResponse = regelMapper.toRegelResponse(kundbehovsflodeId, cloudEventData, utfall);
+      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
-   protected void patchKundbehovsflode(UUID kundbehovsflodeId, List<ErsattningData> ersattningar)
+   protected void patchHandlaggning(UUID handlaggningId, List<ErsattningData> ersattningar)
    {
-      var patchKundbehovsflodeRequest = regelMapper.toPatchKundbehovsflodeRequest(kundbehovsflodeId, ersattningar);
-      kundbehovsflodeAdapter.patchKundbehovsflode(patchKundbehovsflodeRequest);
+      var patchHandlaggningRequest = regelMapper.toPatchHandlaggningRequest(handlaggningId, ersattningar);
+      handlaggningAdapter.patchHandlaggning(patchHandlaggningRequest);
    }
 
-   protected void putKundbehovsflode(UUID kundbehovsflodeId, UppgiftData uppgiftData, List<Underlag> underlag)
+   protected void putHandlaggning(UUID handlaggningId, UppgiftData uppgiftData, List<Underlag> underlag)
    {
-      var putKundbehovsflodeRequest = regelMapper.toPutKundbehovsflodeRequest(kundbehovsflodeId, uppgiftData, underlag,
+      var putHandlaggningRequest = regelMapper.toPutHandlaggningRequest(handlaggningId, uppgiftData, underlag,
             regelConfig);
-      kundbehovsflodeAdapter.putKundbehovsflode(putKundbehovsflodeRequest);
+      handlaggningAdapter.putHandlaggning(putHandlaggningRequest);
    }
 }

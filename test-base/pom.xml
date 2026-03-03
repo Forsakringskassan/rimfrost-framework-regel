@@ -61,12 +61,12 @@
     <dependency>
       <groupId>se.fk.rimfrost.framework.regel</groupId>
       <artifactId>rimfrost-framework-regel-asyncapi</artifactId>
-      <version>0.0.0</version>
+      <version>0.0.2</version>
     </dependency>
     <dependency>
-      <groupId>se.fk.rimfrost.framework.kundbehovsflode</groupId>
-      <artifactId>rimfrost-framework-kundbehovsflode-adapter</artifactId>
-      <version>0.1.1</version>
+      <groupId>se.fk.rimfrost.framework.handlaggning</groupId>
+      <artifactId>rimfrost-framework-handlaggning-adapter</artifactId>
+      <version>0.1.5</version>
     </dependency>
   </dependencies>
 

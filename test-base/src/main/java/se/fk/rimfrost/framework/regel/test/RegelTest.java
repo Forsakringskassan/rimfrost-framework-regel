@@ -24,7 +24,7 @@ public abstract class RegelTest
 
    protected static final String regelRequestsChannel = "regel-requests";
    protected static final String regelResponsesChannel = "regel-responses";
-   protected static final String kundbehovsflodeEndpoint = "/kundbehovsflode/";
+   protected static final String handlaggningEndpoint = "/handlaggning/";
    protected static final ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule())
          .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 

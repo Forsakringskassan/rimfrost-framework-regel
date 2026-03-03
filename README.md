@@ -24,11 +24,11 @@ _integration/kafka_ och _presentation/kafka_ innehåller DTO's och handlers för
 kafka-meddelanden på kanaler _regel-requests_ och _regel-responses_. <br>
 Notera att kanalnamnen konfigureras till regel-specifika topic-namn i reglers _application.properties_.
 
-## Integration med kundbehovsflöde
+## Integration med handläggning
 
-Alla regler hämtar och uppdaterar kundbehovsflöde-info med samma mekanismer.
+Alla regler hämtar och uppdaterar handläggning-info med samma mekanismer.
 
-_integration/kundbehovsflode_ innehåller DTO's samt adapter med metoder för Get och Update av kundbehovsflödes-info.
+_integration/handlaggning_ innehåller DTO's samt adapter med metoder för Get och Update av handläggning-info.
 
 ## Kogito och cloudevents
 
