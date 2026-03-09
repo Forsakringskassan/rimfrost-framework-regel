@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.12 (2026-03-09)
+
+### Bug Fixes
+
+-  spotless ([3934c](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/3934cc0afa6c2d0) Nils Elveros)  
+-  able to patch ersattningstatus ([137ce](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/137cebbcf1e0937) Nils Elveros)  
+
 ## 0.3.11 (2026-03-03)
 
 ### Bug Fixes
