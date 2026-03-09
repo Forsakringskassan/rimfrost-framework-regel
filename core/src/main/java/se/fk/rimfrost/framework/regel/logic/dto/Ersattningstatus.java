@@ -1,8 +1,8 @@
 package se.fk.rimfrost.framework.regel.logic.dto;
 
+public enum Ersattningstatus
+{
 
-public enum Ersattningstatus {
-    
-    PLANERAT, YRKAT, UNDER_UTREDNING, FASTSTALLT_UNDER_UTREDNING, FASTSTALLT
+   PLANERAT, YRKAT, UNDER_UTREDNING, FASTSTALLT_UNDER_UTREDNING, FASTSTALLT
 
 }
