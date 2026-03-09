@@ -108,7 +108,18 @@ public class RegelMapper
             case JA -> Beslutsutfall.JA;
             case NEJ -> Beslutsutfall.NEJ;
             case FU -> Beslutsutfall.FU;
-            default -> throw new InternalError("Could not map beslutsutfall: " + beslutsutfall);
+            default -> null;
+      };
+}
+
+   private Ersattningstatus mapErsattningstatus(se.fk.rimfrost.framework.regel.logic.dto.Ersattningstatus ersattningstatus) {
+      return switch(ersattningstatus) {
+            case PLANERAT -> Ersattningstatus.PLANERAT;
+            case YRKAT -> Ersattningstatus.YRKAT;
+            case UNDER_UTREDNING -> Ersattningstatus.UNDER_UTREDNING;
+            case FASTSTALLT_UNDER_UTREDNING -> Ersattningstatus.FASTSTALLT_UNDER_UTREDNING;
+            case FASTSTALLT -> Ersattningstatus.FASTSTALLT;
+            default -> null;
       };
 }
 
@@ -149,6 +160,7 @@ public class RegelMapper
       {
          var updateErsattning = ImmutableUpdateHandlaggningErsattning.builder()
                .beslutsutfall(mapBeslutsutfall(ersattning.beslutsutfall()))
+               .ersattningstatus(mapErsattningstatus(ersattning.ersattningstatus()))
                .ersattningId(ersattning.id())
                .avslagsanledning(ersattning.avslagsanledning())
                .build();
