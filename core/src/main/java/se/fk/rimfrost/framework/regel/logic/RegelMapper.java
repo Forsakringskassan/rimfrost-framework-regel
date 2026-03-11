@@ -104,22 +104,30 @@ public class RegelMapper
    }
 
    private Beslutsutfall mapBeslutsutfall(se.fk.rimfrost.framework.regel.logic.dto.Beslutsutfall beslutsutfall) {
+      if(beslutsutfall == null){
+            return null;
+      }
+
       return switch(beslutsutfall) {
             case JA -> Beslutsutfall.JA;
             case NEJ -> Beslutsutfall.NEJ;
             case FU -> Beslutsutfall.FU;
-            default -> null;
+            default -> throw new InternalError("Could not map Beslutsutfall: " + beslutsutfall);
       };
 }
 
    private Ersattningstatus mapErsattningstatus(se.fk.rimfrost.framework.regel.logic.dto.Ersattningstatus ersattningstatus) {
+      if(ersattningstatus == null){
+            return null;
+      }
+
       return switch(ersattningstatus) {
             case PLANERAT -> Ersattningstatus.PLANERAT;
             case YRKAT -> Ersattningstatus.YRKAT;
             case UNDER_UTREDNING -> Ersattningstatus.UNDER_UTREDNING;
             case FASTSTALLT_UNDER_UTREDNING -> Ersattningstatus.FASTSTALLT_UNDER_UTREDNING;
             case FASTSTALLT -> Ersattningstatus.FASTSTALLT;
-            default -> null;
+            default -> throw new InternalError("Could not map Ersattningstatus: " + ersattningstatus);
       };
 }
 
