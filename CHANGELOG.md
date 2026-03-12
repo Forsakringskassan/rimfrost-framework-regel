@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.13 (2026-03-12)
+
+### Bug Fixes
+
+-  roll ([57550](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/57550622f84775e) Nils Elveros)  
+-  nullpointer in mapping enum that is nullable ([00416](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/00416c7477ca9d4) Nils Elveros)  
+
 ## 0.3.12 (2026-03-09)
 
 ### Bug Fixes
