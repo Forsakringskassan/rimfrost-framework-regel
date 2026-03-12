@@ -60,16 +60,22 @@ public class RegelMapper
             .lagrum(lagrum)
             .build();
 
+      var roll = ImmutableRoll.builder()
+            .id(UUID.randomUUID())
+            .namn(regelConfig.getSpecifikation().getRoll())
+            .version(regelConfig.getRegel().getVersion())
+            .build();
+
       var specifikation = ImmutableUpdateHandlaggningSpecifikation.builder()
             .id(regelConfig.getSpecifikation().getId())
             .version(regelConfig.getSpecifikation().getVersion())
             .namn(regelConfig.getSpecifikation().getNamn())
             .uppgiftsbeskrivning(regelConfig.getSpecifikation().getUppgiftbeskrivning())
             .verksamhetslogik(mapVerksamhetslogik(regelConfig.getSpecifikation().getVerksamhetslogik()))
-            .roll(mapRoll(regelConfig.getSpecifikation().getRoll()))
             .applikationsId(regelConfig.getSpecifikation().getApplikationsId())
             .applikationsversion(regelConfig.getSpecifikation().getApplikationsversion())
             .url(regelConfig.getUppgift().getPath())
+            .roll(roll)
             .regel(regel)
             .build();
 
@@ -104,29 +110,32 @@ public class RegelMapper
    }
 
    private Beslutsutfall mapBeslutsutfall(se.fk.rimfrost.framework.regel.logic.dto.Beslutsutfall beslutsutfall) {
+      if(beslutsutfall == null){
+            return null;
+      }
+
       return switch(beslutsutfall) {
             case JA -> Beslutsutfall.JA;
             case NEJ -> Beslutsutfall.NEJ;
             case FU -> Beslutsutfall.FU;
-            default -> null;
+            default -> throw new InternalError("Could not map Beslutsutfall: " + beslutsutfall);
       };
 }
 
    private Ersattningstatus mapErsattningstatus(se.fk.rimfrost.framework.regel.logic.dto.Ersattningstatus ersattningstatus) {
+      if(ersattningstatus == null){
+            return null;
+      }
+
       return switch(ersattningstatus) {
             case PLANERAT -> Ersattningstatus.PLANERAT;
             case YRKAT -> Ersattningstatus.YRKAT;
             case UNDER_UTREDNING -> Ersattningstatus.UNDER_UTREDNING;
             case FASTSTALLT_UNDER_UTREDNING -> Ersattningstatus.FASTSTALLT_UNDER_UTREDNING;
             case FASTSTALLT -> Ersattningstatus.FASTSTALLT;
-            default -> null;
+            default -> throw new InternalError("Could not map Ersattningstatus: " + ersattningstatus);
       };
 }
-
-   private Roll mapRoll(String roll)
-   {
-      return switch(roll){case"AGARE"->Roll.AGARE;case"ANSVARIG_HANDLAGGARE"->Roll.ANSVARIG_HANDLAGGARE;case"DJUR"->Roll.DJUR;default->throw new InternalError("Could not map roll: "+roll);};
-   }
 
    private Verksamhetslogik mapVerksamhetslogik(String verksamhetslogik)
    {
