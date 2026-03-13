@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.14 (2026-03-13)
+
+### Bug Fixes
+
+-  Add aktivitetId to RegelDataRequest ([0b0f1](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0b0f15ecc302b50) Lars Persson)  
+
 ## 0.3.13 (2026-03-12)
 
 ### Bug Fixes
