@@ -21,6 +21,7 @@ public class RegelKafkaMapper
             .kogitoprocist(rtfRequest.getKogitoprocist())
             .kogitoprocversion(rtfRequest.getKogitoprocversion())
             .handlaggningId(UUID.fromString(rtfRequest.getData().getHandlaggningId()))
+            .aktivitetId(UUID.fromString(rtfRequest.getData().getAktivitetId()))
             .type(rtfRequest.getType())
             .build();
    }

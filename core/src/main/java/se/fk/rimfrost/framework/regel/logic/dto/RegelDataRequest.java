@@ -10,6 +10,8 @@ public interface RegelDataRequest
 
    UUID handlaggningId();
 
+   UUID aktivitetId();
+
    String kogitorootprocid();
 
    UUID kogitorootprociid();
