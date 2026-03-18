@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.16 (2026-03-18)
+
+### Bug Fixes
+
+-  Suppress unread field warning ([be1ab](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/be1ab0b9ae9354d) Lars Persson)  
+
 ## 0.3.15 (2026-03-18)
 
 ### Bug Fixes
