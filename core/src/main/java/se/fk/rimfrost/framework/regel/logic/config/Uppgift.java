@@ -1,9 +1,12 @@
 package se.fk.rimfrost.framework.regel.logic.config;
 
+import java.util.UUID;
+
 @SuppressWarnings("unused")
 public class Uppgift
 {
-   private String version;
+   private UUID id;
+   private int version;
    private String path;
    private String aktivitet;
 
@@ -12,12 +15,22 @@ public class Uppgift
       // required by SnakeYAML
    }
 
-   public String getVersion()
+   public UUID getId()
+   {
+      return id;
+   }
+
+   public void setId(UUID id)
+   {
+      this.id = id;
+   }
+
+   public int getVersion()
    {
       return version;
    }
 
-   public void setVersion(String version)
+   public void setVersion(int version)
    {
       this.version = version;
    }

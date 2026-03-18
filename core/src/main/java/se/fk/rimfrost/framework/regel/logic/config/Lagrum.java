@@ -9,7 +9,7 @@ public class Lagrum
 {
 
    private UUID id;
-   private String version;
+   private int version;
    private Date giltigFom;
    private String forfattning;
    private String kapitel;
@@ -32,12 +32,12 @@ public class Lagrum
       this.id = id;
    }
 
-   public String getVersion()
+   public int getVersion()
    {
       return version;
    }
 
-   public void setVersion(String version)
+   public void setVersion(int version)
    {
       this.version = version;
    }
