@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.17 (2026-03-18)
+
+### Bug Fixes
+
+-  Add uppgift id ([d92eb](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/d92eb7947df04f4) Lars Persson)  
+
 ## 0.3.16 (2026-03-18)
 
 ### Bug Fixes
