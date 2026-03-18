@@ -72,17 +72,4 @@ public abstract class RegelRequestHandlerBase
       var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
-
-   protected void patchHandlaggning(UUID handlaggningId, List<ErsattningData> ersattningar)
-   {
-      var patchHandlaggningRequest = regelMapper.toPatchHandlaggningRequest(handlaggningId, ersattningar);
-      handlaggningAdapter.patchHandlaggning(patchHandlaggningRequest);
-   }
-
-   protected void putHandlaggning(UUID handlaggningId, UppgiftData uppgiftData, List<Underlag> underlag)
-   {
-      var putHandlaggningRequest = regelMapper.toPutHandlaggningRequest(handlaggningId, uppgiftData, underlag,
-            regelConfig);
-      handlaggningAdapter.putHandlaggning(putHandlaggningRequest);
-   }
 }
