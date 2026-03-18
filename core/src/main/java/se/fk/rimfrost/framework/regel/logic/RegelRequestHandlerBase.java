@@ -1,5 +1,6 @@
 package se.fk.rimfrost.framework.regel.logic;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 
@@ -36,6 +37,7 @@ public abstract class RegelRequestHandlerBase
    @Inject
    protected RegelKafkaProducer regelKafkaProducer;
 
+   @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
    protected RegelConfig regelConfig;
 
    /*
