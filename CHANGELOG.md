@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.22 (2026-03-25)
+
+### Bug Fixes
+
+-  bump handlaggning adapter även för test base ([43a46](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/43a4638a246f4c2) Ulf Slunga)  
+
 ## 0.3.21 (2026-03-25)
 
 ### Bug Fixes
