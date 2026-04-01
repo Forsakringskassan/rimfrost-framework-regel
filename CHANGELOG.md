@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.28 (2026-04-01)
+
+### Bug Fixes
+
+-  helper för regel test data ([9aa47](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/9aa47a986a200fb) Ulf Slunga)  
+
 ## 0.3.27 (2026-04-01)
 
 ### Bug Fixes
