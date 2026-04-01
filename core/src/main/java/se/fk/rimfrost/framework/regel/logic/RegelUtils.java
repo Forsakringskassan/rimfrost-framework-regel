@@ -84,5 +84,23 @@ public class RegelUtils
          throw new InternalError("Could not parse object to String", e);
       }
    }
+   
+   /***
+    * 
+    * @param object Objekt som ska bli till json-format
+    * @param objectMapper Används för att mappa object till json
+    * @return object i json-format
+    */
+   public static String createProduceratResultatData(Object object, ObjectMapper objectMapper)
+   {
+      try
+      {
+         return objectMapper.writeValueAsString(object);
+      }
+      catch (JsonProcessingException e)
+      {
+         throw new InternalError("Could not parse object to String", e);
+      }
+   }
 
 }
