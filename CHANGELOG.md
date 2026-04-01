@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.26 (2026-04-01)
+
+### Bug Fixes
+
+-  add createUnderlag to RegelUtils ([a8355](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a83554c39c63d47) Nils Elveros)  
+
 ## 0.3.25 (2026-04-01)
 
 ### Bug Fixes
