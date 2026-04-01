@@ -3,15 +3,23 @@ package se.fk.rimfrost.framework.regel.logic;
 import se.fk.rimfrost.framework.handlaggning.model.ImmutableYrkande;
 import se.fk.rimfrost.framework.handlaggning.model.ProduceratResultat;
 import se.fk.rimfrost.framework.handlaggning.model.Yrkande;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RegelProduceradeResultat
+public class RegelUtils
 {
+
+   /**
+    * Skapar nytt Yrkande-objekt där listan av producerade resultat har mergats
+    * så att endast den senaste versionen av resultaten inkluderas.
+    *
+    * @param yrkande             Ursprungligt yrkande
+    * @param uppdateradeResultat De nya/förändrade resultat som ska mergas in i yrkandets resultat
+    * @return Uppdaterat yrkande
+    */
 
    public static Yrkande createYrkandeWithUpdatedProduceradeResultat(Yrkande yrkande,
          List<ProduceratResultat> uppdateradeResultat)
@@ -25,7 +33,17 @@ public class RegelProduceradeResultat
             .build();
    }
 
-   private static List<ProduceratResultat> mergeProduceradeResultat(List<ProduceratResultat> uppdateradeResultat,
+   /**
+    * Mergar två listor av producerade resultat.
+    * <p>
+    * Den mergade listan innehåller alla element ur uppdateradeResultat,
+    * samt de element ur tidigareResultat som ej har motsvarande id i uppdateradeResultat.
+    *
+    * @param uppdateradeResultat Nya/förändrade resultat
+    * @param tidigareResultat    Ursprungliga resultat
+    * @return Mergad lista av producerade resultat
+    */
+   public static List<ProduceratResultat> mergeProduceradeResultat(List<ProduceratResultat> uppdateradeResultat,
          List<ProduceratResultat> tidigareResultat)
    {
       Set<UUID> idsInUppdateradeResultat = uppdateradeResultat.stream()
