@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.24 (2026-04-01)
+
+### Bug Fixes
+
+-  döper om till RegelUtils. Lägger till tester av utils ([c8ff5](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c8ff549d5fc286b) Ulf Slunga)  
+-  lägger till helper för producerade resultat ([c2b22](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c2b22d7bfdf43dc) Ulf Slunga)  
+
 ## 0.3.23 (2026-04-01)
 
 ### Bug Fixes
