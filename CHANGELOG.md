@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.27 (2026-04-01)
+
+### Bug Fixes
+
+-  spotless ([3329a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/3329a9c59a4806b) Nils Elveros)  
+-  add createProduceratResultatData to RegelUtils ([6886a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6886a9fa4d4e82c) Nils Elveros)  
+
 ## 0.3.26 (2026-04-01)
 
 ### Bug Fixes
