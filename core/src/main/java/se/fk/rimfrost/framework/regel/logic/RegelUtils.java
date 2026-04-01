@@ -84,7 +84,7 @@ public class RegelUtils
          throw new InternalError("Could not parse object to String", e);
       }
    }
-   
+
    /***
     * 
     * @param object Objekt som ska bli till json-format
