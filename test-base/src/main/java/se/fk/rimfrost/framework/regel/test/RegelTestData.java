@@ -2,7 +2,7 @@ package se.fk.rimfrost.framework.regel.test;
 
 import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 import se.fk.rimfrost.framework.regel.RegelRequestMessagePayloadData;
-import static se.fk.rimfrost.framework.regel.test.RegelTest.regelRequestsChannel;
+import static se.fk.rimfrost.framework.regel.test.AbstractRegelTest.regelRequestsChannel;
 
 public class RegelTestData
 {
