@@ -11,15 +11,18 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import org.eclipse.microprofile.reactive.messaging.Message;
 import org.eclipse.microprofile.reactive.messaging.spi.Connector;
 import org.junit.jupiter.api.BeforeAll;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import static com.github.tomakehurst.wiremock.client.WireMock.anyRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
 
 @SuppressWarnings("unused")
-public abstract class RegelTest
+public abstract class AbstractRegelTest
 {
 
    protected static final String regelRequestsChannel = "regel-requests";
@@ -37,7 +40,27 @@ public abstract class RegelTest
    @BeforeAll
    static void setup()
    {
+      loadTestProperties();
       wiremockServer = AbstractWireMockTestResource.getWireMockServer();
+   }
+
+   protected static void loadTestProperties()
+   {
+      Properties props = new Properties();
+      try (InputStream in = Thread.currentThread()
+            .getContextClassLoader()
+            .getResourceAsStream("test.properties"))
+      {
+         if (in == null)
+         {
+            throw new RuntimeException("Could not find /test.properties in classpath");
+         }
+         props.load(in);
+      }
+      catch (IOException e)
+      {
+         throw new RuntimeException("Failed to load test.properties", e);
+      }
    }
 
    protected List<LoggedRequest> waitForWireMockRequest(
