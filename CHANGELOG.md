@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.31 (2026-04-07)
+
+### Bug Fixes
+
+-  lägger till loadTestProperties till setup. renaming RegelTest to AbstractRegelTest ([e7c98](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e7c9840b9d2f968) Ulf Slunga)  
+
 ## 0.3.30 (2026-04-02)
 
 ### Bug Fixes
