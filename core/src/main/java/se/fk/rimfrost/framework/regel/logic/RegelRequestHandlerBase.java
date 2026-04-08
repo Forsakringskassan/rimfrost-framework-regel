@@ -4,7 +4,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
