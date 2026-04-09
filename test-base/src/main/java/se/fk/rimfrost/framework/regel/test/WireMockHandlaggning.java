@@ -9,14 +9,13 @@ import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Idtyp;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutHandlaggningRequest;
-import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.UppgiftStatus;
 import java.util.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.anyRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 import static org.junit.Assert.assertEquals;
-import static se.fk.rimfrost.framework.regel.test.RegelKafkaConnector.handlaggningEndpoint;
 
 /**
  * WireMock-based test resource for mocking and verifying
@@ -38,6 +37,10 @@ import static se.fk.rimfrost.framework.regel.test.RegelKafkaConnector.handlaggni
 }, justification = "WireMock test resource shared across tests")
 public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecycleManager
 {
+   /**
+    * Endpoint path used in handläggning-related tests.
+    */
+   public static final String handlaggningEndpoint = "/handlaggning/";
 
    /**
     * Shared WireMock server instance used across tests.
@@ -247,8 +250,8 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
     */
    public static void verifyPutHandlaggningContent(
          String handlaggningId,
-         String utforarId,
-         UppgiftStatus expectedUppgiftStatus) throws Exception
+         Idtyp utforarId,
+         String expectedUppgiftStatus) throws Exception
    {
 
       var request = getLastPutHandlaggningRequest(handlaggningId);
@@ -259,7 +262,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
       var uppgift = dto.getHandlaggning().getUppgift();
 
       assertEquals(expectedUppgiftStatus, uppgift.getUppgiftStatus());
-      assertEquals(UUID.fromString(utforarId), uppgift.getUtforarId());
+      assertEquals(utforarId, uppgift.getUtforarId());
    }
 
    /**

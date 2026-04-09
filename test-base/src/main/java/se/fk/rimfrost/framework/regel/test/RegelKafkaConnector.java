@@ -29,11 +29,6 @@ public class RegelKafkaConnector extends KafkaConnector
    public static final String regelResponsesChannel = "regel-responses";
 
    /**
-    * Endpoint path used in handläggning-related tests.
-    */
-   public static final String handlaggningEndpoint = "/handlaggning/";
-
-   /**
     * Creates a new {@code RegelKafkaConnector}.
     *
     * @param inMemoryConnector connector managing in-memory
