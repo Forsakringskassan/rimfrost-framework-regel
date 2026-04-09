@@ -197,7 +197,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
     *
     * @param handlaggningId handläggning identifier
     * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
-    * @return latest PUT request
+    * @return latest handläggning request
     */
    public static LoggedRequest getLastHandlaggningRequest(String handlaggningId, RequestMethod requestMethod)
    {
