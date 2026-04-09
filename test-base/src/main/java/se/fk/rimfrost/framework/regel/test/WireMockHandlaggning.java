@@ -131,7 +131,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
          String handlaggningId)
    {
 
-      var request = getLastPutHandlaggningRequest(handlaggningId);
+      var request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
 
       try
       {
@@ -148,14 +148,16 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
 
    /**
     * Waits until the specified minimum number of requests
-    * matching a URL pattern have been captured.
+    * matching both a URL pattern and HTTP requestMethod have been captured.
     *
     * @param urlRegex URL regex to match
-    * @param minRequests minimum number of requests expected
+    * @param requestMethod HTTP requestMethod to filter by
+    * @param minRequests minimum number of matching requests expected
     * @return matching logged requests
     */
    public static List<LoggedRequest> waitForRequest(
          String urlRegex,
+         RequestMethod requestMethod,
          int minRequests)
    {
       List<LoggedRequest> requests = Collections.emptyList();
@@ -164,7 +166,10 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
 
       for (int i = 0; i < retries; i++)
       {
-         requests = server.findAll(anyRequestedFor(urlMatching(urlRegex)));
+         requests = server.findAll(anyRequestedFor(urlMatching(urlRegex)))
+               .stream()
+               .filter(r -> r.getMethod().equals(requestMethod))
+               .toList();
 
          if (requests.size() >= minRequests)
          {
@@ -188,53 +193,31 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    }
 
    /**
-    * Retrieves the most recent PUT request for a given handläggning.
+    * Retrieves the most recent request of specified RequestMethod for a given handläggning.
     *
     * @param handlaggningId handläggning identifier
+    * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
     * @return latest PUT request
     */
-   public static LoggedRequest getLastPutHandlaggningRequest(String handlaggningId)
+   public static LoggedRequest getLastHandlaggningRequest(String handlaggningId, RequestMethod requestMethod)
    {
-      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, 1);
-
+      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, requestMethod, 1);
       return requests.stream()
-            .filter(r -> r.getMethod().equals(RequestMethod.PUT))
             .reduce((first, second) -> second)
             .orElseThrow();
    }
 
    /**
-    * Verifies that exactly one GET request was made for
+    * Verifies that exactly one request of specified requestMethod was made for
     * the specified handläggning.
     *
     * @param handlaggningId handläggning identifier
+    * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
     */
-   public static void verifyGetHandlaggningProduced(String handlaggningId)
+   public static void verifyHandlaggningProduced(String handlaggningId, RequestMethod requestMethod)
    {
-      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, 1);
-
-      assertEquals(
-            1,
-            requests.stream()
-                  .filter(p -> p.getMethod().equals(RequestMethod.GET))
-                  .count());
-   }
-
-   /**
-    * Verifies that exactly one PUT request was made for
-    * the specified handläggning.
-    *
-    * @param handlaggningId handläggning identifier
-    */
-   public static void verifyPutHandlaggningProduced(String handlaggningId)
-   {
-      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, 1);
-
-      assertEquals(
-            1,
-            requests.stream()
-                  .filter(p -> p.getMethod().equals(RequestMethod.PUT))
-                  .count());
+      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, requestMethod, 1);
+      assertEquals(1, requests.size());
    }
 
    /**
@@ -254,7 +237,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
          String expectedUppgiftStatus) throws Exception
    {
 
-      var request = getLastPutHandlaggningRequest(handlaggningId);
+      var request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
       var dto = mapper.readValue(
             request.getBodyAsString(),
             PutHandlaggningRequest.class);
