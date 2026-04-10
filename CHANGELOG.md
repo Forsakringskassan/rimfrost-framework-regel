@@ -2,6 +2,15 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.33 (2026-04-10)
+
+### Bug Fixes
+
+-  javadoc fix för getLastHandlaggningRequest ([2caeb](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/2caebc11962205c) Ulf Slunga)  
+-  filtrerar på request-metod i hjälpklasser för WireMockHandlaggning. ([addc2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/addc20065a4772a) Ulf Slunga)  
+-  flyttar handlaggningEndpoint till WireMockHandlaggning. ersätter UppgiftStatus med String. fix för utforarId. ([4721a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4721aaf0f3c2473) Ulf Slunga)  
+-  refaktorerar för användning av framework regel manuell ([25a0e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/25a0e243292a7a5) Ulf Slunga)  
+
 ## 0.3.32 (2026-04-08)
 
 ### Bug Fixes
