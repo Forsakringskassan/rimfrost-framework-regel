@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.34 (2026-04-10)
+
+### Bug Fixes
+
+-  lägger till strängar för UppgiftStatus ([a9d5c](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a9d5c69044fed2a) Ulf Slunga)  
+
 ## 0.3.33 (2026-04-10)
 
 ### Bug Fixes
