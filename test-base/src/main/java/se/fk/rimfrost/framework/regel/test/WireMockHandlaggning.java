@@ -9,13 +9,12 @@ import com.github.tomakehurst.wiremock.http.RequestMethod;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
-import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Idtyp;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutHandlaggningRequest;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgift;
 import java.util.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.anyRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-import static org.junit.Assert.assertEquals;
 
 /**
  * WireMock-based test resource for mocking and verifying
@@ -193,59 +192,56 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    }
 
    /**
-    * Retrieves the most recent request of specified RequestMethod for a given handläggning.
+    * Wait for at least a specified number of handläggning requests are received
     *
     * @param handlaggningId handläggning identifier
     * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
-    * @return latest handläggning request
+    * @param minRequests minimum number of handläggning requests
+    * @return requests a list af received handläggning requests
     */
+   public static List<LoggedRequest> waitForHandlaggningRequests(String handlaggningId, RequestMethod requestMethod,
+         Integer minRequests)
+   {
+      return waitForRequest(handlaggningEndpoint + handlaggningId, requestMethod, minRequests);
+   }
+
+   /**
+   * Retrieves the most recent request of specified RequestMethod for a given handläggning.
+   *
+   * @param handlaggningId handläggning identifier
+   * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
+   * @return latest handläggning request
+   */
    public static LoggedRequest getLastHandlaggningRequest(String handlaggningId, RequestMethod requestMethod)
    {
-      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, requestMethod, 1);
-      return requests.stream()
+      var handlaggningRequests = waitForHandlaggningRequests(handlaggningId, requestMethod, 1);
+      return handlaggningRequests.stream()
             .reduce((first, second) -> second)
             .orElseThrow();
    }
 
    /**
-    * Verifies that exactly one request of specified requestMethod was made for
-    * the specified handläggning.
+    * Retrieves the last PUT handläggning request
     *
     * @param handlaggningId handläggning identifier
-    * @param requestMethod the type of request (i.e. GET/PUT/POST/PATCH)
+    * @return latest Put handläggning
     */
-   public static void verifyHandlaggningProduced(String handlaggningId, RequestMethod requestMethod)
+   public static PutHandlaggningRequest getLastPutHandlaggning(String handlaggningId) throws JsonProcessingException
    {
-      var requests = waitForRequest(handlaggningEndpoint + handlaggningId, requestMethod, 1);
-      assertEquals(1, requests.size());
+      LoggedRequest request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
+      return mapper.readValue(request.getBodyAsString(), PutHandlaggningRequest.class);
    }
 
    /**
-    * Verifies the content of the PUT request sent to update
-    * a handläggning.
-    *
-    * <p>Checks performer ID and expected task status.</p>
+    * Retrieves the Uppgift from the last PUT handläggning request
     *
     * @param handlaggningId handläggning identifier
-    * @param utforarId expected performer identifier
-    * @param expectedUppgiftStatus expected task status
-    * @throws Exception if request body parsing fails
+    * @return uppgift from latest Put handläggning
     */
-   public static void verifyPutHandlaggningContent(
-         String handlaggningId,
-         Idtyp utforarId,
-         String expectedUppgiftStatus) throws Exception
+   public static Uppgift getUppgiftFromLastPutHandlaggning(String handlaggningId) throws JsonProcessingException
    {
-
-      var request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
-      var dto = mapper.readValue(
-            request.getBodyAsString(),
-            PutHandlaggningRequest.class);
-
-      var uppgift = dto.getHandlaggning().getUppgift();
-
-      assertEquals(expectedUppgiftStatus, uppgift.getUppgiftStatus());
-      assertEquals(utforarId, uppgift.getUtforarId());
+      PutHandlaggningRequest dto = getLastPutHandlaggning(handlaggningId);
+      return dto.getHandlaggning().getUppgift();
    }
 
    /**

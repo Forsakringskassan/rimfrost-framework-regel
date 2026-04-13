@@ -62,29 +62,14 @@ public class RegelKafkaConnector extends KafkaConnector
    }
 
    /**
-    * Verifies that exactly one Regel response message
-    * was produced.
-    */
-   public void verifyRegelResponseProduced()
-   {
-      Assertions.assertEquals(1, waitForMessages(regelResponsesChannel).size());
-   }
-
-   /**
-    * Verifies the content of the produced Regel response.
+    * Waits for regel response and returns payload
     *
-    * <p>Checks both the handläggning identifier and
-    * the resulting {@link Utfall}.</p>
-    *
-    * @param handlaggningId expected handläggning identifier
-    * @param utfall expected rule evaluation outcome
+    * @return RegelResponseMessagePayload content of regel response
     */
-   public void verifyRegelResponseContent(String handlaggningId, Utfall utfall)
+   public RegelResponseMessagePayload waitForRegelResponse()
    {
-      var msg = (RegelResponseMessagePayload) waitForMessages(regelResponsesChannel)
+      return (RegelResponseMessagePayload) waitForMessages(regelResponsesChannel)
             .getFirst()
             .getPayload();
-      Assertions.assertEquals(handlaggningId, msg.getData().getHandlaggningId());
-      Assertions.assertEquals(utfall, msg.getData().getUtfall());
    }
 }
