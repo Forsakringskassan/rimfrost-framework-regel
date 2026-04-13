@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.35 (2026-04-13)
+
+### Bug Fixes
+
+-  get-metoder ist för verify-metoder i test-helpers ([6b336](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6b3368c8331ec7f) Ulf Slunga)  
+
 ## 0.3.34 (2026-04-10)
 
 ### Bug Fixes
