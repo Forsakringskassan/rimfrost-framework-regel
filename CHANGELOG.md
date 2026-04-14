@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.36 (2026-04-14)
+
+### Bug Fixes
+
+-  refactor wiremockMapping metod ([00fbe](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/00fbe1a87a1b180) Ulf Slunga)  
+
 ## 0.3.35 (2026-04-13)
 
 ### Bug Fixes
