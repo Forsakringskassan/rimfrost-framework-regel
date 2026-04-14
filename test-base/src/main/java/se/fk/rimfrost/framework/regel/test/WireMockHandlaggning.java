@@ -25,7 +25,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
  * verifying HTTP requests sent to mocked Handläggning services.</p>
  *
  * <p>Subclasses may extend configuration by overriding
- * {@link #customMapping(WireMockServer)}.</p>
+ * {@link #wiremockMapping(WireMockServer)}.</p>
  */
 @SuppressWarnings("unused")
 @SuppressFBWarnings(value =
@@ -78,9 +78,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
                   .dynamicPort()
                   .usingFilesUnderDirectory("src/test/resources"));
       server.start();
-      Map<String, String> config = new HashMap<>(baseMapping(server));
-      config.putAll(customMapping(server));
-      return config;
+      return wiremockMapping(server);
    }
 
    /**
@@ -96,27 +94,17 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    }
 
    /**
-    * Returns base configuration mappings for handlaggning since all rules access the handlaggning API.
+    * Defines wiremock mappings
     *
     * @param server active WireMock server
-    * @return base property mappings
+    * @return property mappings
     */
-   protected Map<String, String> baseMapping(WireMockServer server)
+   protected Map<String, String> wiremockMapping(WireMockServer server)
    {
-      return Map.of(
-            "quarkus.rest-client.handlaggning.url", server.baseUrl(),
-            "handlaggning.api.base-url", server.baseUrl());
-   }
-
-   /**
-    * Allows subclasses to provide additional custom mappings.
-    *
-    * @param server active WireMock server
-    * @return extra property mappings
-    */
-   protected Map<String, String> customMapping(WireMockServer server)
-   {
-      return Map.of();
+      Map<String, String> map = new HashMap<>();
+      map.put("quarkus.rest-client.handlaggning.url", server.baseUrl());
+      map.put("handlaggning.api.base-url", server.baseUrl());
+      return map;
    }
 
    /**
