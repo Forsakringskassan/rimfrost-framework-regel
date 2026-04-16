@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.37 (2026-04-16)
+
+### Bug Fixes
+
+-  Remove UppgiftStatus due to it being replace by UppgiftStatusProvider ([6ef91](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6ef91c81b8eefce) Lars Persson)  
+
 ## 0.3.36 (2026-04-14)
 
 ### Bug Fixes
