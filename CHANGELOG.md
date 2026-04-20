@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.38 (2026-04-20)
+
+### Bug Fixes
+
+-  removing unused imports ([a1025](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a10254f5bf3f054) Ulf Slunga)  
+-  refactoring flyttar regelKafkaConnector ([101b8](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/101b85a819fbaf8) Ulf Slunga)  
+
 ## 0.3.37 (2026-04-16)
 
 ### Bug Fixes
