@@ -8,6 +8,7 @@ import io.smallrye.reactive.messaging.memory.InMemoryConnector;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.spi.Connector;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,22 @@ public abstract class AbstractRegelTest
    @Inject
    @Connector("smallrye-in-memory")
    protected InMemoryConnector inMemoryConnector;
+
+   protected RegelKafkaConnector regelKafkaConnector;
+
+   @BeforeEach
+   void resetState()
+   {
+      if (regelKafkaConnector == null)
+      {
+         regelKafkaConnector = new RegelKafkaConnector(inMemoryConnector);
+      }
+
+      //
+      // Have to clear even when connectors are new, since the inMemoryCpnnector is not necessarily empty
+      //
+      regelKafkaConnector.clear();
+   }
 
    @BeforeAll
    void setup()

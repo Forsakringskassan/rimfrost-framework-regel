@@ -1,9 +1,7 @@
 package se.fk.rimfrost.framework.regel.test;
 
 import io.smallrye.reactive.messaging.memory.InMemoryConnector;
-import org.junit.jupiter.api.Assertions;
 import se.fk.rimfrost.framework.regel.RegelResponseMessagePayload;
-import se.fk.rimfrost.framework.regel.Utfall;
 import static se.fk.rimfrost.framework.regel.test.RegelTestData.newRegelRequestMessagePayload;
 
 /**
