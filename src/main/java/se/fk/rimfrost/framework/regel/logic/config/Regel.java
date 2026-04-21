@@ -1,0 +1,58 @@
+package se.fk.rimfrost.framework.regel.logic.config;
+
+import java.util.UUID;
+
+@SuppressWarnings("unused")
+public class Regel
+{
+
+   private UUID id;
+   private int version;
+   private String namn;
+   private String beskrivning;
+
+   public Regel()
+   {
+      // required by SnakeYAML
+   }
+
+   public UUID getId()
+   {
+      return id;
+   }
+
+   public void setId(UUID id)
+   {
+      this.id = id;
+   }
+
+   public int getVersion()
+   {
+      return version;
+   }
+
+   public void setVersion(int version)
+   {
+      this.version = version;
+   }
+
+   public String getNamn()
+   {
+      return namn;
+   }
+
+   public void setNamn(String namn)
+   {
+      this.namn = namn;
+   }
+
+   public String getBeskrivning()
+   {
+      return beskrivning;
+   }
+
+   public void setBeskrivning(String beskrivning)
+   {
+      this.beskrivning = beskrivning;
+   }
+}
