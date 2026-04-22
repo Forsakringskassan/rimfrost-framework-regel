@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.3.39 (2026-04-21)
+
+### Bug Fixes
+
+-  revert to single module ([115e4](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/115e4d7fb89dea2) Ulf Slunga)  
+-  utökad readme och javadoc ([80a07](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/80a07e86c2f9d2c) Ulf Slunga)  
+
 ## 0.3.38 (2026-04-20)
 
 ### Bug Fixes
