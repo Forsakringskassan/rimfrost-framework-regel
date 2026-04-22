@@ -1,5 +1,19 @@
 # rimfrost-framework-regel
 Ramverkskomponenter som är gemensamma för alla typer av regler (både maskinella och manuella).
+Innehåller både framework-logik och hjälpklasser vid test av regler.
+
+- **`core`** – Framework-logik
+- **`test-base`** – Återanvändbara testkomponenter för implementation av reglers tester
+
+```text
+root
+├── core
+│   └── (framework implementation)
+├── test-base
+│   └── (test-klasser)
+└── pom.xml (parent)
+```
+# Core
 
 ## Konfiguration av regelns verksamhetsdata
 
@@ -35,3 +49,29 @@ _integration/handlaggning_ innehåller DTO's samt adapter med metoder för Get o
 Vid all asynkron kommunikation med Kogito-processer (som t.ex. vid regel-initiering)
 måste kafka-meddelandet innehålla cloud-event-data.<br>
 _logic/entity/CloudEventData_ innehåller DTO som kan användas av alla regler vid kommunikation med Kogito-processer via kafka.
+
+# test-base
+
+## AbstractRegelTest
+
+Innehåller testkomponenter som är gemensamma för alla typer av regler. 
+Testkomponenter för manuella- resp. maskinella regler ärver dessa komponenter så att reglers testklasser
+kan ärva komponenter från rimfrost-framework-manuell/maskinell.
+
+## Kafka connector
+
+Utility-klass som underlättar hantering av en inMemory kafka-connector.
+
+## RegelKafkaConnector
+
+Extendar KafkaConnector för att hantera reglers request/response-kanaler.
+
+## RegelTestData
+
+Utility-klass som skapar testdata.
+
+## WireMockHandlaggning
+
+Utility-klass för hantering av Wiremock-setup.<br>
+Innehåller mappning mot api /handlaggning eftersom alla regler nyttjar det API't.<br>
+Regler kan extenda WireMockHandlaggning för att utöka med regelspecifika endpoints som mockas.

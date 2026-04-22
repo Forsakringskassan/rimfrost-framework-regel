@@ -10,11 +10,41 @@ import org.eclipse.microprofile.reactive.messaging.spi.Connector;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInstance;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 @SuppressWarnings("unused")
+
+/**
+ * Base class for implementing tests within the Regel framework.
+ *
+ * <p>This class provides common test setup utilities, including:
+ * <ul>
+ *   <li>A preconfigured {@link ObjectMapper}</li>
+ *   <li>An injected {@link InMemoryConnector} for testing kafka in-memory</li>
+ *   <li>Lifecycle management and reset of {@link RegelKafkaConnector}</li>
+ *   <li>Loading of test configuration from {@code test.properties}</li>
+ * </ul>
+ * <p><b>In-memory connector behavior:</b>
+ * The {@link InMemoryConnector} may retain state across tests even when newly
+ * injected. Therefore, {@link RegelKafkaConnector#clear()} is always invoked
+ * before each test to ensure isolation.
+ *
+ * <p><b>Usage:</b>
+ * <pre>
+ * class MyRegelTest extends AbstractRegelTest {
+ *     // write tests using mapper and regelKafkaConnector
+ * }
+ * </pre>
+ *
+ * <p><b>Configuration:</b>
+ * Test configuration is loaded from {@code test.properties} located on the classpath.
+ *
+ * @see RegelKafkaConnector
+ * @see InMemoryConnector
+ */
 @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Injected by Quarkus CDI, used at runtime")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class AbstractRegelTest
@@ -29,6 +59,16 @@ public abstract class AbstractRegelTest
 
    protected RegelKafkaConnector regelKafkaConnector;
 
+   /**
+    * Resets messaging state before each test execution.
+    *
+    * <p>Ensures that the {@link RegelKafkaConnector} is initialized and clears any
+    * previously retained messages from the underlying {@link InMemoryConnector}.
+    *
+    * <p><b>Note:</b> The {@link InMemoryConnector} may retain state across tests,
+    * even when newly injected, so clearing is always required to guarantee
+    * test isolation.
+    */
    @BeforeEach
    void resetState()
    {
@@ -43,12 +83,25 @@ public abstract class AbstractRegelTest
       regelKafkaConnector.clear();
    }
 
+   /**
+    * Initializes shared test configuration before any tests are executed.
+    *
+    * <p>This method loads properties from {@code test.properties} on the classpath.
+    * It is executed once per test class due to {@link TestInstance.Lifecycle#PER_CLASS}.
+    */
    @BeforeAll
    void setup()
    {
       loadTestProperties();
    }
 
+   /**
+    * Loads test configuration properties from {@code test.properties}.
+    *
+    * <p>This method is intended to be invoked once during test initialization.
+    *
+    * @throws RuntimeException if {@code test.properties} is missing or cannot be read
+    */
    protected static void loadTestProperties()
    {
       Properties props = new Properties();
