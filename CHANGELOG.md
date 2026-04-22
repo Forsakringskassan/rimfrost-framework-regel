@@ -2,11 +2,20 @@
 
 Changelog of rimfrost-framework-regel.
 
-## 0.3.39 (2026-04-21)
+## 0.4.0 (2026-04-22)
+
+### Features
+
+-  trigger build ([5035a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/5035ae79c2bd995) Nils Elveros)  
+
+## v0.3.40 (2026-04-22)
 
 ### Bug Fixes
 
--  revert to single module ([115e4](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/115e4d7fb89dea2) Ulf Slunga)  
+-  trigger new build ([973e5](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/973e57ea8b7303b) Nils Elveros)  
+-  cherry changelog ([f8c29](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/f8c29492cde83a8) Nils Elveros)  
+-  add handlaggning base api url ([8ce53](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/8ce538dde1d8bc7) Nils Elveros)  
+-  add common regel properties to framework ([8814f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/8814f0e9a2433d1) Nils Elveros)  
 -  utökad readme och javadoc ([80a07](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/80a07e86c2f9d2c) Ulf Slunga)  
 
 ## 0.3.38 (2026-04-20)
