@@ -2,6 +2,14 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.4.1 (2026-04-23)
+
+### Bug Fixes
+
+-  avslutar javadoc paragraphs med </p> ([0c6ae](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0c6ae171769a3ef) Ulf Slunga)  
+-  tar bort RegelRequesthandler ([17146](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/1714659a9d75fa4) Ulf Slunga)  
+-  excluding test classes from test-jar. skipping BeforeEach in resetState ([5f5e1](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/5f5e1f953c42cbd) Ulf Slunga)  
+
 ## 0.4.0 (2026-04-22)
 
 ### Features
