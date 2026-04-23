@@ -19,7 +19,7 @@ import org.junit.jupiter.api.TestInstance;
 /**
  * Base class for implementing tests within the Regel framework.
  *
- * <p>This class provides common test setup utilities, including:
+ * <p>This class provides common test setup utilities, including:</p>
  *
  * <ul>
  *   <li>A preconfigured {@link ObjectMapper}
@@ -30,9 +30,9 @@ import org.junit.jupiter.api.TestInstance;
  *
  * <p><b>In-memory connector behavior:</b> The {@link InMemoryConnector} may retain state across
  * tests even when newly injected. Therefore, {@link RegelKafkaConnector#clear()} is always invoked
- * before each test to ensure isolation.
+ * before each test to ensure isolation.</p>
  *
- * <p><b>Usage:</b>
+ * <p><b>Usage:</b></p>
  *
  * <pre>
  * class MyRegelTest extends AbstractRegelTest {
@@ -41,7 +41,7 @@ import org.junit.jupiter.api.TestInstance;
  * </pre>
  *
  * <p><b>Configuration:</b> Test configuration is loaded from {@code test.properties} located on the
- * classpath.
+ * classpath.</p>
  *
  * @see RegelKafkaConnector
  * @see InMemoryConnector
@@ -66,10 +66,10 @@ public abstract class RegelTestBase
     * Intended to be called in a BeforeEach-annotated method in subclasses.
     *
     * <p>Ensures that the {@link RegelKafkaConnector} is initialized and clears any previously
-    * retained messages from the underlying {@link InMemoryConnector}.
+    * retained messages from the underlying {@link InMemoryConnector}.</p>
     *
     * <p><b>Note:</b> The {@link InMemoryConnector} may retain state across tests, even when newly
-    * injected, so clearing is always required to guarantee test isolation.
+    * injected, so clearing is always required to guarantee test isolation.</p>
     */
    protected void regelResetState()
    {
@@ -93,7 +93,7 @@ public abstract class RegelTestBase
     * Initializes shared test configuration before any tests are executed.
     *
     * <p>This method loads properties from {@code test.properties} on the classpath. It is executed
-    * once per test class due to {@link TestInstance.Lifecycle#PER_CLASS}.
+    * once per test class due to {@link TestInstance.Lifecycle#PER_CLASS}.</p>
     */
    @BeforeAll
    void setup()
@@ -104,7 +104,7 @@ public abstract class RegelTestBase
    /**
     * Loads test configuration properties from {@code test.properties}.
     *
-    * <p>This method is intended to be invoked once during test initialization.
+    * <p>This method is intended to be invoked once during test initialization.</p>
     *
     * @throws RuntimeException if {@code test.properties} is missing or cannot be read
     */

@@ -22,9 +22,9 @@ import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgift;
  *
  * <p>This class manages the lifecycle of a shared {@link WireMockServer}, provides common endpoint
  * mappings, and exposes helper methods for verifying HTTP requests sent to mocked Handläggning
- * services.
+ * services.</p>
  *
- * <p>Subclasses may extend configuration by overriding {@link #wiremockMapping(WireMockServer)}.
+ * <p>Subclasses may extend configuration by overriding {@link #wiremockMapping(WireMockServer)}.</p>
  */
 @SuppressWarnings("unused")
 @SuppressFBWarnings(value =
@@ -57,7 +57,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    /**
    * Starts the WireMock server and initializes test configuration.
    *
-   * <p>Includes base mappings and any subclass-specific mappings.
+   * <p>Includes base mappings and any subclass-specific mappings.</p>
    *
    * @return configuration properties for Quarkus tests
    */

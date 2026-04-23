@@ -38,7 +38,7 @@ public class RegelUtils
    * Mergar två listor av producerade resultat.
    *
    * <p>Den mergade listan innehåller alla element ur uppdateradeResultat, samt de element ur
-   * tidigareResultat som ej har motsvarande id i uppdateradeResultat.
+   * tidigareResultat som ej har motsvarande id i uppdateradeResultat.</p>
    *
    * @param uppdateradeResultat Nya/förändrade resultat
    * @param tidigareResultat Ursprungliga resultat

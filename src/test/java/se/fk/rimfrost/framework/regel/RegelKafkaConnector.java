@@ -6,7 +6,7 @@ import io.smallrye.reactive.messaging.memory.InMemoryConnector;
  * Specialized Kafka test connector for rule-engine (Regel) messaging flows.
  *
  * <p>Provides helper methods for sending rule requests, verifying produced responses, and
- * validating response payload content for tests.
+ * validating response payload content for tests.</p>
  */
 @SuppressWarnings("unused")
 public class RegelKafkaConnector extends KafkaConnector
@@ -31,7 +31,7 @@ public class RegelKafkaConnector extends KafkaConnector
    /**
    * Clears all previously received Regel response messages.
    *
-   * <p>Useful for resetting test state between scenarios.
+   * <p>Useful for resetting test state between scenarios.</p>
    */
    public void clear()
    {
