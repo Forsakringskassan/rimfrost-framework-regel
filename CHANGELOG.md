@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.4.2 (2026-04-23)
+
+### Bug Fixes
+
+-  använd org.awaitility.Awaitility.await; ([9a34f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/9a34ffd07bd37b7) Ulf Slunga)  
+
 ## 0.4.1 (2026-04-23)
 
 ### Bug Fixes
