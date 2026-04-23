@@ -1,13 +1,10 @@
 package se.fk.rimfrost.framework.regel;
 
-import static org.testcontainers.shaded.org.awaitility.Awaitility.await;
-
 import io.smallrye.reactive.messaging.memory.InMemoryConnector;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.eclipse.microprofile.reactive.messaging.Message;
+import static org.awaitility.Awaitility.await;
 
 /**
  * Test utility for interacting with Kafka channels backed by {@link InMemoryConnector}.
