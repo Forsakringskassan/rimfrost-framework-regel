@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.4.4 (2026-04-27)
+
+### Bug Fixes
+
+-  Add support for sending regel response with RegelErrorInformation ([63f3f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/63f3f7673dd3dfc) Lars Persson)  
+
 ## 0.4.3 (2026-04-27)
 
 ### Bug Fixes
