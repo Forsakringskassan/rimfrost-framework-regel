@@ -18,6 +18,12 @@ public class RegelKafkaMapper
       data.setHandlaggningId(regelResponse.handlaggningId().toString());
       data.setUtfall(regelResponse.utfall());
 
+      var regelErrorInformation = regelResponse.regelErrorInformation();
+      if (regelErrorInformation != null)
+      {
+         data.setError(regelErrorInformation);
+      }
+
       var response = new RegelResponseMessagePayload();
       response.setId(regelResponse.id().toString());
       response.setKogitorootprocid(regelResponse.kogitorootprocid());

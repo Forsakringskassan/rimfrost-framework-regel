@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import se.fk.rimfrost.framework.handlaggning.adapter.HandlaggningAdapter;
+import se.fk.rimfrost.framework.regel.RegelErrorInformation;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.integration.config.RegelConfigProviderYaml;
 import se.fk.rimfrost.framework.regel.integration.kafka.RegelKafkaProducer;
@@ -69,6 +70,12 @@ public abstract class RegelRequestHandlerBase
    protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
    {
       var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
+      regelKafkaProducer.sendRegelResponse(regelResponse);
+   }
+
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
+   {
+      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
       regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 }
