@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 0.4.6 (2026-04-28)
+
+### Bug Fixes
+
+-  bumpar till releasade versioner ([35127](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/35127581e0b05a9) Ulf Slunga)  
+
 ## 0.4.5 (2026-04-27)
 
 ### Bug Fixes
