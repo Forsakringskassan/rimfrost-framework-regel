@@ -2,6 +2,16 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.0.0 (2026-04-28)
+
+### Breaking changes
+
+-  release 1.0 ([223de](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/223de30da5ccf49) Ulf Slunga)  
+
+### Features
+
+-  release 1.0 ([223de](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/223de30da5ccf49) Ulf Slunga)  
+
 ## 0.4.6 (2026-04-28)
 
 ### Bug Fixes
