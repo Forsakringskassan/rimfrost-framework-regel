@@ -40,12 +40,12 @@
     <dependency>
       <groupId>se.fk.rimfrost.framework.regel</groupId>
       <artifactId>rimfrost-framework-regel-asyncapi</artifactId>
-      <version>0.1.1</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>se.fk.rimfrost.framework.handlaggning</groupId>
       <artifactId>rimfrost-framework-handlaggning-adapter</artifactId>
-      <version>0.1.18</version>
+      <version>1.0.0</version>
     </dependency>
     <dependency>
       <groupId>se.fk.maven</groupId>
