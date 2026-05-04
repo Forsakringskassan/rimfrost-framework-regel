@@ -5,6 +5,8 @@ import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.fk.rimfrost.framework.handlaggning.adapter.HandlaggningAdapter;
 import se.fk.rimfrost.framework.regel.RegelErrorInformation;
 import se.fk.rimfrost.framework.regel.Utfall;
@@ -17,6 +19,8 @@ import se.fk.rimfrost.framework.regel.logic.entity.*;
 @SuppressWarnings("unused")
 public abstract class RegelRequestHandlerBase
 {
+   Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
+
    @ConfigProperty(name = "kafka.source")
    private String kafkaSource;
 
@@ -69,13 +73,29 @@ public abstract class RegelRequestHandlerBase
 
    protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
    {
-      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
-      regelKafkaProducer.sendRegelResponse(regelResponse);
+      try
+      {
+         var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
+         regelKafkaProducer.sendRegelResponse(regelResponse);
+      }
+      catch (IllegalStateException e)
+      {
+         LOGGER.error("Failed to send regel response for handlaggning. handlaggningId: {}, utfall: {}", handlaggningId, utfall,
+               e);
+      }
    }
 
    protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
    {
-      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
-      regelKafkaProducer.sendRegelResponse(regelResponse);
+      try
+      {
+         var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
+         regelKafkaProducer.sendRegelResponse(regelResponse);
+      }
+      catch (IllegalStateException e)
+      {
+         LOGGER.error("Failed to send regel response for handlaggning. handlaggningId: {}, regelErrorInformation: {}",
+               handlaggningId, errorInformation, e);
+      }
    }
 }
