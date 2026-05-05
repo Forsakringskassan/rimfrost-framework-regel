@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.0.1 (2026-05-04)
+
+### Bug Fixes
+
+-  Logg an error if a rule response could not be sent ([24490](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/24490865cb39177) Lars Persson)  
+
 ## 1.0.0 (2026-04-28)
 
 ### Breaking changes
