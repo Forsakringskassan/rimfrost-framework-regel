@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import se.fk.rimfrost.framework.regel.error.RegelFelkod;
 import se.fk.rimfrost.framework.regel.logic.RegelRequestHandlerBase;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
@@ -95,7 +96,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    public void send_regel_response_should_support_regel_error_information()
    {
       var regelErrorInfo = new RegelErrorInformation();
-      regelErrorInfo.setFelkod(RegelFelkod.OTHER);
+      regelErrorInfo.setFelkod(RegelFelkod.RIMFROST_OTHER);
       regelErrorInfo.setFelmeddelande("Test");
 
       var handlaggningId = UUID.randomUUID();
