@@ -2,6 +2,19 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.0.3 (2026-05-11)
+
+### Bug Fixes
+
+-  Use error codes defined in rimfrost-framework-regel-error-codes ([123e0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/123e001ca017273) Lars Persson)  
+-  Add basic tests for RegelConsumer and RegelMessageHandler ([8999d](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/8999d6e3d617140) Lars Persson)  
+-  Add a simple test for verifying RegelRequestHandlerBase functionality ([6f5a2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6f5a21efebedc11) Lars Persson)  
+
+### Dependency updates
+
+- update dependency org.apache.maven.plugins:maven-jar-plugin to v3.5.0 ([6b5d2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6b5d2c6510d80a2) renovate[bot])  
+- update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.15.0 ([7639d](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/7639d42ff02699b) renovate[bot])  
+- add renovate.json ([37a0b](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/37a0bb6e4706808) renovate[bot])  
 ## 1.0.2 (2026-05-05)
 
 ### Bug Fixes
