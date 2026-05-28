@@ -2,6 +2,17 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.0.5 (2026-05-28)
+
+### Bug Fixes
+
+-  bump rimfrost-framework-handlaggning-adapter to 1.0.3 ([4f12a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4f12afa95958f6e) Ulf Slunga)  
+-  **deps**  update dependency se.fk.maven:fk-code-standard-java to v1.12.0 ([4c211](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4c211aff9c3c82a) renovate[bot])  
+
+### Dependency updates
+
+- update dependency org.immutables:value-processor to v2.12.2 ([0debf](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0debf3567bb5cc4) renovate[bot])  
+- update dependency org.awaitility:awaitility to v4.3.0 ([a1ea3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a1ea3237ed443ff) renovate[bot])  
 ## 1.0.4 (2026-05-12)
 
 ### Bug Fixes
