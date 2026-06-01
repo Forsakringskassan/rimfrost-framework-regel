@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.0.6 (2026-06-01)
+
+### Bug Fixes
+
+-  bump regel asyncapi ([23a1f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/23a1f897f89f179) Nils Elveros)  
+
 ## 1.0.5 (2026-05-28)
 
 ### Bug Fixes
