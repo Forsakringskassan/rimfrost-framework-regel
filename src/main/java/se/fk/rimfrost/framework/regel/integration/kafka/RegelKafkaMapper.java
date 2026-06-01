@@ -1,7 +1,7 @@
 package se.fk.rimfrost.framework.regel.integration.kafka;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import se.fk.rimfrost.framework.regel.KogitoProcType;
+import se.fk.rimfrost.framework.regel.Kogitoproctype;
 import se.fk.rimfrost.framework.regel.RegelResponseMessagePayload;
 import se.fk.rimfrost.framework.regel.RegelResponseMessagePayloadData;
 import se.fk.rimfrost.framework.regel.SpecVersion;
@@ -34,10 +34,10 @@ public class RegelKafkaMapper
       response.setKogitoprocrefid(regelResponse.kogitoprocinstanceid().toString());
       response.setKogitoprocist(regelResponse.kogitoprocist());
       response.setKogitoprocversion(regelResponse.kogitoprocversion());
-      response.setSpecversion(SpecVersion.NUMBER_1_DOT_0);
+      response.setSpecversion(SpecVersion.V1);
       response.setSource(regelResponse.source());
       response.setType(regelResponse.type());
-      response.setKogitoproctype(KogitoProcType.BPMN);
+      response.setKogitoproctype(Kogitoproctype.BPMN);
       response.setData(data);
 
       return response;

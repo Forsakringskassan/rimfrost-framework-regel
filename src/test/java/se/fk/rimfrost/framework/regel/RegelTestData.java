@@ -11,7 +11,7 @@ public class RegelTestData
       RegelRequestMessagePayloadData data = new RegelRequestMessagePayloadData();
       data.setHandlaggningId(handlaggningId);
       data.setAktivitetId(aktivitetId);
-      payload.setSpecversion(se.fk.rimfrost.framework.regel.SpecVersion.NUMBER_1_DOT_0);
+      payload.setSpecversion(SpecVersion.V1);
       payload.setId("99994567-89ab-4cde-9012-3456789abcde");
       payload.setSource("TestSource-001");
       payload.setType(type);
@@ -22,7 +22,7 @@ public class RegelTestData
       payload.setKogitoprocinstanceid("66664567-89ab-4cde-9012-3456789abcde");
       payload.setKogitoprocist("345678");
       payload.setKogitoprocversion("111");
-      payload.setKogitoproctype(se.fk.rimfrost.framework.regel.KogitoProcType.BPMN);
+      payload.setKogitoproctype(Kogitoproctype.BPMN);
       payload.setKogitoprocrefid("56789");
       payload.setData(data);
       return payload;
