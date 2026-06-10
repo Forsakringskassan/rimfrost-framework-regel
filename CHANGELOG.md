@@ -2,7 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
-## 1.0.8 (2026-06-04)
+## 1.1.1 (2026-06-10)
+
+### Bug Fixes
+
+-  Add support for replyTo ([61dd2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/61dd21b3aab7718) Lars Persson)  
+
+## rimfrost-1.1 (2026-06-04)
 
 ### Bug Fixes
 
