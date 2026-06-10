@@ -3,6 +3,7 @@ package se.fk.rimfrost.framework.regel;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
@@ -23,11 +24,14 @@ public class RegelMessageHandlerTest extends RegelTestBase
    @Inject
    RegelMessageHandler regelMessageHandler;
 
+   @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
+   String responseTopic;
+
    @Test
    public void consume_regel_request_should_call_regel_request_handler()
    {
       var handlaggningId = UUID.randomUUID().toString();
-      var payload = newRegelRequestMessagePayload(handlaggningId);
+      var payload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
 
       regelMessageHandler.consumeRegelRequest(payload);
       Mockito.verify(regelRequestHandler, Mockito.times(1)).handleRegelRequest(createRegelDataRequest(payload));
@@ -39,6 +43,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
             .id(UUID.fromString(payload.getId()))
             .handlaggningId(UUID.fromString(payload.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(payload.getData().getAktivitetId()))
+            .replyTo(payload.getData().getReplyTo())
             .kogitorootprocid(payload.getKogitorootprocid())
             .kogitorootprociid(UUID.fromString(payload.getKogitorootprociid()))
             .kogitoparentprociid(UUID.fromString(payload.getKogitoparentprociid()))

@@ -3,6 +3,8 @@ package se.fk.rimfrost.framework.regel.logic;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
+
+import java.util.Objects;
 import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.slf4j.Logger;
@@ -71,12 +73,12 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall, String replyTo)
    {
       try
       {
          var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
-         regelKafkaProducer.sendRegelResponse(regelResponse);
+         regelKafkaProducer.sendRegelResponse(regelResponse, Objects.requireNonNull(replyTo));
       }
       catch (IllegalStateException e)
       {
@@ -85,12 +87,13 @@ public abstract class RegelRequestHandlerBase
       }
    }
 
-   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation,
+         String replyTo)
    {
       try
       {
          var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
-         regelKafkaProducer.sendRegelResponse(regelResponse);
+         regelKafkaProducer.sendRegelResponse(regelResponse, Objects.requireNonNull(replyTo));
       }
       catch (IllegalStateException e)
       {

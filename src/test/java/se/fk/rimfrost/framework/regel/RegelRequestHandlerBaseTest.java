@@ -29,10 +29,10 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    TestRegelRequestHandler testRegelRequestHandler;
 
    @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
-   private String responseTopic;
+   String responseTopic;
 
    @ConfigProperty(name = "kafka.source")
-   private String kafkaSource;
+   String kafkaSource;
 
    @BeforeEach
    public void regelResetState()
@@ -47,6 +47,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
             .id(UUID.randomUUID())
             .handlaggningId(UUID.randomUUID())
             .aktivitetId(UUID.randomUUID())
+            .replyTo("test-topic")
             .kogitorootprocid(UUID.randomUUID().toString())
             .kogitorootprociid(UUID.randomUUID())
             .kogitoparentprociid(UUID.randomUUID())
@@ -79,7 +80,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    public void send_regel_response_should_support_all_utfall_values(Utfall utfall)
    {
       var handlaggningId = UUID.randomUUID();
-      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), utfall);
+      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), utfall, responseTopic);
       var responses = regelKafkaConnector.waitForMessages(RegelKafkaConnector.regelResponsesChannel);
       assertEquals(1, responses.size());
 
@@ -100,7 +101,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
       regelErrorInfo.setFelmeddelande("Test");
 
       var handlaggningId = UUID.randomUUID();
-      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), regelErrorInfo);
+      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), regelErrorInfo, responseTopic);
 
       var responses = regelKafkaConnector.waitForMessages(RegelKafkaConnector.regelResponsesChannel);
       assertEquals(1, responses.size());
@@ -123,14 +124,15 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
          return super.createCloudEvent(request);
       }
 
-      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
+      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall, String replyTo)
       {
-         super.sendResponse(handlaggningId, cloudEventData, utfall);
+         super.sendResponse(handlaggningId, cloudEventData, utfall, replyTo);
       }
 
-      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
+      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation,
+            String replyTo)
       {
-         super.sendResponse(handlaggningId, cloudEventData, errorInformation);
+         super.sendResponse(handlaggningId, cloudEventData, errorInformation, replyTo);
       }
 
       @Override
