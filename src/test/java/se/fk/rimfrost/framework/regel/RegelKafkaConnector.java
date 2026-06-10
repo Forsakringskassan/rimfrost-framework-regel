@@ -43,9 +43,9 @@ public class RegelKafkaConnector extends KafkaConnector
    *
    * @param handlaggningId identifier for the case being processed
    */
-   public void sendRegelRequest(String handlaggningId)
+   public void sendRegelRequest(String handlaggningId, String replyTo)
    {
-      var payload = RegelTestData.newRegelRequestMessagePayload(handlaggningId);
+      var payload = RegelTestData.newRegelRequestMessagePayload(handlaggningId, replyTo);
       inMemoryConnector.source(regelRequestsChannel).send(payload);
    }
 
@@ -56,6 +56,6 @@ public class RegelKafkaConnector extends KafkaConnector
    */
    public RegelResponseMessagePayload waitForRegelResponse()
    {
-      return (RegelResponseMessagePayload) waitForMessages(regelResponsesChannel).get(0).getPayload();
+      return (RegelResponseMessagePayload) waitForMessages(regelResponsesChannel).getFirst().getPayload();
    }
 }

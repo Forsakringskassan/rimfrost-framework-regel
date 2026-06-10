@@ -27,4 +27,6 @@ public interface RegelDataRequest
    String kogitoprocversion();
 
    String type();
+
+   String replyTo();
 }

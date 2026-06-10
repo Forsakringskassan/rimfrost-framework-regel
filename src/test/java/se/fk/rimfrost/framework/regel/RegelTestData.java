@@ -5,12 +5,13 @@ import static se.fk.rimfrost.framework.regel.RegelKafkaConnector.regelRequestsCh
 public class RegelTestData
 {
    public static RegelRequestMessagePayload newRegelRequestMessagePayload(
-         String handlaggningId, String aktivitetId, String type)
+         String handlaggningId, String aktivitetId, String type, String replyTo)
    {
       RegelRequestMessagePayload payload = new RegelRequestMessagePayload();
       RegelRequestMessagePayloadData data = new RegelRequestMessagePayloadData();
       data.setHandlaggningId(handlaggningId);
       data.setAktivitetId(aktivitetId);
+      data.setReplyTo(replyTo);
       payload.setSpecversion(SpecVersion.V1);
       payload.setId("99994567-89ab-4cde-9012-3456789abcde");
       payload.setSource("TestSource-001");
@@ -28,9 +29,9 @@ public class RegelTestData
       return payload;
    }
 
-   public static RegelRequestMessagePayload newRegelRequestMessagePayload(String handlaggningId)
+   public static RegelRequestMessagePayload newRegelRequestMessagePayload(String handlaggningId, String replyTo)
    {
       return newRegelRequestMessagePayload(
-            handlaggningId, "9b9d8261-559b-48db-b8bb-cbf61401c0ae", regelRequestsChannel);
+            handlaggningId, "9b9d8261-559b-48db-b8bb-cbf61401c0ae", regelRequestsChannel, replyTo);
    }
 }

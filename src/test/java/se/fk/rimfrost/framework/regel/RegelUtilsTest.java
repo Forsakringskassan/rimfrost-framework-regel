@@ -93,8 +93,8 @@ public class RegelUtilsTest
       var result = RegelUtils.mergeProduceradeResultat(updated, previous);
 
       assertEquals(1, result.size());
-      assertEquals(id, result.get(0).id());
-      assertEquals(yrkandestatus1, result.get(0).yrkandeStatus());
+      assertEquals(id, result.getFirst().id());
+      assertEquals(yrkandestatus1, result.getFirst().yrkandeStatus());
    }
 
    // ==========================================
