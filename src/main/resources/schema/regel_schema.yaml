@@ -16,7 +16,6 @@ properties:
     type: object
     required:
       - version
-      - path
       - aktivitet
     additionalProperties: false
     properties:
@@ -25,6 +24,7 @@ properties:
         pattern: "^[0-9]+\\.[0-9]+$"
       path:
         type: string
+        description: "Callback-URL som skickas till OUL vid skapande av operativ uppgift. Obligatorisk för manuella regler; används inte av maskinella regler."
       aktivitet:
         type: string
       metadata:
