@@ -25,6 +25,9 @@ Där förväntas regler specificera t.ex:
 - lagrum
 - etc...
 
+Notera att fältet `uppgift.path` endast är obligatoriskt för **manuella regler** — det används som callback-URL mot OUL.
+Maskinella regler behöver inte ange detta fält.
+
 Implementation av inläsning från config.yaml finns i katalogen _integration/config_.
 
 Exempel på config.yaml i template: <br>
