@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.1.3 (2026-06-15)
+
+### Bug Fixes
+
+-  Bump rimfrost-framework-handlaggning-adapter version ([35a47](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/35a479c8e2f5a27) Lars Persson)  
+-  make uppgift.path optional and document it for manual rules only ([fd544](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/fd544895cc276c9) Ulf Slunga)  
+
 ## 1.1.2 (2026-06-10)
 
 ### Bug Fixes
