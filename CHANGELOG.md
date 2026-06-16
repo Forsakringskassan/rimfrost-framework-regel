@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.1.4 (2026-06-16)
+
+### Bug Fixes
+
+-  correct path to config.yaml in application.properties ([c1364](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c1364634a654782) Ulf Slunga)  
+
 ## 1.1.3 (2026-06-15)
 
 ### Bug Fixes
