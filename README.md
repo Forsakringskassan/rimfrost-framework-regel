@@ -17,21 +17,124 @@ root
 
 ## Konfiguration av regelns verksamhetsdata
 
-Reglers verksamhetsdata kan konfigureras i yaml-fil som (default) läses från regelns _src/main/resources/config.yaml_.
-Där förväntas regler specificera t.ex:
-- version
-- namn
-- uppgiftbeskrivning
-- lagrum
-- etc...
+Reglers verksamhetsdata konfigureras i `src/main/resources/config.yaml`.
+Implementation av inläsning finns i katalogen _integration/config_.
 
-Notera att fältet `uppgift.path` endast är obligatoriskt för **manuella regler** — det används som callback-URL mot OUL.
-Maskinella regler behöver inte ange detta fält.
+### Attribut
 
-Implementation av inläsning från config.yaml finns i katalogen _integration/config_.
+**`uppgift`** — beskriver den operativa uppgiften
 
-Exempel på config.yaml i template: <br>
-https://github.com/Forsakringskassan/rimfrost-template-regel-maskinell/blob/main/src/main/resources/config.yaml
+| Attribut | Typ | Obligatorisk | Beskrivning |
+|------|-----|:---:|-------------|
+| `id` | uuid | Nej | Identifierare för uppgiften |
+| `version` | integer | Ja | Versionsnummer, börja på `1` och öka vid förändring |
+| `aktivitet` | string | Ja | Aktivitetsnamn |
+| `path` | string | Manuell | Callback-URL mot OUL — obligatorisk för manuella regler, utelämnas av maskinella |
+| `metadata` | object | Nej | Valfria nycklar |
+
+**`specifikation`** — metadata om regelns specifikation
+
+| Attribut | Typ | Obligatorisk | Beskrivning |
+|------|-----|:---:|-------------|
+| `id` | uuid | Ja | Specifikationens identifierare |
+| `version` | integer | Ja | Versionsnummer |
+| `namn` | string | Ja | Regelns namn |
+| `uppgiftbeskrivning` | string | Ja | Kort beskrivning av uppgiften |
+| `verksamhetslogik` | string | Ja | Kod för verksamhetslogik |
+| `roll` | string | Ja | Handläggarroll |
+| `applikationsId` | string | Ja | Applikationens identifierare |
+| `applikationsversion` | string | Ja | Applikationens version |
+| `metadata` | object | Nej | Valfria nycklar |
+
+**`regel`** — beskriver den specifika regeln
+
+| Attribut | Typ | Obligatorisk | Beskrivning |
+|------|-----|:---:|-------------|
+| `id` | uuid | Ja | Regelns identifierare |
+| `version` | integer | Ja | Versionsnummer |
+| `namn` | string | Ja | Regelns namn |
+| `beskrivning` | string | Ja | Detaljerad beskrivning |
+| `metadata` | object | Nej | Valfria nycklar |
+
+**`lagrum`** — juridisk grund för regeln
+
+| Attribut | Typ | Obligatorisk | Beskrivning |
+|------|-----|:---:|-------------|
+| `id` | uuid | Ja | Lagrummets identifierare |
+| `version` | integer | Ja | Versionsnummer |
+| `giltigFom` | date | Ja | Giltig från och med (ISO 8601, t.ex. `2010-02-11`) |
+| `forfattning` | string | Ja | Namn på författning |
+| `kapitel` | integer ≥ 1 | Ja | Kapitel |
+| `paragraf` | integer ≥ 1 | Ja | Paragraf |
+| `stycke` | integer ≥ 1 | Ja | Stycke |
+| `punkt` | integer ≥ 1 | Ja | Punkt |
+| `metadata` | object | Nej | Valfria nycklar |
+
+**`utokadUppgiftsbeskrivning`** _(valfritt)_ — utökad text som visas i handläggningsgränssnittet
+
+| Attribut | Typ | Obligatorisk | Beskrivning |
+|------|-----|:---:|-------------|
+| `beskrivning` | string | Nej | Längre beskrivning av uppgiften |
+
+### Versionshantering
+
+Attributet `version` (integer) finns på `uppgift`, `specifikation`, `regel` och `lagrum`.
+Det är ett manuellt hanterat versionsnummer — börja på `1` och öka med `1` varje gång
+innehållet i det aktuella objektet förändras på ett sätt som påverkar beteendet.
+
+### Exempel
+
+```yaml
+uppgift:
+  id: 10386a9e-cee0-454f-89ba-f16abf5052f2
+  version: 1
+  path: /regel/bekraftabeslut        # utelämnas för maskinella regler
+  aktivitet: "Bekräfta beslut"
+
+specifikation:
+  id: a42ffaed-2f20-47e8-8499-f2f79ae2f45e
+  version: 1
+  namn: "Bekräfta beslut"
+  uppgiftbeskrivning: "Bekräfta beslut"
+  verksamhetslogik: B
+  roll: ANSVARIG_HANDLAGGARE
+  applikationsId: 3.5.1
+  applikationsversion: bekrafta_beslut_1.0
+
+regel:
+  id: a11f3429-3a6b-4389-ba1c-c2747b0fb45a
+  version: 1
+  namn: "Bekräfta beslut"
+  beskrivning: "Bekräfta beslut"
+
+lagrum:
+  id: f0c927a9-b995-4a12-b4fd-4bcbf4281b43
+  version: 1
+  giltigFom: 2010-02-11
+  forfattning: "Husdjursbalken"
+  kapitel: 3
+  paragraf: 5
+  stycke: 1
+  punkt: 4
+
+utokadUppgiftsbeskrivning:           # valfritt
+  beskrivning: "Utvärdera beslutet och bekräfta eller avvisa"
+```
+
+### Schemavalidering
+
+Schemat definieras i `src/main/resources/schema/regel_schema.yaml` (JSON Schema draft 2020-12).
+Regelimplementationer valideras automatiskt mot schemat i CI via det återanvändbara GitHub
+Actions-workflow som finns i detta repo.
+
+Validera lokalt med:
+
+```bash
+pip install check-jsonschema
+check-jsonschema \
+  --schemafile <path-to-rimfrost-framework-regel>/src/main/resources/schema/regel_schema.yaml \
+  src/main/resources/config.yaml
+```
 
 ## Regel-initiering via Kafka
 
