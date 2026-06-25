@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.2.1 (2026-06-25)
+
+### Bug Fixes
+
+-  use workflow_sha to checkout framework repo at pinned commit ([243fa](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/243fa923a9e8b0c) Ulf Slunga)  
+
 ## 1.2.0 (2026-06-25)
 
 ### Features
