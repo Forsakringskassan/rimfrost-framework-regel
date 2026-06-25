@@ -12,7 +12,9 @@ jobs:
 
       - name: Extract workflow ref
         id: get-ref
-        run: echo "ref=${GITHUB_WORKFLOW_REF##*@}" >> $GITHUB_OUTPUT
+        run: |
+          ref="${{ github.workflow_ref }}"
+          echo "ref=${ref##*@}" >> $GITHUB_OUTPUT
 
       - name: Checkout rimfrost-framework-regel
         uses: actions/checkout@v4
