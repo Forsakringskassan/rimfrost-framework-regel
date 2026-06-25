@@ -2,6 +2,15 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.1.5 (2026-06-25)
+
+### Bug Fixes
+
+-  **deps**  update dependency se.fk.rimfrost.framework.handlaggning:rimfrost-framework-handlaggning-adapter to v1.2.1 ([2ef9e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/2ef9e1e9c044ea9) renovate[bot])  
+
+### Other changes
+
+
 ## 1.1.4 (2026-06-16)
 
 ### Bug Fixes
