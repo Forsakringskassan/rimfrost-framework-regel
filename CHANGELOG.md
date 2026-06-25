@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.1.7 (2026-06-25)
+
+### Bug Fixes
+
+-  use workflow_ref to checkout framework repo at correct tag ([71544](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/71544e50a71752e) Ulf Slunga)  
+
 ## 1.1.6 (2026-06-25)
 
 ### Bug Fixes
