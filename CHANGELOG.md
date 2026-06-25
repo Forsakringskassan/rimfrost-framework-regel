@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.1.6 (2026-06-25)
+
+### Bug Fixes
+
+-  replace check-jsonschema action with pip run step ([6afba](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6afba284245cd04) Ulf Slunga)  
+
 ## 1.1.5 (2026-06-25)
 
 ### Bug Fixes
