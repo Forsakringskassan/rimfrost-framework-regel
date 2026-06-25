@@ -2,6 +2,16 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.2.0 (2026-06-25)
+
+### Features
+
+-  add config.yaml validation workflow ([e6916](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e69162b3e0e9643) Ulf Slunga)  
+
+### Bug Fixes
+
+-  use github.workflow_ref context to get called workflow ref ([ba905](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ba905ac3b99e36b) Ulf Slunga)  
+
 ## 1.1.6 (2026-06-25)
 
 ### Bug Fixes
