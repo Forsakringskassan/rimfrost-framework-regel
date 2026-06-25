@@ -19,9 +19,12 @@ properties:
       - aktivitet
     additionalProperties: false
     properties:
-      version:
+      id:
         type: string
-        pattern: "^[0-9]+\\.[0-9]+$"
+        format: uuid
+      version:
+        type: integer
+        minimum: 1
       path:
         type: string
         description: "Callback-URL som skickas till OUL vid skapande av operativ uppgift. Obligatorisk för manuella regler; används inte av maskinella regler."
@@ -48,8 +51,8 @@ properties:
         type: string
         format: uuid
       version:
-        type: string
-        pattern: "^[0-9]+\\.[0-9]+$"
+        type: integer
+        minimum: 1
       namn:
         type: string
       uppgiftbeskrivning:
@@ -80,8 +83,8 @@ properties:
         type: string
         format: uuid
       version:
-        type: string
-        pattern: "^[0-9]+\\.[0-9]+$"
+        type: integer
+        minimum: 1
       namn:
         type: string
       beskrivning:
@@ -108,8 +111,8 @@ properties:
         type: string
         format: uuid
       version:
-        type: string
-        pattern: "^[0-9]+\\.[0-9]+$"
+        type: integer
+        minimum: 1
       giltigFom:
         type: string
         format: date
@@ -131,3 +134,10 @@ properties:
       metadata:
         type: object
         additionalProperties: true
+
+  utokadUppgiftsbeskrivning:
+    type: object
+    additionalProperties: false
+    properties:
+      beskrivning:
+        type: string

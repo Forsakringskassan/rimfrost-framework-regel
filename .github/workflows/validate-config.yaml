@@ -1,0 +1,24 @@
+name: Validate config.yaml
+
+on:
+  workflow_call:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout caller repo
+        uses: actions/checkout@v4
+
+      - name: Checkout rimfrost-framework-regel
+        uses: actions/checkout@v4
+        with:
+          repository: Forsakringskassan/rimfrost-framework-regel
+          ref: ${{ github.workflow_sha }}
+          path: framework-regel
+
+      - name: Validate config.yaml against regel schema
+        uses: python-jsonschema/check-jsonschema@0.37.2
+        with:
+          schema-file: framework-regel/src/main/resources/schema/regel_schema.yaml
+          instance-files: src/main/resources/config.yaml
