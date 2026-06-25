@@ -10,11 +10,15 @@ jobs:
       - name: Checkout caller repo
         uses: actions/checkout@v4
 
+      - name: Extract workflow ref
+        id: get-ref
+        run: echo "ref=${GITHUB_WORKFLOW_REF##*@}" >> $GITHUB_OUTPUT
+
       - name: Checkout rimfrost-framework-regel
         uses: actions/checkout@v4
         with:
           repository: Forsakringskassan/rimfrost-framework-regel
-          ref: ${{ github.workflow_sha }}
+          ref: ${{ steps.get-ref.outputs.ref }}
           path: framework-regel
 
       - name: Validate config.yaml against regel schema
