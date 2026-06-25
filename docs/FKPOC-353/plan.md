@@ -30,6 +30,8 @@ schema change requires updating `config.yaml` before merging. No extra process i
 | rimfrost-regel-bekraftabeslut | yes | yes |
 | rimfrost-regel-rtf-manuell | yes | yes |
 | rimfrost-regel-rtf-maskinell | yes | yes |
+| rimfrost-template-regel-manuell | yes | yes |
+| rimfrost-template-regel-maskinell | yes | yes |
 
 Excluded (no `config.yaml`): `rimfrost-regel-ratt-till-forsakring`,
 `rimfrost-regel-rtf-manuell-subprocess`, `rimfrost-regel-rtf-maskinell-subprocess`.
@@ -68,7 +70,15 @@ Same change as step 2, in its `.github/workflows/maven-ci.yaml`.
 
 Same change as step 2, in its `.github/workflows/maven-ci.yaml`.
 
-### 5. Smoke-test
+### 5. Wire up rimfrost-template-regel-manuell
+
+Same change as step 2, in its `.github/workflows/maven-ci.yaml`.
+
+### 6. Wire up rimfrost-template-regel-maskinell
+
+Same change as step 2, in its `.github/workflows/maven-ci.yaml`.
+
+### 7. Smoke-test
 
 Intentionally break one `config.yaml` on a feature branch and verify the CI job fails with a
 clear error message. Revert and confirm green.
