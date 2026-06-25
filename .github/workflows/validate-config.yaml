@@ -2,6 +2,11 @@ name: Validate config.yaml
 
 on:
   workflow_call:
+    inputs:
+      framework-ref:
+        description: 'Ref to use when checking out rimfrost-framework-regel for the schema'
+        required: true
+        type: string
 
 jobs:
   validate:
@@ -14,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Forsakringskassan/rimfrost-framework-regel
-          ref: ${{ github.workflow_sha }}
+          ref: ${{ inputs.framework-ref }}
           path: framework-regel
 
       - name: Validate config.yaml against regel schema
