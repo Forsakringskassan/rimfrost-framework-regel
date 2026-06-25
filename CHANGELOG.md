@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.2.2 (2026-06-25)
+
+### Bug Fixes
+
+-  framework-ref input for framework repo checkout in validate-config ([648ff](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/648ff9a09490aa8) Ulf Slunga)  
+-  framework-ref input for framework repo checkout in validate-config ([a070a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a070a6f7b5060bc) Ulf Slunga)  
+
 ## 1.2.1 (2026-06-25)
 
 ### Bug Fixes
