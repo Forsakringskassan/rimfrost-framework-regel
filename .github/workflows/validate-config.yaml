@@ -18,7 +18,8 @@ jobs:
           path: framework-regel
 
       - name: Validate config.yaml against regel schema
-        uses: python-jsonschema/check-jsonschema@0.37.2
-        with:
-          schema-file: framework-regel/src/main/resources/schema/regel_schema.yaml
-          instance-files: src/main/resources/config.yaml
+        run: |
+          pip install check-jsonschema==0.37.3
+          check-jsonschema \
+            --schemafile framework-regel/src/main/resources/schema/regel_schema.yaml \
+            src/main/resources/config.yaml
