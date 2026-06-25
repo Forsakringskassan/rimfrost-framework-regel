@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: Forsakringskassan/rimfrost-framework-regel
-          framework-ref: ${{ inputs.framework-ref }}
+          ref: ${{ inputs.framework-ref }}
           path: framework-regel
 
       - name: Validate config.yaml against regel schema
