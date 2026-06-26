@@ -2,19 +2,6 @@
 Ramverkskomponenter som är gemensamma för alla typer av regler (både maskinella och manuella).
 Innehåller både framework-logik och hjälpklasser vid test av regler.
 
-- **`core`** – Framework-logik
-- **`test-base`** – Återanvändbara testkomponenter för implementation av reglers tester
-
-```text
-root
-├── core
-│   └── (framework implementation)
-├── test-base
-│   └── (test-klasser)
-└── pom.xml (parent)
-```
-# Core
-
 ## Konfiguration av regelns verksamhetsdata
 
 Reglers verksamhetsdata konfigureras i `src/main/resources/config.yaml`.
@@ -148,7 +135,7 @@ Notera att kanalnamnen konfigureras till regel-specifika topic-namn i reglers _a
 
 Alla regler hämtar och uppdaterar handläggning-info med samma mekanismer.
 
-_integration/handlaggning_ innehåller DTO's samt adapter med metoder för Get och Update av handläggning-info.
+`HandlaggningAdapter` med metoder för Get och Update av handläggning-info tillhandahålls av beroendet `rimfrost-framework-handlaggning-adapter`.
 
 ## Kogito och cloudevents
 
@@ -156,9 +143,7 @@ Vid all asynkron kommunikation med Kogito-processer (som t.ex. vid regel-initier
 måste kafka-meddelandet innehålla cloud-event-data.<br>
 _logic/entity/CloudEventData_ innehåller DTO som kan användas av alla regler vid kommunikation med Kogito-processer via kafka.
 
-# test-base
-
-## AbstractRegelTest
+## RegelTestBase
 
 Innehåller testkomponenter som är gemensamma för alla typer av regler. 
 Testkomponenter för manuella- resp. maskinella regler ärver dessa komponenter så att reglers testklasser
