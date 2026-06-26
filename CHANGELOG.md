@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.2.3 (2026-06-26)
+
+### Bug Fixes
+
+-  trigger patch release for validate-config workflow fix ([66631](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6663108d4e658f7) Ulf Slunga)  
+
 ## 1.2.2 (2026-06-25)
 
 ### Bug Fixes
