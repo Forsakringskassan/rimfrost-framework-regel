@@ -8,7 +8,7 @@ specifikation:
   uppgiftbeskrivning: "TestBeskrivning"
   verksamhetslogik: C
   roll: ANSVARIG_HANDLAGGARE
-  applikationsId: 1.0
+  applikationsId: "1.0"
   applikationsversion: test_1.0
 regel:
   id: a11f3429-3a6b-4389-ba1c-c2747b0fb45b

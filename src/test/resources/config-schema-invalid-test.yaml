@@ -8,7 +8,7 @@ specifikation:
   uppgiftbeskrivning: "TestBeskrivning"
   verksamhetslogik: C
   roll: ANSVARIG_HANDLAGGARE
-  applikationsId: 1.0
+  applikationsId: "1.0"
   applikationsversion: test_1.0
 regel:
   id: a11f3429-3a6b-4389-ba1c-c2747b0fb45b
@@ -18,7 +18,7 @@ regel:
 lagrum:
   id: f0c927a9-b995-4a12-b4fd-4bcbf4281b44
   version: 1
-  giltigFom: 2010-02-11
+  giltigFom: "2010-02-11"
   forfattning: "TestFörfattning"
   kapitel: 3
   paragraf: 5

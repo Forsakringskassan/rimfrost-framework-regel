@@ -3,8 +3,10 @@ package se.fk.rimfrost.framework.regel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,18 +39,20 @@ public class RegelConfigProviderYamlTest
       RegelConfigProviderYaml provider = new RegelConfigProviderYaml();
       setField(provider, "applicationConfigPath", configPath.toString());
 
-      assertThrows(Exception.class, () -> invokeInit(provider));
+      var ex = assertThrows(IllegalStateException.class, () -> invokeInit(provider));
+      assertTrue(ex.getMessage().contains("Config violates JSON Schema"));
    }
 
    @Test
-   @DisplayName("FRALL-FR-02.2: Ramverket ska avvisa config där obligatoriska sektioner saknas")
+   @DisplayName("FRALL-FR-02.2, FRALL-FR-02.3: Ramverket ska avvisa config där obligatoriska sektioner saknas — tillämpas via JSON Schema required-attribut")
    void init_shouldFailWhenRequiredSectionIsMissing() throws Exception
    {
       var configPath = Path.of(getClass().getClassLoader().getResource("config-missing-section-test.yaml").toURI());
       RegelConfigProviderYaml provider = new RegelConfigProviderYaml();
       setField(provider, "applicationConfigPath", configPath.toString());
 
-      assertThrows(Exception.class, () -> invokeInit(provider));
+      var ex = assertThrows(IllegalStateException.class, () -> invokeInit(provider));
+      assertTrue(ex.getMessage().contains("Config violates JSON Schema"));
    }
 
    private static void setField(Object target, String fieldName, String value) throws Exception
@@ -62,6 +66,17 @@ public class RegelConfigProviderYamlTest
    {
       var method = RegelConfigProviderYaml.class.getDeclaredMethod("init");
       method.setAccessible(true);
-      method.invoke(provider);
+      try
+      {
+         method.invoke(provider);
+      }
+      catch (InvocationTargetException e)
+      {
+         if (e.getCause() instanceof Exception cause)
+         {
+            throw cause;
+         }
+         throw e;
+      }
    }
 }
