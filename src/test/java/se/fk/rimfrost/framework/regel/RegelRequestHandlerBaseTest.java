@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -41,6 +42,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    }
 
    @Test
+   @DisplayName("FRALL-FR-04.1: Regelsvar formateras som CloudEvent med handläggningsid och Kogito-processkorrelationsdata")
    public void create_cloud_event_should_create_cloud_event_data_from_request_data()
    {
       var regelDataRequest = ImmutableRegelDataRequest.builder()
@@ -77,6 +79,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
 
    @ParameterizedTest
    @EnumSource(Utfall.class)
+   @DisplayName("FRALL-FR-03.2, FRALL-FR-03.3, FRALL-FR-04.2: Alla utfall stöds och svar skickas till angiven replyTo-kanal")
    public void send_regel_response_should_support_all_utfall_values(Utfall utfall)
    {
       var handlaggningId = UUID.randomUUID();
@@ -94,6 +97,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    }
 
    @Test
+   @DisplayName("FRALL-FR-03.4, FRALL-FR-04.2: Felutfall inkluderar felkod och felmeddelande och utfallet sätts till ERROR")
    public void send_regel_response_should_support_regel_error_information()
    {
       var regelErrorInfo = new RegelErrorInformation();

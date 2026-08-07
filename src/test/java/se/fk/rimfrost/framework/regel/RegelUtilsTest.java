@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import se.fk.rimfrost.framework.handlaggning.model.*;
 import se.fk.rimfrost.framework.regel.logic.RegelUtils;
@@ -45,6 +46,7 @@ public class RegelUtilsTest
    // =========================
 
    @Test
+   @DisplayName("FRALL-FR-05.1: Merge inkluderar alla nya producerade resultat")
    void merge_shouldIncludeAllUpdatedResults()
    {
       UUID id1 = UUID.randomUUID();
@@ -63,6 +65,7 @@ public class RegelUtilsTest
    }
 
    @Test
+   @DisplayName("FRALL-FR-05.1: Merge bevarar tidigare resultat som inte ersätts av nya")
    void merge_shouldKeepPreviousIfNotOverridden()
    {
       UUID id1 = UUID.randomUUID(); // updated
@@ -81,6 +84,7 @@ public class RegelUtilsTest
    }
 
    @Test
+   @DisplayName("FRALL-FR-05.1: Nytt resultat med samma id ersätter tidigare vid merge")
    void merge_shouldPreferUpdatedOverPreviousWithSameId()
    {
       UUID id = UUID.randomUUID();
@@ -102,6 +106,7 @@ public class RegelUtilsTest
    // ==========================================
 
    @Test
+   @DisplayName("FRALL-FR-05.2: Nytt yrkande skapas med merge av befintliga och nya producerade resultat")
    void createYrkande_shouldMergeResultsIntoNewInstance()
    {
       UUID id1 = UUID.randomUUID(); // updated

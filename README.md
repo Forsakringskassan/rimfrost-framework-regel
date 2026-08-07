@@ -1,67 +1,65 @@
 # rimfrost-framework-regel
-Ramverkskomponenter som är gemensamma för alla typer av regler (både maskinella och manuella).
-Innehåller både framework-logik och hjälpklasser vid test av regler.
+
+Delat ramverksbibliotek med gemensam infrastruktur för alla typer av regler i Rimfrost — både
+maskinella och manuella. Ramverket hanterar mottagning av regelförfrågningar via Kafka, laddning
+och validering av regelkonfiguration, integrationsadapter mot Handläggningstjänsten samt publicering
+av regelsvar. Konkreta regelimplementationer ärver från ramverket och behöver enbart implementera
+den regelspecifika affärslogiken.
+
+## Aktörer
+
+| Aktör                 | Roll                                                                               |
+|-----------------------|------------------------------------------------------------------------------------|
+| Kundbehovsflödet      | Initierar regelkörningar via Kafka och tar emot regelsvar                          |
+| Regelimplementationer | Bygger vidare på detta ramverk och implementerar regelspecifik logik               |
+| Handläggningstjänsten | Tillhandahåller ärendeinformation som regelimplementationer hämtar under bedömning |
+| Förvaltningsteam      | Förvaltar och vidareutvecklar ramverket                                            |
+
+## Struktur
+
+```
+src/main/java/.../
+├── presentation/kafka/   # Kafka-konsument, deserializer och handler-kontrakt
+├── logic/                # Domänlogik, konfigurationsobjekt och abstrakt basklass för regelimplementationer
+└── integration/          # Adapter för YAML-konfiguration och Kafka-producent
+
+src/test/java/.../        # Basklasser och hjälpklasser för regelimplementationernas tester
+```
+
+---
+
+## Kafka
+
+Ramverket hanterar följande Kafka-kanaler:
+
+| Kanal             | Riktning   | Trigger                                        |
+|-------------------|------------|------------------------------------------------|
+| `regel-requests`  | Inkommande | Regelförfrågan från kundbehovsflödet           |
+| `regel-responses` | Utgående   | Regelbehandling klar (lyckat eller misslyckat) |
+
+Svarstopicen är dynamisk — ramverket dirigerar svaret till den topic som angavs i `replyTo`-fältet
+i inkommande meddelande. Meddelandescheman definieras i **rimfrost-framework-regel-asyncapi**.
+
+---
+
+## Konfiguration
+
+| Property                    | Beskrivning                                                                                                               | Standardvärde                           |
+|-----------------------------|---------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| `application.config.path`   | Sökväg till regelns YAML-konfigurationsfil                                                                                | `src/main/resources/config.yaml`        |
+| `REGEL_CONFIG_PATH` (env)   | Åsidosätter `application.config.path` vid körning                                                                         | —                                       |
+| `kafka.source`              | Identifierar avsändarservice i utgående CloudEvents (`source`-fältet är obligatoriskt enligt CloudEvents-specifikationen) | —                                       |
+| `handlaggning.api.base-url` | Bas-URL till Handläggningstjänstens REST API                                                                              | `http://rimfrost-k8s-handlaggning:8080` |
+
+---
 
 ## Konfiguration av regelns verksamhetsdata
 
 Reglers verksamhetsdata konfigureras i `src/main/resources/config.yaml`.
 Implementation av inläsning finns i katalogen _integration/config_.
 
-### Attribut
-
-**`uppgift`** — beskriver den operativa uppgiften
-
-| Attribut | Typ | Obligatorisk | Beskrivning |
-|------|-----|:---:|-------------|
-| `id` | uuid | Nej | Identifierare för uppgiften |
-| `version` | integer | Ja | Versionsnummer, börja på `1` och öka vid förändring |
-| `aktivitet` | string | Ja | Aktivitetsnamn |
-| `path` | string | Manuell | Callback-URL mot OUL — obligatorisk för manuella regler, utelämnas av maskinella |
-| `metadata` | object | Nej | Valfria nycklar |
-
-**`specifikation`** — metadata om regelns specifikation
-
-| Attribut | Typ | Obligatorisk | Beskrivning |
-|------|-----|:---:|-------------|
-| `id` | uuid | Ja | Specifikationens identifierare |
-| `version` | integer | Ja | Versionsnummer |
-| `namn` | string | Ja | Regelns namn |
-| `uppgiftbeskrivning` | string | Ja | Kort beskrivning av uppgiften |
-| `verksamhetslogik` | string | Ja | Kod för verksamhetslogik |
-| `roll` | string | Ja | Handläggarroll |
-| `applikationsId` | string | Ja | Applikationens identifierare |
-| `applikationsversion` | string | Ja | Applikationens version |
-| `metadata` | object | Nej | Valfria nycklar |
-
-**`regel`** — beskriver den specifika regeln
-
-| Attribut | Typ | Obligatorisk | Beskrivning |
-|------|-----|:---:|-------------|
-| `id` | uuid | Ja | Regelns identifierare |
-| `version` | integer | Ja | Versionsnummer |
-| `namn` | string | Ja | Regelns namn |
-| `beskrivning` | string | Ja | Detaljerad beskrivning |
-| `metadata` | object | Nej | Valfria nycklar |
-
-**`lagrum`** — juridisk grund för regeln
-
-| Attribut | Typ | Obligatorisk | Beskrivning |
-|------|-----|:---:|-------------|
-| `id` | uuid | Ja | Lagrummets identifierare |
-| `version` | integer | Ja | Versionsnummer |
-| `giltigFom` | date | Ja | Giltig från och med (ISO 8601, t.ex. `2010-02-11`) |
-| `forfattning` | string | Ja | Namn på författning |
-| `kapitel` | integer ≥ 1 | Ja | Kapitel |
-| `paragraf` | integer ≥ 1 | Ja | Paragraf |
-| `stycke` | integer ≥ 1 | Ja | Stycke |
-| `punkt` | integer ≥ 1 | Ja | Punkt |
-| `metadata` | object | Nej | Valfria nycklar |
-
-**`utokadUppgiftsbeskrivning`** _(valfritt)_ — utökad text som visas i handläggningsgränssnittet
-
-| Attribut | Typ | Obligatorisk | Beskrivning |
-|------|-----|:---:|-------------|
-| `beskrivning` | string | Nej | Längre beskrivning av uppgiften |
+Fullständig attributlista med typer och obligatoriska fält definieras i
+`src/main/resources/schema/regel_schema.yaml`.
 
 ### Versionshantering
 
@@ -123,11 +121,26 @@ check-jsonschema \
   src/main/resources/config.yaml
 ```
 
+---
+
+## Test-JAR
+
+Ramverket levererar en test-JAR med basklasser och hjälpklasser för regelimplementationernas tester.
+
+| Klass                  | Användning                                                           |
+|------------------------|----------------------------------------------------------------------|
+| `RegelTestBase`        | Abstrakt basklass med in-memory Kafka och grundkonfiguration         |
+| `RegelKafkaConnector`  | Hanterar request/response-kanaler i tester                           |
+| `RegelTestData`        | Skapar testdata för regelförfrågningar                               |
+| `WireMockHandlaggning` | WireMock-setup mot `/handlaggning` — utökas av regelspecifika tester |
+
+---
+
 ## Regel-initiering via Kafka
 
 Alla regler initieras/avslutas med samma typ av request/response-meddelanden över Kafka-topics.
 
-_integration/kafka_ och _presentation/kafka_ innehåller DTO's och handlers för att konsumera och producera 
+_integration/kafka_ och _presentation/kafka_ innehåller DTO's och handlers för att konsumera och producera
 kafka-meddelanden på kanaler _regel-requests_ och _regel-responses_. <br>
 Notera att kanalnamnen konfigureras till regel-specifika topic-namn i reglers _application.properties_.
 
@@ -145,7 +158,7 @@ _logic/entity/CloudEventData_ innehåller DTO som kan användas av alla regler v
 
 ## RegelTestBase
 
-Innehåller testkomponenter som är gemensamma för alla typer av regler. 
+Innehåller testkomponenter som är gemensamma för alla typer av regler.
 Testkomponenter för manuella- resp. maskinella regler ärver dessa komponenter så att reglers testklasser
 kan ärva komponenter från rimfrost-framework-manuell/maskinell.
 
