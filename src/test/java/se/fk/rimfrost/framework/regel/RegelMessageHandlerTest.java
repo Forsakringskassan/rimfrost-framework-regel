@@ -4,6 +4,7 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
@@ -28,6 +29,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
    String responseTopic;
 
    @Test
+   @DisplayName("FRALL-FR-01.2: Mottagen regelförfrågan delegeras till registrerad regelimplementation")
    public void consume_regel_request_should_call_regel_request_handler()
    {
       var handlaggningId = UUID.randomUUID().toString();

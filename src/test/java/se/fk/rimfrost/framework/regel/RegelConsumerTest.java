@@ -4,6 +4,7 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelMessageHandler;
@@ -29,6 +30,7 @@ public class RegelConsumerTest extends RegelTestBase
    }
 
    @Test
+   @DisplayName("FRALL-FR-01.1, FRALL-FR-01.2: Inkommande regelförfrågan på Kafka-kanalen delegeras till meddelandehanteraren")
    public void regel_consumer_should_call_regel_message_handler_on_incoming_request() throws InterruptedException
    {
       var handlaggningId = UUID.randomUUID().toString();
