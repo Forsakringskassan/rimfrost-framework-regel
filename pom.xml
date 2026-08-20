@@ -89,6 +89,28 @@
       <artifactId>json-schema-validator</artifactId>
       <version>1.4.3</version>
     </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.oul</groupId>
+      <artifactId>rimfrost-framework-oul</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.oul</groupId>
+      <artifactId>rimfrost-framework-oul-adapter</artifactId>
+      <version>1.1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-flyway</artifactId>
+    </dependency>
   </dependencies>
 
   <repositories>
