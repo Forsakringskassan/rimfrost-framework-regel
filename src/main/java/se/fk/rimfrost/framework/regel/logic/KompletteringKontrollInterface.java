@@ -7,10 +7,10 @@ import se.fk.rimfrost.framework.regel.logic.dto.KompletteringUnderlag;
 /**
  * Pre-flight completeness check included in all regel service contracts.
  *
- * <p>{@link DefaultKompletteringKontroll} provides the framework-registered CDI bean that
- * returns an empty list, meaning the yrkande is complete and the regel runs immediately.
- * Regel repos that require a completeness check register their own
- * {@code @Alternative @Priority(1)} implementation of this interface instead.
+ * <p>Regel repos must register an {@code @ApplicationScoped} bean implementing this interface.
+ * The default method returns an empty list — no override is required unless the regel needs
+ * a completeness check. Regel repos that do override return one {@link KompletteringUnderlag}
+ * per missing attribute.
  *
  * <p>The check inspects {@code handlaggning.yrkande()} and its nested fields — not stored
  * underlag, which are not available on {@link Handlaggning}.
