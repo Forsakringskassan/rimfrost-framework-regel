@@ -24,6 +24,26 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-arc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-flyway</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-hibernate-validator</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>1.21.4</version>
@@ -51,6 +71,26 @@
       <groupId>se.fk.rimfrost.framework.regel.error</groupId>
       <artifactId>rimfrost-framework-regel-error-codes</artifactId>
       <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.oul</groupId>
+      <artifactId>rimfrost-framework-oul</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.oul</groupId>
+      <artifactId>rimfrost-framework-oul-adapter</artifactId>
+      <version>1.1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.referensdata</groupId>
+      <artifactId>rimfrost-framework-referensdata-interface</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>se.fk.rimfrost.framework.sid</groupId>
+      <artifactId>rimfrost-framework-sid-adapter</artifactId>
+      <version>0.0.1</version>
     </dependency>
     <dependency>
       <groupId>se.fk.maven</groupId>
