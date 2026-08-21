@@ -3,7 +3,6 @@ package se.fk.rimfrost.framework.regel.logic;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.Map;
-import java.util.UUID;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import se.fk.rimfrost.framework.oul.adapter.OulAdapter;
 import se.fk.rimfrost.framework.oul.exception.OulException;
@@ -12,6 +11,7 @@ import se.fk.rimfrost.framework.oul.model.ImmutableCreateOperativUppgiftRequest;
 import se.fk.rimfrost.framework.oul.model.ImmutableProcessInfo;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableKompletteringTillstand;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 
 /**
@@ -42,23 +42,19 @@ public class KompletteringOulHandler
     * Creates the komplettering OUL task and stores the full correlation state.
     * Returns without sending a Kafka reply — the BPMN process instance keeps waiting.
     *
-    * @param handlaggningId       the handlaggning being processed
-    * @param cloudEventData       original CloudEvent payload as raw JSON, re-published on done
+    * @param regelDataRequest     the original regel request; stored for replay on done
     * @param cloudEventAttributes CloudEvent attributes extracted from the incoming event
-    * @param replyTo              Kafka reply topic from the original CloudEvent
     * @param regelConfig          the regel's own config; used to derive all OUL task metadata
     * @param erbjudande           the erbjudande associated with the handlaggning
     * @throws OulException if the OUL task creation fails
     */
-   public void initiate(UUID handlaggningId,
-         String cloudEventData,
+   public void initiate(RegelDataRequest regelDataRequest,
          Map<String, String> cloudEventAttributes,
-         String replyTo,
          RegelConfig regelConfig,
          Erbjudande erbjudande) throws OulException
    {
       var oulRequest = ImmutableCreateOperativUppgiftRequest.builder()
-            .handlaggningId(handlaggningId)
+            .handlaggningId(regelDataRequest.handlaggningId())
             .version("1")
             .regel("Hantera komplettering för " + regelConfig.getSpecifikation().getNamn())
             .beskrivning("Kompletteringsuppgift för att hantera saknade uppgifter i yrkandet.")
@@ -68,7 +64,7 @@ public class KompletteringOulHandler
             .subTopic(subTopic)
             .erbjudande(erbjudande)
             .processInfo(ImmutableProcessInfo.builder()
-                  .replyTopic(replyTo)
+                  .replyTopic(regelDataRequest.replyTo())
                   .cloudeventAttributes(cloudEventAttributes)
                   .build())
             .build();
@@ -77,10 +73,9 @@ public class KompletteringOulHandler
 
       var tillstand = ImmutableKompletteringTillstand.builder()
             .oulUppgiftId(operativUppgift.getUppgiftId())
-            .replyTo(replyTo)
-            .cloudEventData(cloudEventData)
+            .regelDataRequest(regelDataRequest)
             .build();
 
-      storage.setKompletteringTillstand(handlaggningId, tillstand);
+      storage.setKompletteringTillstand(regelDataRequest.handlaggningId(), tillstand);
    }
 }

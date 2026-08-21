@@ -19,6 +19,8 @@ import se.fk.rimfrost.framework.regel.logic.KompletteringOulHandler;
 import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.config.Specifikation;
 import se.fk.rimfrost.framework.regel.logic.config.Uppgift;
+import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -55,6 +57,24 @@ class KompletteringOulHandlerTest
       return config;
    }
 
+   private RegelDataRequest regelDataRequest(UUID handlaggningId)
+   {
+      return ImmutableRegelDataRequest.builder()
+            .id(UUID.randomUUID())
+            .handlaggningId(handlaggningId)
+            .aktivitetId(UUID.randomUUID())
+            .replyTo("reply-topic")
+            .type("test-type")
+            .kogitorootprocid("root-proc-id")
+            .kogitorootprociid(UUID.randomUUID())
+            .kogitoparentprociid(UUID.randomUUID())
+            .kogitoprocid("proc-id")
+            .kogitoprocinstanceid(UUID.randomUUID())
+            .kogitoprocist("proc-ist")
+            .kogitoprocversion("1.0")
+            .build();
+   }
+
    private void stubOulAdapter(UUID handlaggningId, UUID oulUppgiftId) throws OulException
    {
       Mockito.when(oulAdapter.createOperativUppgift(any()))
@@ -80,7 +100,7 @@ class KompletteringOulHandlerTest
       var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
       var cloudEventAttributes = Map.of("id", UUID.randomUUID().toString(), "type", "regel.request");
 
-      handler.initiate(handlaggningId, "{}", cloudEventAttributes, "reply-topic", regelConfig(), erbjudande);
+      handler.initiate(regelDataRequest(handlaggningId), cloudEventAttributes, regelConfig(), erbjudande);
 
       var captor = ArgumentCaptor.forClass(CreateOperativUppgiftRequest.class);
       verify(oulAdapter).createOperativUppgift(captor.capture());
@@ -103,14 +123,14 @@ class KompletteringOulHandlerTest
       stubOulAdapter(handlaggningId, oulUppgiftId);
 
       var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
+      var regelDataRequest = regelDataRequest(handlaggningId);
 
-      handler.initiate(handlaggningId, "{original}", Map.of(), "reply-topic", regelConfig(), erbjudande);
+      handler.initiate(regelDataRequest, Map.of(), regelConfig(), erbjudande);
 
       var stored = storage.getKompletteringTillstand(handlaggningId);
       assertTrue(stored.isPresent());
       assertEquals(oulUppgiftId, stored.get().oulUppgiftId());
-      assertEquals("reply-topic", stored.get().replyTo());
-      assertEquals("{original}", stored.get().cloudEventData());
+      assertEquals(regelDataRequest, stored.get().regelDataRequest());
    }
 
    @Test
@@ -124,7 +144,7 @@ class KompletteringOulHandlerTest
       var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
 
       assertThrows(OulException.class,
-            () -> handler.initiate(handlaggningId, "{}", Map.of(), "reply-topic", regelConfig(), erbjudande));
+            () -> handler.initiate(regelDataRequest(handlaggningId), Map.of(), regelConfig(), erbjudande));
 
       assertFalse(storage.getKompletteringTillstand(handlaggningId).isPresent());
    }

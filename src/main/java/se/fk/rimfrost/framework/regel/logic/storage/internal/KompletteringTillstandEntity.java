@@ -25,11 +25,38 @@ public class KompletteringTillstandEntity
    @Column(name = "oul_uppgift_id", nullable = false)
    UUID oulUppgiftId;
 
+   @Column(name = "regel_request_id", nullable = false)
+   UUID regelRequestId;
+
+   @Column(name = "aktivitet_id", nullable = false)
+   UUID aktivitetId;
+
    @Column(name = "reply_to", nullable = false)
    String replyTo;
 
-   @Column(name = "cloud_event_data", nullable = false, columnDefinition = "text")
-   String cloudEventData;
+   @Column(name = "type", nullable = false)
+   String type;
+
+   @Column(name = "kogitorootprocid", nullable = false)
+   String kogitorootprocid;
+
+   @Column(name = "kogitorootprociid", nullable = false)
+   UUID kogitorootprociid;
+
+   @Column(name = "kogitoparentprociid", nullable = false)
+   UUID kogitoparentprociid;
+
+   @Column(name = "kogitoprocid", nullable = false)
+   String kogitoprocid;
+
+   @Column(name = "kogitoprocinstanceid", nullable = false)
+   UUID kogitoprocinstanceid;
+
+   @Column(name = "kogitoprocist", nullable = false)
+   String kogitoprocist;
+
+   @Column(name = "kogitoprocversion", nullable = false)
+   String kogitoprocversion;
 
    @Version
    @Column(name = "version")

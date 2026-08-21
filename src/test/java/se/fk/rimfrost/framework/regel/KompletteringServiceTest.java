@@ -11,6 +11,7 @@ import se.fk.rimfrost.framework.oul.adapter.OulAdapter;
 import se.fk.rimfrost.framework.oul.exception.OulException;
 import se.fk.rimfrost.framework.regel.logic.KompletteringService;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableKompletteringTillstand;
+import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.doThrow;
@@ -33,8 +34,20 @@ class KompletteringServiceTest
    {
       return ImmutableKompletteringTillstand.builder()
             .oulUppgiftId(oulUppgiftId)
-            .replyTo("reply-topic")
-            .cloudEventData("{}");
+            .regelDataRequest(ImmutableRegelDataRequest.builder()
+                  .id(UUID.randomUUID())
+                  .handlaggningId(UUID.randomUUID())
+                  .aktivitetId(UUID.randomUUID())
+                  .replyTo("reply-topic")
+                  .type("test-type")
+                  .kogitorootprocid("root-proc-id")
+                  .kogitorootprociid(UUID.randomUUID())
+                  .kogitoparentprociid(UUID.randomUUID())
+                  .kogitoprocid("proc-id")
+                  .kogitoprocinstanceid(UUID.randomUUID())
+                  .kogitoprocist("proc-ist")
+                  .kogitoprocversion("1.0")
+                  .build());
    }
 
    @Test

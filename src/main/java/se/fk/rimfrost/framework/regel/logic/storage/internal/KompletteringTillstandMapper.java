@@ -3,6 +3,7 @@ package se.fk.rimfrost.framework.regel.logic.storage.internal;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.UUID;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableKompletteringTillstand;
+import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.dto.KompletteringTillstand;
 
 /**
@@ -20,11 +21,21 @@ public class KompletteringTillstandMapper
     */
    public KompletteringTillstandEntity toEntity(UUID handlaggningId, KompletteringTillstand tillstand)
    {
+      var request = tillstand.regelDataRequest();
       var entity = new KompletteringTillstandEntity();
       entity.handlaggningId = handlaggningId;
       entity.oulUppgiftId = tillstand.oulUppgiftId();
-      entity.replyTo = tillstand.replyTo();
-      entity.cloudEventData = tillstand.cloudEventData();
+      entity.regelRequestId = request.id();
+      entity.aktivitetId = request.aktivitetId();
+      entity.replyTo = request.replyTo();
+      entity.type = request.type();
+      entity.kogitorootprocid = request.kogitorootprocid();
+      entity.kogitorootprociid = request.kogitorootprociid();
+      entity.kogitoparentprociid = request.kogitoparentprociid();
+      entity.kogitoprocid = request.kogitoprocid();
+      entity.kogitoprocinstanceid = request.kogitoprocinstanceid();
+      entity.kogitoprocist = request.kogitoprocist();
+      entity.kogitoprocversion = request.kogitoprocversion();
       return entity;
    }
 
@@ -38,8 +49,20 @@ public class KompletteringTillstandMapper
    {
       return ImmutableKompletteringTillstand.builder()
             .oulUppgiftId(entity.oulUppgiftId)
-            .replyTo(entity.replyTo)
-            .cloudEventData(entity.cloudEventData)
+            .regelDataRequest(ImmutableRegelDataRequest.builder()
+                  .id(entity.regelRequestId)
+                  .handlaggningId(entity.handlaggningId)
+                  .aktivitetId(entity.aktivitetId)
+                  .replyTo(entity.replyTo)
+                  .type(entity.type)
+                  .kogitorootprocid(entity.kogitorootprocid)
+                  .kogitorootprociid(entity.kogitorootprociid)
+                  .kogitoparentprociid(entity.kogitoparentprociid)
+                  .kogitoprocid(entity.kogitoprocid)
+                  .kogitoprocinstanceid(entity.kogitoprocinstanceid)
+                  .kogitoprocist(entity.kogitoprocist)
+                  .kogitoprocversion(entity.kogitoprocversion)
+                  .build())
             .build();
    }
 }
