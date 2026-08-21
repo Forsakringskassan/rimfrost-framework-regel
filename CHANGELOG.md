@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.3.1 (2026-08-21)
+
+### Bug Fixes
+
+-  Store RegelDataRequest directly in KompletteringTillstand (FKPOC-947) ([b83fb](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/b83fb8938672ae8) Ulf Slunga)  
+
 ## 1.3.0 (2026-08-21)
 
 ### Features
