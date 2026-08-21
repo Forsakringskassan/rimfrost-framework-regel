@@ -1,5 +1,6 @@
 package se.fk.rimfrost.framework.regel.presentation.kafka;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import org.slf4j.Logger;
@@ -9,9 +10,11 @@ import se.fk.github.logging.callerinfo.model.MDCKeys;
 import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 
 @ApplicationScoped
+@SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 public class RegelMessageHandler
 {
 
+   @SuppressFBWarnings("UUF_UNUSED_FIELD")
    private static final Logger LOGGER = LoggerFactory.getLogger(RegelMessageHandler.class);
 
    @Inject
