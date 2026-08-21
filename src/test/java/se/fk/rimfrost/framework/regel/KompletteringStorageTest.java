@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableKompletteringTillstand;
+import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,12 +18,24 @@ class KompletteringStorageTest
    @Inject
    KompletteringStorage storage;
 
-   private ImmutableKompletteringTillstand.Builder tillstandBuilder()
+   private ImmutableKompletteringTillstand.Builder tillstandBuilder(UUID handlaggningId)
    {
       return ImmutableKompletteringTillstand.builder()
             .oulUppgiftId(UUID.randomUUID())
-            .replyTo("reply-topic")
-            .cloudEventData("{}");
+            .regelDataRequest(ImmutableRegelDataRequest.builder()
+                  .id(UUID.randomUUID())
+                  .handlaggningId(handlaggningId)
+                  .aktivitetId(UUID.randomUUID())
+                  .replyTo("reply-topic")
+                  .type("test-type")
+                  .kogitorootprocid("root-proc-id")
+                  .kogitorootprociid(UUID.randomUUID())
+                  .kogitoparentprociid(UUID.randomUUID())
+                  .kogitoprocid("proc-id")
+                  .kogitoprocinstanceid(UUID.randomUUID())
+                  .kogitoprocist("proc-ist")
+                  .kogitoprocversion("1.0")
+                  .build());
    }
 
    @Test
@@ -30,7 +43,7 @@ class KompletteringStorageTest
    void should_return_stored_tillstand()
    {
       var handlaggningId = UUID.randomUUID();
-      var tillstand = tillstandBuilder().build();
+      var tillstand = tillstandBuilder(handlaggningId).build();
 
       storage.setKompletteringTillstand(handlaggningId, tillstand);
 
@@ -51,7 +64,7 @@ class KompletteringStorageTest
    void should_return_empty_after_delete()
    {
       var handlaggningId = UUID.randomUUID();
-      storage.setKompletteringTillstand(handlaggningId, tillstandBuilder().build());
+      storage.setKompletteringTillstand(handlaggningId, tillstandBuilder(handlaggningId).build());
 
       storage.deleteKompletteringTillstand(handlaggningId);
 

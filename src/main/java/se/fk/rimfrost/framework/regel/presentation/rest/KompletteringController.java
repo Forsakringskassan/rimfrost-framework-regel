@@ -1,6 +1,5 @@
 package se.fk.rimfrost.framework.regel.presentation.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -19,11 +18,9 @@ import se.fk.rimfrost.framework.handlaggning.model.Handlaggning;
 import se.fk.rimfrost.framework.handlaggning.model.HandlaggningUpdate;
 import se.fk.rimfrost.framework.oul.adapter.OulAdapter;
 import se.fk.rimfrost.framework.oul.exception.OulException;
-import se.fk.rimfrost.framework.regel.RegelRequestMessagePayload;
 import se.fk.rimfrost.framework.regel.logic.KompletteringKontrollInterface;
 import se.fk.rimfrost.framework.regel.logic.KompletteringSvarServiceInterface;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
-import se.fk.rimfrost.framework.regel.presentation.kafka.RegelKafkaMapper;
 import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInterface;
 
 /**
@@ -61,12 +58,6 @@ public abstract class KompletteringController<T, Y>
    @Inject
    RegelRequestHandlerInterface regelRequestHandler;
 
-   @Inject
-   RegelKafkaMapper regelKafkaMapper;
-
-   @Inject
-   ObjectMapper objectMapper;
-
    /**
     * Returns the data the handläggare needs to register the sökande's svar.
     *
@@ -103,13 +94,21 @@ public abstract class KompletteringController<T, Y>
     * <p>Calls {@code checkKomplettering()} to verify the yrkande is now complete — returns
     * HTTP 422 if attributes are still missing. On success, ends the OUL task, triggers
     * the regel via {@code handleRegelRequest}, and clears correlation storage.
-    * Returns HTTP 409 if the timeout has already cleared storage.
+    *
+    * <ul>
+    *   <li>HTTP 204 — komplettering accepted and OUL task closed successfully.
+    *   <li>HTTP 207 — komplettering accepted and regel triggered, but OUL task close failed;
+    *       the OUL task may still appear open. The error is logged (FRALL-FR-07.6).
+    *   <li>HTTP 409 — timeout has already cleared correlation storage.
+    *   <li>HTTP 422 — yrkande is still incomplete.
+    * </ul>
     *
     * @param handlaggningId the handlaggning whose komplettering is done
+    * @return 204 on full success, 207 if OUL close failed
     */
    @POST
    @Path("/{handlaggningId}/komplettering/done")
-   public void kompletteringDone(@PathParam("handlaggningId") UUID handlaggningId)
+   public Response kompletteringDone(@PathParam("handlaggningId") UUID handlaggningId)
    {
       var tillstand = storage.getKompletteringTillstand(handlaggningId);
       if (tillstand.isEmpty())
@@ -124,12 +123,14 @@ public abstract class KompletteringController<T, Y>
          throw new jakarta.ws.rs.WebApplicationException(Response.status(422).build());
       }
 
+      var oulClosed = true;
       try
       {
          oulAdapter.endOperativUppgift(tillstand.get().oulUppgiftId(), "Komplettering klar");
       }
       catch (OulException e)
       {
+         oulClosed = false;
          LOGGER.error(
                "Failed to end operativ uppgift on komplettering done. handlaggningId: {}, oulUppgiftId: {}",
                handlaggningId, tillstand.get().oulUppgiftId(), e);
@@ -137,9 +138,7 @@ public abstract class KompletteringController<T, Y>
 
       try
       {
-         var payload = objectMapper.readValue(tillstand.get().cloudEventData(), RegelRequestMessagePayload.class);
-         var regelRequest = regelKafkaMapper.toRegelDataRequest(payload);
-         regelRequestHandler.handleRegelRequest(regelRequest);
+         regelRequestHandler.handleRegelRequest(tillstand.get().regelDataRequest());
       }
       catch (Exception e)
       {
@@ -148,6 +147,7 @@ public abstract class KompletteringController<T, Y>
       }
 
       storage.deleteKompletteringTillstand(handlaggningId);
+      return oulClosed ? Response.noContent().build() : Response.status(207).build();
    }
 
    private Handlaggning fetchHandlaggning(UUID handlaggningId)

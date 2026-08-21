@@ -13,9 +13,6 @@ public interface KompletteringTillstand
    /** ID of the OUL task created for this komplettering. */
    UUID oulUppgiftId();
 
-   /** Kafka topic to send the reply to when the komplettering is completed. */
-   String replyTo();
-
-   /** Original CloudEvent payload — re-published to retrigger the regel on done. */
-   String cloudEventData();
+   /** Original regel request — used to retrigger the regel on done. */
+   RegelDataRequest regelDataRequest();
 }
