@@ -1,6 +1,5 @@
 package se.fk.rimfrost.framework.regel.storage.internal;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,35 +12,59 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "common_data")
-@SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class RegelCommonDataEntity
 {
    @Id
+   @Column(name = "handlaggning_id")
    UUID handlaggningId;
 
+   @Column(name = "uppgift_id")
    UUID uppgiftId;
+
+   @Column(name = "uppgift_version")
    int uppgiftVersion;
+
+   @Column(name = "uppgift_skapad_ts")
    Instant uppgiftSkapadTs;
+
+   @Column(name = "uppgift_utford_ts")
    Instant uppgiftUtfordTs;
+
+   @Column(name = "uppgift_planerad_ts")
    Instant uppgiftPlaneradTs;
+
+   @Column(name = "uppgift_utforar_id_typ_id")
    String uppgiftUtforarIdTypId;
+
+   @Column(name = "uppgift_utforar_id_varde")
    String uppgiftUtforarIdVarde;
+
+   @Column(name = "uppgift_status")
    String uppgiftStatus;
+
+   @Column(name = "uppgift_aktivitet_id")
    UUID uppgiftAktivitetId;
+
+   @Column(name = "uppgift_fssa_information")
    String uppgiftFssaInformation;
+
+   @Column(name = "uppgift_specifikation_id")
    UUID uppgiftSpecifikationId;
+
+   @Column(name = "uppgift_specifikation_version")
    Integer uppgiftSpecifikationVersion;
 
    @Column(name = "oul_uppgift_id")
    UUID oulUppgiftId;
 
    @Version
+   @Column(name = "version")
    long version;
 
-   @Column(nullable = false, updatable = false)
+   @Column(name = "created_at", nullable = false, updatable = false)
    Instant createdAt;
 
-   @Column(nullable = false)
+   @Column(name = "updated_at", nullable = false)
    Instant updatedAt;
 
    @PrePersist

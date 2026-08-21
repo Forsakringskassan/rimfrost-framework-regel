@@ -1,6 +1,5 @@
 package se.fk.rimfrost.framework.regel.storage.internal;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -10,7 +9,6 @@ import java.util.UUID;
 
 @ApplicationScoped
 @Transactional
-@SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 public class PanacheCloudEventDataStorage implements CloudEventDataStorage
 {
    @Inject

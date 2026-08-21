@@ -16,18 +16,20 @@ import java.util.UUID;
 public class ProcessTopicInfoEntity
 {
    @Id
+   @Column(name = "handlaggning_id")
    UUID handlaggningId;
 
-   @Column(nullable = false)
+   @Column(name = "reply_topic", nullable = false)
    String replyTopic;
 
    @Version
+   @Column(name = "version")
    long version;
 
-   @Column(nullable = false, updatable = false)
+   @Column(name = "created_at", nullable = false, updatable = false)
    Instant createdAt;
 
-   @Column(nullable = false)
+   @Column(name = "updated_at", nullable = false)
    Instant updatedAt;
 
    @PrePersist

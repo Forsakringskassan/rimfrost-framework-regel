@@ -1,6 +1,5 @@
 package se.fk.rimfrost.framework.regel.storage.internal;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,10 +12,10 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "cloud_event_data")
-@SuppressFBWarnings("UUF_UNUSED_FIELD")
 public class CloudEventDataEntity
 {
    @Id
+   @Column(name = "handlaggning_id")
    UUID handlaggningId;
 
    @Column(name = "event_id", nullable = false)
@@ -33,12 +32,13 @@ public class CloudEventDataEntity
    String source;
 
    @Version
+   @Column(name = "version")
    long version;
 
-   @Column(nullable = false, updatable = false)
+   @Column(name = "created_at", nullable = false, updatable = false)
    Instant createdAt;
 
-   @Column(nullable = false)
+   @Column(name = "updated_at", nullable = false)
    Instant updatedAt;
 
    @PrePersist

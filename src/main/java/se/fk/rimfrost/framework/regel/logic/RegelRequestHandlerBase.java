@@ -1,6 +1,5 @@
 package se.fk.rimfrost.framework.regel.logic;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.PostConstruct;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
@@ -22,7 +21,6 @@ import se.fk.rimfrost.framework.oul.model.CreateOperativUppgiftRequest;
 import se.fk.rimfrost.framework.oul.model.Erbjudande;
 import se.fk.rimfrost.framework.oul.model.ImmutableErbjudande;
 import se.fk.rimfrost.framework.oul.model.OperativUppgift;
-import se.fk.rimfrost.framework.referensdata.ErbjudandeReferensdataInterface;
 import se.fk.rimfrost.framework.regel.RegelErrorInformation;
 import se.fk.rimfrost.framework.regel.Utfall;
 import se.fk.rimfrost.framework.regel.error.RegelFelkod;
@@ -38,10 +36,8 @@ import se.fk.rimfrost.framework.regel.storage.entity.ProcessTopicInfo;
 import se.fk.rimfrost.framework.regel.storage.entity.RegelCommonData;
 
 @SuppressWarnings("unused")
-@SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 public abstract class RegelRequestHandlerBase
 {
-   @SuppressFBWarnings("UUF_UNUSED_FIELD")
    Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
 
    @ConfigProperty(name = "kafka.source")
@@ -69,9 +65,6 @@ public abstract class RegelRequestHandlerBase
    protected OulAdapter oulAdapter;
 
    @Inject
-   protected ErbjudandeReferensdataInterface erbjudandeReferensdata;
-
-   @Inject
    protected CloudEventDataStorage cloudEventDataStorage;
 
    @Inject
@@ -80,7 +73,6 @@ public abstract class RegelRequestHandlerBase
    @Inject
    RegelCommonDataStorage dataStorage;
 
-   @SuppressFBWarnings("UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD")
    protected RegelConfig regelConfig;
 
    /*
