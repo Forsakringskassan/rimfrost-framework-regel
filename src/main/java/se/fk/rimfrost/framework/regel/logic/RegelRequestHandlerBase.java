@@ -38,7 +38,7 @@ import se.fk.rimfrost.framework.regel.storage.entity.RegelCommonData;
 @SuppressWarnings("unused")
 public abstract class RegelRequestHandlerBase
 {
-   Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(RegelRequestHandlerBase.class);
 
    @ConfigProperty(name = "kafka.source")
    protected String kafkaSource;
@@ -169,7 +169,7 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   protected Status toHttpStatus(OulException e) {
+   protected static Status toHttpStatus(OulException e) {
       return switch (e.getErrorType()) {
          case NOT_FOUND -> Response.Status.NOT_FOUND;
          case BAD_REQUEST -> Response.Status.BAD_REQUEST;
@@ -329,7 +329,7 @@ public abstract class RegelRequestHandlerBase
       }
    }
 
-   protected void writeManuellRegelCommonData(UUID handlaggningId, UUID uppgiftId, RegelCommonData regelCommonData)
+   protected void writeRegelCommonData(UUID handlaggningId, UUID uppgiftId, RegelCommonData regelCommonData)
    {
       try
       {
