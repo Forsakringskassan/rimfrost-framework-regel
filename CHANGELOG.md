@@ -2,6 +2,36 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.3.0 (2026-08-21)
+
+### Features
+
+-  Update KompletteringKontrollInterface Javadoc for new contract ([ac847](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ac8472ba330424d) Ulf Slunga)  
+-  Remove DefaultKompletteringKontroll — regler must provide their own bean ([59e68](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/59e68e5f6a76a14) Ulf Slunga)  
+-  Add komplettering foundation — storage, OUL handler, timeout service, and REST controller (FKPOC-928) ([ad6ca](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ad6cad994cd7cc3) Ulf Slunga)  
+
+### Bug Fixes
+
+-  small fixes ([64c81](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/64c81cfb1c983f1) Nils Elveros)  
+-  tests ([776e2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/776e2b39167e789) Nils Elveros)  
+-  refactor common methods from manuell and maskinell ([410d1](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/410d1e945639b6d) Nils Elveros)  
+-  **deps**  update dependency com.networknt:json-schema-validator to v1.5.9 ([0bc26](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/0bc265e72b9465d) renovate[bot])  
+-  validate config against JSON Schema on startup (FR-02.3)(FR-02.2) ([f6b6b](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/f6b6b9bd6af10e8) Ulf Slunga)  
+-  add tests for FR-02.1, FR-04.3 ([5b6e5](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/5b6e5ffc95c4bbb) Ulf Slunga)  
+-  correct README module structure and class name ([1cd78](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/1cd789e0a2a9063) Ulf Slunga)  
+
+### Dependency updates
+
+- update dependency org.apache.maven.plugins:maven-jar-plugin to v3.5.1 ([fa663](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/fa663f4225d2112) renovate[bot])  
+### Other changes
+
+**Apply suggestions from code review**
+
+* Co-authored-by: Ulf Slunga &lt;98820233+UlfSlunga-Sinetiq@users.noreply.github.com&gt; 
+
+[4363e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/4363efe1f42ff99) NilsElveros *2026-08-21 09:22:00*
+
+
 ## 1.2.4 (2026-06-26)
 
 ### Bug Fixes
