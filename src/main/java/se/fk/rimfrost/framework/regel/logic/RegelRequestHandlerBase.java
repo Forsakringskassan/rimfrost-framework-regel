@@ -71,7 +71,7 @@ public abstract class RegelRequestHandlerBase
    protected ProcessTopicInfoStorage processTopicInfoStorage;
 
    @Inject
-   RegelCommonDataStorage dataStorage;
+   protected RegelCommonDataStorage dataStorage;
 
    protected RegelConfig regelConfig;
 
@@ -287,8 +287,7 @@ public abstract class RegelRequestHandlerBase
       }
    }
 
-   protected void writeCloudEventData(UUID handlaggningId,
-         CloudEventData cloudEventData, UUID uppgiftId)
+   protected void writeCloudEventData(UUID handlaggningId, CloudEventData cloudEventData)
    {
       try
       {
