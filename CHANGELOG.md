@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.3.2 (2026-08-27)
+
+### Bug Fixes
+
+-  collapse KompletteringSvarServiceInterface to a single type parameter ([939b4](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/939b43c6a903531) Ulf Slunga)  
+
 ## 1.3.1 (2026-08-21)
 
 ### Bug Fixes
