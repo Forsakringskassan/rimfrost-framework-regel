@@ -6,18 +6,20 @@ import se.fk.rimfrost.framework.handlaggning.model.HandlaggningUpdate;
 /**
  * Regel-specific extension point for handling the handläggare's svar during komplettering.
  *
- * <p>Regel repos implement this interface with their own OpenAPI-generated types:
+ * <p>The same type {@code T} is used for both the GET response body ({@code readSvarData}) and the
+ * PATCH request body ({@code registerSvar}), as required by FRALL-FR-07.7. Regel repos implement
+ * this interface with their own OpenAPI-generated type:
  *
  * <pre>
  * {@code @ApplicationScoped}
  * public class RtfKompletteringSvarService
- *         implements KompletteringSvarServiceInterface<RtfKompletteringResponse, RtfPatchKompletteringRequest> { ... }
+ *         implements KompletteringSvarServiceInterface<RtfKompletteringData> { ... }
  * </pre>
  *
- * @param <T> response type for {@code GET /{handlaggningId}/komplettering}
- * @param <Y> request type for {@code PATCH /{handlaggningId}/komplettering}
+ * @param <T> shared data type for {@code GET /{handlaggningId}/komplettering} response and
+ *            {@code PATCH /{handlaggningId}/komplettering} request body
  */
-public interface KompletteringSvarServiceInterface<T, Y>
+public interface KompletteringSvarServiceInterface<T>
 {
    /**
     * Returns the data the handläggare needs to register the sökande's svar.
@@ -34,5 +36,5 @@ public interface KompletteringSvarServiceInterface<T, Y>
     * @param request      the handläggare's registered svar
     * @return the handlaggning update to persist
     */
-   HandlaggningUpdate registerSvar(Handlaggning handlaggning, Y request);
+   HandlaggningUpdate registerSvar(Handlaggning handlaggning, T request);
 }

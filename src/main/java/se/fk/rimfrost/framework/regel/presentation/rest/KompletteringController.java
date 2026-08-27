@@ -25,18 +25,17 @@ import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInte
 
 /**
  * Abstract base controller for komplettering endpoints. Extend with the regel's own
- * OpenAPI-generated request and response types:
+ * OpenAPI-generated data type:
  *
  * <pre>
  * {@code @Path("/api/rtf")}
  * public class RtfKompletteringController
- *         extends KompletteringController<RtfKompletteringResponse, RtfPatchKompletteringRequest> {}
+ *         extends KompletteringController<RtfKompletteringData> {}
  * </pre>
  *
- * @param <T> GET response type — data shown to the handläggare
- * @param <Y> PATCH request type — the handläggare's registered svar
+ * @param <T> shared data type for the GET response and PATCH request body (FRALL-FR-07.7)
  */
-public abstract class KompletteringController<T, Y>
+public abstract class KompletteringController<T>
 {
    private static final Logger LOGGER = LoggerFactory.getLogger(KompletteringController.class);
 
@@ -44,7 +43,7 @@ public abstract class KompletteringController<T, Y>
    HandlaggningAdapter handlaggningAdapter;
 
    @Inject
-   KompletteringSvarServiceInterface<T, Y> svarService;
+   KompletteringSvarServiceInterface<T> svarService;
 
    @Inject
    KompletteringKontrollInterface kompletteringKontroll;
@@ -81,7 +80,7 @@ public abstract class KompletteringController<T, Y>
    @PATCH
    @Path("/{handlaggningId}/komplettering")
    public void patchKomplettering(@PathParam("handlaggningId") UUID handlaggningId,
-         @Valid @NotNull Y request)
+         @Valid @NotNull T request)
    {
       var handlaggning = fetchHandlaggning(handlaggningId);
       var update = svarService.registerSvar(handlaggning, request);
