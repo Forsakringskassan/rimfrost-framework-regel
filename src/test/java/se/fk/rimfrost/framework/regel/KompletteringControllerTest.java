@@ -38,7 +38,7 @@ class KompletteringControllerTest
 {
    /** Minimal concrete subclass registered as a JAX-RS resource for this test. */
    @Path("/api/test")
-   public static class TestKompletteringController extends KompletteringController<Object, Object>
+   public static class TestKompletteringController extends KompletteringController<Object>
    {
    }
 
@@ -57,7 +57,7 @@ class KompletteringControllerTest
    /** Stub CDI bean satisfying the generic svarService injection point; unused by the done endpoint. */
    @ApplicationScoped
    @DefaultBean
-   public static class TestSvarService implements KompletteringSvarServiceInterface<Object, Object>
+   public static class TestSvarService implements KompletteringSvarServiceInterface<Object>
    {
       @Override
       public Object readSvarData(Handlaggning handlaggning)
@@ -106,7 +106,7 @@ class KompletteringControllerTest
    }
 
    @Test
-   @DisplayName("kompletteringDone calls handleRegelRequest with the stored RegelDataRequest")
+   @DisplayName("FRALL-FR-07.7: same type T used for readSvarData (GET) and registerSvar (PATCH)")
    void should_call_handle_regel_request_with_stored_regel_data_request() throws Exception
    {
       var handlaggningId = UUID.randomUUID();

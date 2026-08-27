@@ -50,6 +50,7 @@
 - **FRALL-FR-07.4** Om `checkKomplettering()` returnerar tom lista ska ramverket trigga regelkörningen med det lagrade korrelationstillståndet, vilket resulterar i att Kafka-svaret skickas till den ursprungliga `replyTo`-kanalen.
 - **FRALL-FR-07.5** `POST /komplettering/done` ska returnera HTTP 409 om timeout redan har tömt korrelationstillståndet.
 - **FRALL-FR-07.6** Om avslutning av OUL-uppgiften misslyckas under `POST /komplettering/done` ska felet loggas, regelkörningen ändå triggas och HTTP 207 returneras för att signalera att kompletteringen är accepterad men att OUL-uppgiften eventuellt fortfarande är öppen.
+- **FRALL-FR-07.7** `KompletteringSvarServiceInterface` ska använda en enda typparameter för svarsdata: samma datastruktur används både som returvärde för `readSvarData` (GET) och som request body för `registerSvar` (PATCH). Regelrepos ska alltså inte behöva ange separata typer för GET-svar och PATCH-förfrågan.
 
 ---
 
