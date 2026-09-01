@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.3.3 (2026-09-01)
+
+### Bug Fixes
+
+-  compensate orphaned OUL task on storage failure (FKPOC-960) ([b52c2](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/b52c237d56ea299) Ulf Slunga)  
+-  move config loading tests to core and add health test (FKPOC-949) ([58ac3](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/58ac30c62cb5490) Ulf Slunga)  
+
 ## 1.3.2 (2026-08-27)
 
 ### Bug Fixes
