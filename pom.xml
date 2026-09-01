@@ -195,6 +195,7 @@
             <configuration>
               <excludes>
                 <exclude>**/*Test.class</exclude>
+                <exclude>**/*Test$*.class</exclude>
               </excludes>
             </configuration>
           </execution>
