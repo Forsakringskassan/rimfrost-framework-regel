@@ -4,6 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import java.util.Map;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import se.fk.rimfrost.framework.oul.adapter.OulAdapter;
 import se.fk.rimfrost.framework.oul.exception.OulException;
 import se.fk.rimfrost.framework.oul.model.Erbjudande;
@@ -29,6 +31,8 @@ import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 @ApplicationScoped
 public class KompletteringOulHandler
 {
+   private static final Logger LOGGER = LoggerFactory.getLogger(KompletteringOulHandler.class);
+
    @ConfigProperty(name = "kafka.subtopic")
    String subTopic;
 
@@ -41,6 +45,14 @@ public class KompletteringOulHandler
    /**
     * Creates the komplettering OUL task and stores the full correlation state.
     * Returns without sending a Kafka reply — the BPMN process instance keeps waiting.
+    *
+    * <p>If persistence of the correlation state fails after the OUL task has been created,
+    * the framework best-effort ends the just-created OUL task via
+    * {@link OulAdapter#endOperativUppgift(java.util.UUID, String)} to avoid an orphaned task
+    * in the handläggare's inbox (FRALL-FR-06.9). If the cleanup end-call also fails, the
+    * error is logged with {@code uppgiftId} and {@code handlaggningId} for manual
+    * reconciliation without masking the original exception (FRALL-FR-06.10). The original
+    * persistence exception (unchecked) is always rethrown to the caller.
     *
     * @param regelDataRequest     the original regel request; stored for replay on done
     * @param cloudEventAttributes CloudEvent attributes extracted from the incoming event
@@ -76,6 +88,26 @@ public class KompletteringOulHandler
             .regelDataRequest(regelDataRequest)
             .build();
 
-      storage.setKompletteringTillstand(regelDataRequest.handlaggningId(), tillstand);
+      try
+      {
+         storage.setKompletteringTillstand(regelDataRequest.handlaggningId(), tillstand);
+      }
+      catch (RuntimeException storageEx)
+      {
+         try
+         {
+            oulAdapter.endOperativUppgift(operativUppgift.getUppgiftId(),
+                  "Kompletteringstillstånd kunde inte sparas — avslutar uppgiften för att undvika uppgift utan korrelation");
+         }
+         catch (Exception cleanupEx)
+         {
+            LOGGER.error(
+                  "Orphaned OUL task {} for handlaggning {} — storage failed and cleanup failed",
+                  operativUppgift.getUppgiftId(),
+                  regelDataRequest.handlaggningId(),
+                  cleanupEx);
+         }
+         throw storageEx;
+      }
    }
 }
