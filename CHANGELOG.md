@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.3.4 (2026-09-01)
+
+### Bug Fixes
+
+-  use FRALL-FR-04.1 in CloudEventAttributesMapperTest DisplayName (FKPOC-961) ([bfe64](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/bfe64d542f71555) Ulf Slunga)  
+-  add CloudEventAttributesMapperTest moved from manuell (FKPOC-961) ([3bafb](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/3bafb51d7c16e60) Ulf Slunga)  
+
 ## 1.3.3 (2026-09-01)
 
 ### Bug Fixes
