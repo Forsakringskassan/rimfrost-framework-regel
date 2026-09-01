@@ -41,6 +41,8 @@
 - **FRALL-FR-06.6** Ramverket ska tillhandahålla en operation (`handleKompletteringTimeout`) som avslutar den öppna OUL-uppgiften och tar bort korrelationstillståndet när kompletteringstimern löper ut.
 - **FRALL-FR-06.7** `handleKompletteringTimeout` ska vara säker att anropa även om handläggaren redan avslutat kompletteringen (dvs. tillståndet redan är borttaget) — operationen ska logga och returnera utan exception.
 - **FRALL-FR-06.8** Om avslutning av OUL-uppgiften misslyckas under timeout-hanteringen ska felet loggas och korrelationstillståndet ändå tas bort, utan att kasta exception.
+- **FRALL-FR-06.9** Om lagring av korrelationstillståndet misslyckas efter att OUL-uppgiften har skapats i `KompletteringOulHandler.initiate`, ska ramverket best-effort avsluta den nyskapade OUL-uppgiften via `endOperativUppgift`. Det ursprungliga persistensfelet ska alltid kastas vidare till anroparen.
+- **FRALL-FR-06.10** Om avslutningen av OUL-uppgiften enligt FRALL-FR-06.9 också misslyckas ska felet loggas med `uppgiftId` och `handlaggningId` för manuell rekonsiliering, utan att maskera det ursprungliga persistensfelet.
 
 ### FRALL-FR-07 — Kompletteringsflöde via REST
 

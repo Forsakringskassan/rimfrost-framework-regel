@@ -20,13 +20,17 @@ import se.fk.rimfrost.framework.regel.logic.config.RegelConfig;
 import se.fk.rimfrost.framework.regel.logic.config.Specifikation;
 import se.fk.rimfrost.framework.regel.logic.config.Uppgift;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
+import se.fk.rimfrost.framework.regel.logic.dto.KompletteringTillstand;
 import se.fk.rimfrost.framework.regel.logic.dto.RegelDataRequest;
 import se.fk.rimfrost.framework.regel.logic.storage.KompletteringStorage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @QuarkusTest
@@ -35,11 +39,11 @@ class KompletteringOulHandlerTest
    @InjectMock
    OulAdapter oulAdapter;
 
-   @Inject
-   KompletteringOulHandler handler;
+   @InjectMock
+   KompletteringStorage storage;
 
    @Inject
-   KompletteringStorage storage;
+   KompletteringOulHandler handler;
 
    private RegelConfig regelConfig()
    {
@@ -127,10 +131,11 @@ class KompletteringOulHandlerTest
 
       handler.initiate(regelDataRequest, Map.of(), regelConfig(), erbjudande);
 
-      var stored = storage.getKompletteringTillstand(handlaggningId);
-      assertTrue(stored.isPresent());
-      assertEquals(oulUppgiftId, stored.get().oulUppgiftId());
-      assertEquals(regelDataRequest, stored.get().regelDataRequest());
+      var captor = ArgumentCaptor.forClass(KompletteringTillstand.class);
+      verify(storage).setKompletteringTillstand(eq(handlaggningId), captor.capture());
+      var stored = captor.getValue();
+      assertEquals(oulUppgiftId, stored.oulUppgiftId());
+      assertEquals(regelDataRequest, stored.regelDataRequest());
    }
 
    @Test
@@ -146,6 +151,61 @@ class KompletteringOulHandlerTest
       assertThrows(OulException.class,
             () -> handler.initiate(regelDataRequest(handlaggningId), Map.of(), regelConfig(), erbjudande));
 
-      assertFalse(storage.getKompletteringTillstand(handlaggningId).isPresent());
+      verify(storage, never()).setKompletteringTillstand(any(), any());
+   }
+
+   @Test
+   @DisplayName("FRALL-FR-06.9: storage failure triggers best-effort endOperativUppgift on the created OUL task")
+   void should_end_oul_task_when_storage_fails() throws OulException
+   {
+      var handlaggningId = UUID.randomUUID();
+      var oulUppgiftId = UUID.randomUUID();
+      stubOulAdapter(handlaggningId, oulUppgiftId);
+
+      var storageEx = new RuntimeException("db down");
+      doThrow(storageEx).when(storage).setKompletteringTillstand(eq(handlaggningId), any());
+
+      var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
+
+      var thrown = assertThrows(RuntimeException.class,
+            () -> handler.initiate(regelDataRequest(handlaggningId), Map.of(), regelConfig(), erbjudande));
+      assertSame(storageEx, thrown);
+
+      verify(oulAdapter).endOperativUppgift(eq(oulUppgiftId), anyString());
+   }
+
+   @Test
+   @DisplayName("FRALL-FR-06.10: cleanup failure is swallowed and original storage exception still propagates")
+   void should_swallow_cleanup_failure_and_rethrow_storage_exception() throws OulException
+   {
+      var handlaggningId = UUID.randomUUID();
+      var oulUppgiftId = UUID.randomUUID();
+      stubOulAdapter(handlaggningId, oulUppgiftId);
+
+      var storageEx = new RuntimeException("db down");
+      doThrow(storageEx).when(storage).setKompletteringTillstand(eq(handlaggningId), any());
+      Mockito.when(oulAdapter.endOperativUppgift(eq(oulUppgiftId), anyString()))
+            .thenThrow(new OulException(OulException.ErrorType.SERVICE_UNAVAILABLE, "OUL also down"));
+
+      var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
+
+      var thrown = assertThrows(RuntimeException.class,
+            () -> handler.initiate(regelDataRequest(handlaggningId), Map.of(), regelConfig(), erbjudande));
+      assertSame(storageEx, thrown);
+   }
+
+   @Test
+   @DisplayName("FRALL-FR-06.9: endOperativUppgift is not called on happy path")
+   void should_not_end_oul_task_on_happy_path() throws OulException
+   {
+      var handlaggningId = UUID.randomUUID();
+      var oulUppgiftId = UUID.randomUUID();
+      stubOulAdapter(handlaggningId, oulUppgiftId);
+
+      var erbjudande = ImmutableErbjudande.builder().id("erbjudande-1").namn("Erbjudande Ett").build();
+
+      handler.initiate(regelDataRequest(handlaggningId), Map.of(), regelConfig(), erbjudande);
+
+      verify(oulAdapter, never()).endOperativUppgift(any(), anyString());
    }
 }
