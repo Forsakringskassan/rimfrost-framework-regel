@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.0 (2026-09-01)
+
+### Features
+
+-  add shared ErbjudandeReferensdataTestService fixture (FKPOC-963) ([8d8c1](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/8d8c10a622e7df2) Ulf Slunga)  
+
 ## 1.3.4 (2026-09-01)
 
 ### Bug Fixes
