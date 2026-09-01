@@ -14,7 +14,7 @@ import se.fk.rimfrost.framework.regel.logic.entity.ImmutableCloudEventData;
 class CloudEventAttributesMapperTest
 {
    @Test
-   @DisplayName("FRMM-FR-01.4: CloudEvent-attribut mappas korrekt från nyckel-värdekarta till CloudEventData")
+   @DisplayName("FRALL-FR-04.1: CloudEvent-attribut mappas korrekt från nyckel-värdekarta till CloudEventData")
    void to_cloud_event_data_maps_all_fields_correctly()
    {
       var id = UUID.randomUUID();
@@ -49,7 +49,7 @@ class CloudEventAttributesMapperTest
    }
 
    @Test
-   @DisplayName("FRMM-FR-01.4: CloudEventData kan konverteras till attributkarta och tillbaka utan informationsförlust")
+   @DisplayName("FRALL-FR-04.1: CloudEventData kan konverteras till attributkarta och tillbaka utan informationsförlust")
    void to_attributes_roundtrip_through_to_cloud_event_data()
    {
       var original = ImmutableCloudEventData.builder()
