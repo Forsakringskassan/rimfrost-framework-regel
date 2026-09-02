@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.1 (2026-09-02)
+
+### Bug Fixes
+
+-  exclude inner test classes from test-jar (FKPOC-963) ([f0f88](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/f0f88ebab0d7f24) Ulf Slunga)  
+
 ## 1.4.0 (2026-09-01)
 
 ### Features
