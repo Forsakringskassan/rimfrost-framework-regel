@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.2 (2026-09-03)
+
+### Bug Fixes
+
+-  Remove komplettering functionality from rimfrost-framework-regel ([a12b7](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a12b75f45e4f3ef) Lars Persson)  
+
 ## 1.4.1 (2026-09-02)
 
 ### Bug Fixes
