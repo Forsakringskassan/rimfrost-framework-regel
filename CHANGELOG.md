@@ -2,6 +2,16 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.3 (2026-09-15)
+
+### Bug Fixes
+
+-  Bump rimfrost-framework-handlaggning-adapter version ([e34b9](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e34b9977333b93a) Lars Persson)  
+
+### Dependency updates
+
+- update dependency org.apache.maven.plugins:maven-compiler-plugin to v3.16.0 ([5b47e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/5b47eb96d694784) renovate[bot])  
+- pin dependencies ([683d0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/683d0f0733786c6) renovate[bot])  
 ## 1.4.2 (2026-09-03)
 
 ### Bug Fixes
