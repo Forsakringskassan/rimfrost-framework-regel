@@ -100,7 +100,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    * @param handlaggningId handläggning identifier
    * @return extracted Handläggning update object
    */
-   protected se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.HandlaggningUpdate getLastPutHandlaggningUpdate(
+   public static se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.HandlaggningUpdate getLastPutHandlaggningUpdate(
          String handlaggningId)
    {
 
@@ -186,19 +186,6 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    }
 
    /**
-   * Retrieves the last PUT handläggning request
-   *
-   * @param handlaggningId handläggning identifier
-   * @return latest Put handläggning
-   */
-   public static HandlaggningUpdate getLastPutHandlaggning(String handlaggningId)
-         throws JsonProcessingException
-   {
-      LoggedRequest request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
-      return mapper.readValue(request.getBodyAsString(), HandlaggningUpdate.class);
-   }
-
-   /**
    * Retrieves the Uppgift from the last PUT handläggning request
    *
    * @param handlaggningId handläggning identifier
@@ -207,8 +194,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    public static Uppgift getUppgiftFromLastPutHandlaggning(String handlaggningId)
          throws JsonProcessingException
    {
-      HandlaggningUpdate dto = getLastPutHandlaggning(handlaggningId);
-      return dto.getUppgift();
+      return getLastPutHandlaggningUpdate(handlaggningId).getUppgift();
    }
 
    /**
