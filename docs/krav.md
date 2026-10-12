@@ -26,10 +26,14 @@
 - **FRALL-FR-04.2** Svaret ska skickas dynamiskt till den topic som angavs i `replyTo`-fältet i förfrågan.
 - **FRALL-FR-04.3** Om sändning misslyckas ska felet loggas utan att orsaka ett exception som avbryter processen (fire-and-forget).
 
-### FRALL-FR-05 — Hjälpfunktioner för yrkande och resultat
+### FRALL-FR-05 — Hjälpfunktioner för yrkande och uppgiftsdata
 
-- **FRALL-FR-05.1** Ramverket ska tillhandahålla en hjälpfunktion för att merga producerade resultat från ett yrkande med nya resultat, där nyare resultat för samma id ersätter äldre.
-- **FRALL-FR-05.2** Ramverket ska tillhandahålla en hjälpfunktion för att skapa ett uppdaterat yrkande med mergade producerade resultat.
+- **FRALL-FR-05.1** Ramverket ska tillhandahålla en hjälpfunktion för att merga sakfrågor/ställningstaganden från ett yrkande med nya, där nyare element för samma id ersätter äldre.
+- **FRALL-FR-05.2** Ramverket ska tillhandahålla en hjälpfunktion för att skapa ett uppdaterat yrkande med mergade sakfrågor/ställningstaganden.
+- **FRALL-FR-05.3** Ramverket ska tillhandahålla en hjälpfunktion för att skapa ett `SakfragaStallningstagande` med ett givet id, objektTypId och ett objekt serialiserat som JSON.
+- **FRALL-FR-05.4** Ramverket ska tillhandahålla en hjälpfunktion för att skapa en `Uppgiftsdatakopia` med ett givet informationsobjekt-id, version, typ och ett objekt serialiserat som JSON.
+- **FRALL-FR-05.5** Ramverket ska tillhandahålla en hjälpfunktion för att skapa en `Uppgiftsdatakoppling` med ett givet informationsobjekt-id och version.
+- **FRALL-FR-05.6** Ramverket ska tillhandahålla en hjälpfunktion för att serialisera ett godtyckligt objekt till en JSON-sträng.
 
 ---
 
