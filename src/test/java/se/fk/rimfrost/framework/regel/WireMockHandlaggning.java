@@ -14,7 +14,7 @@ import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import java.util.*;
-import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.PutHandlaggningRequest;
+import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.HandlaggningUpdate;
 import se.fk.rimfrost.jaxrsspec.controllers.generatedsource.model.Uppgift;
 
 /**
@@ -108,10 +108,7 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
 
       try
       {
-         PutHandlaggningRequest putHandlaggningRequest = mapper.readValue(request.getBodyAsString(),
-               PutHandlaggningRequest.class);
-
-         return putHandlaggningRequest.getHandlaggning();
+         return mapper.readValue(request.getBodyAsString(), HandlaggningUpdate.class);
       }
       catch (JsonProcessingException e)
       {
@@ -194,11 +191,11 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    * @param handlaggningId handläggning identifier
    * @return latest Put handläggning
    */
-   public static PutHandlaggningRequest getLastPutHandlaggning(String handlaggningId)
+   public static HandlaggningUpdate getLastPutHandlaggning(String handlaggningId)
          throws JsonProcessingException
    {
       LoggedRequest request = getLastHandlaggningRequest(handlaggningId, RequestMethod.PUT);
-      return mapper.readValue(request.getBodyAsString(), PutHandlaggningRequest.class);
+      return mapper.readValue(request.getBodyAsString(), HandlaggningUpdate.class);
    }
 
    /**
@@ -210,8 +207,8 @@ public abstract class WireMockHandlaggning implements QuarkusTestResourceLifecyc
    public static Uppgift getUppgiftFromLastPutHandlaggning(String handlaggningId)
          throws JsonProcessingException
    {
-      PutHandlaggningRequest dto = getLastPutHandlaggning(handlaggningId);
-      return dto.getHandlaggning().getUppgift();
+      HandlaggningUpdate dto = getLastPutHandlaggning(handlaggningId);
+      return dto.getUppgift();
    }
 
    /**
