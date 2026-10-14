@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import se.fk.rimfrost.framework.handlaggning.model.ImmutableSakfragaStallningstagande;
+import se.fk.rimfrost.framework.handlaggning.model.ImmutableSakfragaStallningstagandeContainer;
 import se.fk.rimfrost.framework.handlaggning.model.ImmutableYrkande;
-import se.fk.rimfrost.framework.handlaggning.model.SakfragaStallningstagande;
+import se.fk.rimfrost.framework.handlaggning.model.SakfragaStallningstagandeContainer;
 import se.fk.rimfrost.framework.handlaggning.model.Yrkande;
 import se.fk.rimfrost.framework.regel.logic.RegelUtils;
 
@@ -18,16 +18,16 @@ public class RegelUtilsTest
 {
    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-   private SakfragaStallningstagande sakfraga(UUID id, String objektTypId)
+   private SakfragaStallningstagandeContainer sakfraga(UUID id, String objektTypId)
    {
-      return ImmutableSakfragaStallningstagande.builder()
+      return ImmutableSakfragaStallningstagandeContainer.builder()
             .id(id)
             .objektTypId(objektTypId)
             .data("{}")
             .build();
    }
 
-   private Yrkande yrkande(List<SakfragaStallningstagande> sakfragor)
+   private Yrkande yrkande(List<SakfragaStallningstagandeContainer> sakfragor)
    {
       return ImmutableYrkande.builder()
             .id(UUID.randomUUID())
@@ -54,7 +54,7 @@ public class RegelUtilsTest
       UUID id2 = UUID.randomUUID();
 
       var updated = List.of(sakfraga(id1, "typ1"), sakfraga(id2, "typ2"));
-      var previous = List.<SakfragaStallningstagande> of();
+      var previous = List.<SakfragaStallningstagandeContainer> of();
 
       var result = RegelUtils.mergeSakfragorStallningstaganden(updated, previous);
 
@@ -144,10 +144,8 @@ public class RegelUtilsTest
    {
       var payload = new TestPayload("data");
 
-      var result = RegelUtils.createUppgiftsdatakopia("obj-1", 3, "TypA", payload, MAPPER);
+      var result = RegelUtils.createUppgiftsdatakopia("TypA", payload, MAPPER);
 
-      assertEquals("obj-1", result.informationsobjektId());
-      assertEquals(3, result.informationsobjektversion());
       assertEquals("TypA", result.informationsobjekttyp());
       assertEquals(MAPPER.writeValueAsString(payload), result.data());
    }

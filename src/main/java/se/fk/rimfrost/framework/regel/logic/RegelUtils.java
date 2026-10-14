@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import se.fk.rimfrost.framework.handlaggning.model.ImmutableSakfragaStallningstagande;
+import se.fk.rimfrost.framework.handlaggning.model.ImmutableSakfragaStallningstagandeContainer;
 import se.fk.rimfrost.framework.handlaggning.model.ImmutableUppgiftsdatakopia;
 import se.fk.rimfrost.framework.handlaggning.model.ImmutableUppgiftsdatakoppling;
 import se.fk.rimfrost.framework.handlaggning.model.ImmutableYrkande;
-import se.fk.rimfrost.framework.handlaggning.model.SakfragaStallningstagande;
+import se.fk.rimfrost.framework.handlaggning.model.SakfragaStallningstagandeContainer;
 import se.fk.rimfrost.framework.handlaggning.model.Uppgiftsdatakopia;
 import se.fk.rimfrost.framework.handlaggning.model.Uppgiftsdatakoppling;
 import se.fk.rimfrost.framework.handlaggning.model.Yrkande;
@@ -22,16 +22,12 @@ public class RegelUtils
    /**
    * Skapar en {@link Uppgiftsdatakopia} med serialiserat JSON-innehåll.
    *
-   * @param informationsobjektId ID för informationsobjektet
-   * @param version Version av informationsobjektet
    * @param informationsobjekttyp Typ av informationsobjekt
    * @param object Objektet som ska serialiseras som data
    * @param objectMapper Används för att serialisera object till JSON
    * @return En {@link Uppgiftsdatakopia}
    */
    public static Uppgiftsdatakopia createUppgiftsdatakopia(
-         String informationsobjektId,
-         int version,
          String informationsobjekttyp,
          Object object,
          ObjectMapper objectMapper)
@@ -39,8 +35,6 @@ public class RegelUtils
       try
       {
          return ImmutableUppgiftsdatakopia.builder()
-               .informationsobjektId(informationsobjektId)
-               .informationsobjektversion(version)
                .informationsobjekttyp(informationsobjekttyp)
                .data(objectMapper.writeValueAsString(object))
                .build();
@@ -76,12 +70,12 @@ public class RegelUtils
    * @param objectMapper Används för att serialisera object till JSON
    * @return Ett {@link SakfragaStallningstagande}
    */
-   public static SakfragaStallningstagande createSakfragaStallningstagande(
+   public static SakfragaStallningstagandeContainer createSakfragaStallningstagande(
          UUID id, String objektTypId, Object object, ObjectMapper objectMapper)
    {
       try
       {
-         return ImmutableSakfragaStallningstagande.builder()
+         return ImmutableSakfragaStallningstagandeContainer.builder()
                .id(id)
                .objektTypId(objektTypId)
                .data(objectMapper.writeValueAsString(object))
@@ -102,7 +96,7 @@ public class RegelUtils
    * @return Uppdaterat yrkande
    */
    public static Yrkande createYrkandeWithUpdatedSakfragorStallningstaganden(
-         Yrkande yrkande, List<SakfragaStallningstagande> uppdaterade)
+         Yrkande yrkande, List<SakfragaStallningstagandeContainer> uppdaterade)
    {
       return ImmutableYrkande.builder()
             .from(yrkande)
@@ -121,13 +115,13 @@ public class RegelUtils
    * @param tidigare Ursprungliga sakfrågor/ställningstaganden
    * @return Mergad lista
    */
-   public static List<SakfragaStallningstagande> mergeSakfragorStallningstaganden(
-         List<SakfragaStallningstagande> uppdaterade, List<SakfragaStallningstagande> tidigare)
+   public static List<SakfragaStallningstagandeContainer> mergeSakfragorStallningstaganden(
+         List<SakfragaStallningstagandeContainer> uppdaterade, List<SakfragaStallningstagandeContainer> tidigare)
    {
       Set<UUID> idsInUppdaterade = uppdaterade.stream()
-            .map(SakfragaStallningstagande::id)
+            .map(SakfragaStallningstagandeContainer::id)
             .collect(Collectors.toSet());
-      List<SakfragaStallningstagande> result = new ArrayList<>(uppdaterade);
+      List<SakfragaStallningstagandeContainer> result = new ArrayList<>(uppdaterade);
       tidigare.stream()
             .filter(s -> !idsInUppdaterade.contains(s.id()))
             .forEach(result::add);
