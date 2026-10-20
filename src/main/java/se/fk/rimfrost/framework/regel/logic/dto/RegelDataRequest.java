@@ -1,5 +1,6 @@
 package se.fk.rimfrost.framework.regel.logic.dto;
 
+import jakarta.annotation.Nullable;
 import java.util.UUID;
 import org.immutables.value.Value;
 
@@ -11,6 +12,9 @@ public interface RegelDataRequest
    UUID handlaggningId();
 
    UUID aktivitetId();
+
+   @Nullable
+   String processvyUrl();
 
    String kogitorootprocid();
 
