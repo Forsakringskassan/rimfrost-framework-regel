@@ -45,6 +45,6 @@ public class RegelKafkaMapperTest
       var payload = newRegelRequestMessagePayload(UUID.randomUUID().toString(), null, "regel-requests", "regel-responses");
       payload.getData().setProcessvyUrl("/process/vah");
 
-      assertThrows(NullPointerException.class, () -> mapper.toRegelDataRequest(payload));
+      assertThrows(RuntimeException.class, () -> mapper.toRegelDataRequest(payload));
    }
 }

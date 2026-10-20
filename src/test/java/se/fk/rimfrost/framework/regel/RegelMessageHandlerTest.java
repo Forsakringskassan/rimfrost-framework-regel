@@ -40,6 +40,17 @@ public class RegelMessageHandlerTest extends RegelTestBase
       Mockito.verify(regelRequestHandler, Mockito.times(1)).handleRegelRequest(createRegelDataRequest(payload));
    }
 
+   @Test
+   @DisplayName("FRALL-FR-06.2: Regelförfrågan utan processvyUrl delegeras som vanligt")
+   public void consume_regel_request_without_processvy_url_should_call_regel_request_handler()
+   {
+      var handlaggningId = UUID.randomUUID().toString();
+      var payload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
+
+      regelMessageHandler.consumeRegelRequest(payload);
+      Mockito.verify(regelRequestHandler, Mockito.times(1)).handleRegelRequest(createRegelDataRequest(payload));
+   }
+
    private RegelDataRequest createRegelDataRequest(RegelRequestMessagePayload payload)
    {
       return ImmutableRegelDataRequest.builder()
