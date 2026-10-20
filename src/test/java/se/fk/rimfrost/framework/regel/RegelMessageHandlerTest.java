@@ -34,6 +34,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
    {
       var handlaggningId = UUID.randomUUID().toString();
       var payload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
+      payload.getData().setProcessvyUrl("/process/vah");
 
       regelMessageHandler.consumeRegelRequest(payload);
       Mockito.verify(regelRequestHandler, Mockito.times(1)).handleRegelRequest(createRegelDataRequest(payload));
@@ -45,6 +46,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
             .id(UUID.fromString(payload.getId()))
             .handlaggningId(UUID.fromString(payload.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(payload.getData().getAktivitetId()))
+            .processvyUrl(payload.getData().getProcessvyUrl())
             .replyTo(payload.getData().getReplyTo())
             .kogitorootprocid(payload.getKogitorootprocid())
             .kogitorootprociid(UUID.fromString(payload.getKogitorootprociid()))
