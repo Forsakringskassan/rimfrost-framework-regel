@@ -31,6 +31,11 @@
 - **FRALL-FR-05.1** Ramverket ska tillhandahålla en hjälpfunktion för att merga producerade resultat från ett yrkande med nya resultat, där nyare resultat för samma id ersätter äldre.
 - **FRALL-FR-05.2** Ramverket ska tillhandahålla en hjälpfunktion för att skapa ett uppdaterat yrkande med mergade producerade resultat.
 
+### FRALL-FR-06 — Processvy-länk i regelanropet
+
+- **FRALL-FR-06.1** Ramverket ska läsa `processvyUrl` från det inkommande regelanropet och göra det tillgängligt för regeln tillsammans med `aktivitetId`.
+- **FRALL-FR-06.2** Ett regelanrop utan `processvyUrl` är giltigt och hanteras som vanligt. Ett anrop utan `aktivitetId` är fortfarande felaktigt.
+
 ---
 
 ## 2. Icke-funktionella krav
