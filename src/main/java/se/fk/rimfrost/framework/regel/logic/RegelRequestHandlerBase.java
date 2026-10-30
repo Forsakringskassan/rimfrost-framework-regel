@@ -114,17 +114,15 @@ public abstract class RegelRequestHandlerBase
       };
    }
 
-   protected HandlaggningUpdate createHandlaggningUpdate(Handlaggning handlaggning, Uppgift uppgift, UUID kogitoprocInstanceId,
-         int version)
+   /**
+   * @param handlaggning Handläggningen som ska uppdateras
+   * @param uppgift Uppgiften som ska kopplas till uppdateringen
+   * @return En {@link HandlaggningUpdate} redo att skickas till handläggningsadaptern
+   */
+   protected HandlaggningUpdate createHandlaggningUpdate(Handlaggning handlaggning, Uppgift uppgift)
    {
       return ImmutableHandlaggningUpdate.builder()
-            .id(handlaggning.id())
-            .version(version)
-            .yrkande(handlaggning.yrkande())
-            .processInstansId(kogitoprocInstanceId)
-            .skapadTS(handlaggning.skapadTS())
-            .avslutadTS(handlaggning.avslutadTS())
-            .handlaggningspecifikationId(handlaggning.handlaggningspecifikationId())
+            .handlaggning(handlaggning)
             .uppgift(uppgift)
             .build();
    }
@@ -135,7 +133,7 @@ public abstract class RegelRequestHandlerBase
             .id(UUID.randomUUID())
             .version(1)
             .aktivitetId(aktivitetId)
-            .skapadTs(OffsetDateTime.now())
+            .skapadTS(OffsetDateTime.now())
             .uppgiftStatus(status)
             .fSSAinformation("FSSAinformation.HANDLAGGNING_PAGAR") // TODO
             .uppgiftSpecifikation(createUppgiftSpecifikation())
@@ -200,7 +198,7 @@ public abstract class RegelRequestHandlerBase
       {
          var message = String.format(
                "Failed to write handlaggning update. handlaggningId: %s, kogitoprocId: %s",
-               handlaggningUpdate.id(), cloudEventData.kogitoprocinstanceid());
+               handlaggningUpdate.handlaggning().id(), cloudEventData.kogitoprocinstanceid());
          var regelErrorInformation = createRegelErrorInformation(RegelFelkod.RIMFROST_HANDLAGGNING_WRITE_FAILURE, message);
          throw new RegelCancelledException(regelErrorInformation, message, e);
       }

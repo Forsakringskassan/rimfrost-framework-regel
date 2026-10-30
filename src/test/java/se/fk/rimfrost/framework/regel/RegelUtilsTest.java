@@ -2,127 +2,184 @@ package se.fk.rimfrost.framework.regel;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import se.fk.rimfrost.framework.handlaggning.model.*;
+import se.fk.rimfrost.framework.handlaggning.model.ImmutableSakfragaStallningstagandeContainer;
+import se.fk.rimfrost.framework.handlaggning.model.ImmutableYrkande;
+import se.fk.rimfrost.framework.handlaggning.model.SakfragaStallningstagandeContainer;
+import se.fk.rimfrost.framework.handlaggning.model.Yrkande;
 import se.fk.rimfrost.framework.regel.logic.RegelUtils;
 
 public class RegelUtilsTest
 {
+   private static final ObjectMapper MAPPER = new ObjectMapper();
 
-   private ProduceratResultat resultat(UUID id, String yrkandestatus)
+   private SakfragaStallningstagandeContainer sakfraga(UUID id, String objektTypId)
    {
-      return ImmutableProduceratResultat.builder()
+      return ImmutableSakfragaStallningstagandeContainer.builder()
             .id(id)
-            .version(1)
-            .resultatFrom(OffsetDateTime.now())
-            .resultatTom(OffsetDateTime.now())
-            .yrkandeStatus(yrkandestatus)
-            .typ("TestTyp")
-            .data("TestData")
+            .objektTypId(objektTypId)
+            .data("{}")
             .build();
    }
 
-   private Yrkande yrkande(List<ProduceratResultat> resultat, String yrkandestatus)
+   private Yrkande yrkande(List<SakfragaStallningstagandeContainer> sakfragor)
    {
       return ImmutableYrkande.builder()
             .id(UUID.randomUUID())
             .version(1)
-            .erbjudandeId(UUID.randomUUID().toString())
+            .ingangtypId("TestIngangtypId")
             .yrkandeDatum(OffsetDateTime.now())
             .yrkandeFrom(OffsetDateTime.now())
             .yrkandeTom(OffsetDateTime.now())
             .avsikt("TestAvsikt")
-            .yrkandeStatus(yrkandestatus)
-            .produceradeResultat(resultat)
+            .yrkandeStatus("AKTIV")
+            .sakfragorStallningstaganden(sakfragor)
             .build();
    }
 
-   // =========================
-   // mergeProduceradeResultat
-   // =========================
+   // ======================================
+   // mergeSakfragorStallningstaganden
+   // ======================================
 
    @Test
-   @DisplayName("FRALL-FR-05.1: Merge inkluderar alla nya producerade resultat")
-   void merge_shouldIncludeAllUpdatedResults()
+   @DisplayName("FRALL-FR-05.1: Merge inkluderar alla nya sakfrågor/ställningstaganden")
+   void merge_shouldIncludeAllUpdated()
    {
       UUID id1 = UUID.randomUUID();
-      String yrkandestatus1 = UUID.randomUUID().toString();
       UUID id2 = UUID.randomUUID();
-      String yrkandestatus2 = UUID.randomUUID().toString();
 
-      var updated = List.of(resultat(id1, yrkandestatus1), resultat(id2, yrkandestatus2));
-      List<ProduceratResultat> previous = List.of();
+      var updated = List.of(sakfraga(id1, "typ1"), sakfraga(id2, "typ2"));
+      var previous = List.<SakfragaStallningstagandeContainer> of();
 
-      var result = RegelUtils.mergeProduceradeResultat(updated, previous);
+      var result = RegelUtils.mergeSakfragorStallningstaganden(updated, previous);
 
       assertEquals(2, result.size());
-      assertTrue(result.stream().anyMatch(r -> r.id().equals(id1)));
-      assertTrue(result.stream().anyMatch(r -> r.id().equals(id2)));
+      assertTrue(result.stream().anyMatch(s -> s.id().equals(id1)));
+      assertTrue(result.stream().anyMatch(s -> s.id().equals(id2)));
    }
 
    @Test
-   @DisplayName("FRALL-FR-05.1: Merge bevarar tidigare resultat som inte ersätts av nya")
+   @DisplayName("FRALL-FR-05.1: Merge bevarar tidigare sakfrågor som inte ersätts av nya")
    void merge_shouldKeepPreviousIfNotOverridden()
    {
-      UUID id1 = UUID.randomUUID(); // updated
-      String yrkandestatus1 = UUID.randomUUID().toString();
-      UUID id2 = UUID.randomUUID(); // only in previous
-      String yrkandestatus2 = UUID.randomUUID().toString();
+      UUID id1 = UUID.randomUUID();
+      UUID id2 = UUID.randomUUID();
 
-      var updated = List.of(resultat(id1, yrkandestatus1));
-      var previous = List.of(resultat(id2, yrkandestatus2));
+      var updated = List.of(sakfraga(id1, "typ1"));
+      var previous = List.of(sakfraga(id2, "typ2"));
 
-      var result = RegelUtils.mergeProduceradeResultat(updated, previous);
+      var result = RegelUtils.mergeSakfragorStallningstaganden(updated, previous);
 
       assertEquals(2, result.size());
-      assertTrue(result.stream().anyMatch(r -> r.id().equals(id1)));
-      assertTrue(result.stream().anyMatch(r -> r.id().equals(id2)));
+      assertTrue(result.stream().anyMatch(s -> s.id().equals(id1)));
+      assertTrue(result.stream().anyMatch(s -> s.id().equals(id2)));
    }
 
    @Test
-   @DisplayName("FRALL-FR-05.1: Nytt resultat med samma id ersätter tidigare vid merge")
+   @DisplayName("FRALL-FR-05.1: Ny sakfråga med samma id ersätter tidigare vid merge")
    void merge_shouldPreferUpdatedOverPreviousWithSameId()
    {
       UUID id = UUID.randomUUID();
-      String yrkandestatus1 = UUID.randomUUID().toString();
-      String yrkandestatus2 = UUID.randomUUID().toString();
 
-      var updated = List.of(resultat(id, yrkandestatus1));
-      var previous = List.of(resultat(id, yrkandestatus2));
+      var updated = List.of(sakfraga(id, "nyTyp"));
+      var previous = List.of(sakfraga(id, "gammalTyp"));
 
-      var result = RegelUtils.mergeProduceradeResultat(updated, previous);
+      var result = RegelUtils.mergeSakfragorStallningstaganden(updated, previous);
 
       assertEquals(1, result.size());
-      assertEquals(id, result.getFirst().id());
-      assertEquals(yrkandestatus1, result.getFirst().yrkandeStatus());
+      assertEquals("nyTyp", result.getFirst().objektTypId());
    }
 
-   // ==========================================
-   // createYrkandeWithUpdatedProduceradeResultat
-   // ==========================================
+   // ===========================================================
+   // createYrkandeWithUpdatedSakfragorStallningstaganden
+   // ===========================================================
 
    @Test
-   @DisplayName("FRALL-FR-05.2: Nytt yrkande skapas med merge av befintliga och nya producerade resultat")
-   void createYrkande_shouldMergeResultsIntoNewInstance()
+   @DisplayName("FRALL-FR-05.2: Nytt yrkande skapas med merge av befintliga och nya sakfrågor/ställningstaganden")
+   void createYrkande_shouldMergeSakfragorIntoNewInstance()
    {
-      UUID id1 = UUID.randomUUID(); // updated
-      String yrkandestatus1 = UUID.randomUUID().toString();
-      UUID id2 = UUID.randomUUID(); // existing
-      String yrkandestatus2 = UUID.randomUUID().toString();
+      UUID id1 = UUID.randomUUID();
+      UUID id2 = UUID.randomUUID();
 
-      var originalResults = List.of(resultat(id2, yrkandestatus2));
-      var updatedResults = List.of(resultat(id1, yrkandestatus1));
+      Yrkande original = yrkande(List.of(sakfraga(id2, "gammal")));
+      var uppdaterade = List.of(sakfraga(id1, "ny"));
 
-      Yrkande original = yrkande(originalResults, yrkandestatus2);
+      Yrkande updated = RegelUtils.createYrkandeWithUpdatedSakfragorStallningstaganden(original, uppdaterade);
 
-      Yrkande updated = RegelUtils.createYrkandeWithUpdatedProduceradeResultat(original, updatedResults);
+      assertEquals(2, updated.sakfragorStallningstaganden().size());
+      assertTrue(updated.sakfragorStallningstaganden().stream().anyMatch(s -> s.id().equals(id1)));
+      assertTrue(updated.sakfragorStallningstaganden().stream().anyMatch(s -> s.id().equals(id2)));
+   }
 
-      assertEquals(2, updated.produceradeResultat().size());
-      assertTrue(updated.produceradeResultat().stream().anyMatch(r -> r.id().equals(id1)));
-      assertTrue(updated.produceradeResultat().stream().anyMatch(r -> r.id().equals(id2)));
+   // ======================================
+   // createSakfragaStallningstagande
+   // ======================================
+
+   @Test
+   @DisplayName("FRALL-FR-05.3: createSakfragaStallningstagande sätter id, objektTypId och serialiserat data")
+   void createSakfragaStallningstagande_shouldSetAllFields() throws Exception
+   {
+      UUID id = UUID.randomUUID();
+      var payload = new TestPayload("hej");
+
+      var result = RegelUtils.createSakfragaStallningstagande(id, "testTyp", payload, MAPPER);
+
+      assertEquals(id, result.id());
+      assertEquals("testTyp", result.objektTypId());
+      assertEquals(MAPPER.writeValueAsString(payload), result.data());
+   }
+
+   // ======================================
+   // createUppgiftsdatakopia
+   // ======================================
+
+   @Test
+   @DisplayName("FRALL-FR-05.4: createUppgiftsdatakopia sätter alla fält och serialiserar data")
+   void createUppgiftsdatakopia_shouldSetAllFields() throws Exception
+   {
+      var payload = new TestPayload("data");
+
+      var result = RegelUtils.createUppgiftsdatakopia("TypA", payload, MAPPER);
+
+      assertEquals("TypA", result.informationsobjekttyp());
+      assertEquals(MAPPER.writeValueAsString(payload), result.data());
+   }
+
+   // ======================================
+   // createUppgiftsdatakoppling
+   // ======================================
+
+   @Test
+   @DisplayName("FRALL-FR-05.5: createUppgiftsdatakoppling sätter informationsobjektId och version")
+   void createUppgiftsdatakoppling_shouldSetAllFields()
+   {
+      var result = RegelUtils.createUppgiftsdatakoppling("obj-2", 7);
+
+      assertEquals("obj-2", result.informationsobjektId());
+      assertEquals(7, result.informationsobjektversion());
+   }
+
+   // ======================================
+   // toJson
+   // ======================================
+
+   @Test
+   @DisplayName("FRALL-FR-05.6: toJson serialiserar objekt till JSON-sträng")
+   void toJson_shouldSerializeObject() throws Exception
+   {
+      var payload = new TestPayload("värde");
+
+      var result = RegelUtils.toJson(payload, MAPPER);
+
+      assertEquals(MAPPER.writeValueAsString(payload), result);
+   }
+
+   record TestPayload(String value)
+   {
    }
 }
