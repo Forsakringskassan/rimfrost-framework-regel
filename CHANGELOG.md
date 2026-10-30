@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.6 (2026-10-30)
+
+### Bug Fixes
+
+-  update workflows ([e307f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e307fc004b8981b) Nils Elveros)  
+
 ## 1.4.5 (2026-10-30)
 
 ### Bug Fixes
