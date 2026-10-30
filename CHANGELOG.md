@@ -2,6 +2,23 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.4.5 (2026-10-30)
+
+### Bug Fixes
+
+-  update handlaggning-adapter version ([e401e](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e401e4600370509) Nils Elveros)  
+-  rename of SakfragaStallningstagande ([c7fff](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c7fff13af7b66ab) Nils Elveros)  
+-  remove duplicate getLastPutHandlaggning from WireMockHandlaggning ([7ff68](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/7ff68df40b20edc) Ulf Slunga)  
+-  restore RegelUtils with updated model types and tests ([34e27](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/34e27d89796c5c7) Ulf Slunga)  
+-  migrate to handlaggning adapter 1.2.5-SNAPSHOT breaking changes ([ba03c](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/ba03c5aa53c6d0d) Ulf Slunga)  
+
+### Dependency updates
+
+- update dependency org.immutables:value-processor to v2.12.3 ([e4ffd](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e4ffda1858d730a) renovate[bot])  
+- update forsakringskassan/.github digest to cbd74f1 ([c93b7](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c93b7d062e7feb6) renovate[bot])  
+- update forsakringskassan/.github digest to bfb01f7 ([e33d9](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e33d93331902496) renovate[bot])  
+## rimfrost-1_2 (2026-09-22)
+
 ## 1.4.4 (2026-09-22)
 
 ### Bug Fixes
