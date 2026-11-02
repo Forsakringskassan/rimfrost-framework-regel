@@ -35,6 +35,11 @@
 - **FRALL-FR-05.5** Ramverket ska tillhandahålla en hjälpfunktion för att skapa en `Uppgiftsdatakoppling` med ett givet informationsobjekt-id och version.
 - **FRALL-FR-05.6** Ramverket ska tillhandahålla en hjälpfunktion för att serialisera ett godtyckligt objekt till en JSON-sträng.
 
+### FRALL-FR-06 — Processvy-länk i regelanropet
+
+- **FRALL-FR-06.1** Ramverket ska läsa `processvyUrl` från det inkommande regelanropet och göra det tillgängligt för regeln tillsammans med `aktivitetId`.
+- **FRALL-FR-06.2** Ett regelanrop utan `processvyUrl` är giltigt och hanteras som vanligt. Ett anrop utan `aktivitetId` är fortfarande felaktigt.
+
 ---
 
 ## 2. Icke-funktionella krav
