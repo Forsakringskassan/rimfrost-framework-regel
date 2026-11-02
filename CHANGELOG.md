@@ -2,6 +2,15 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.5.0 (2026-11-02)
+
+### Features
+
+-  read optional processvyUrl from regel request (FKPOC-1158) ([012df](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/012df0030aba200) LisaWedin_Ductus)  
+
+### Other changes
+
+
 ## 1.4.6 (2026-10-30)
 
 ### Bug Fixes
