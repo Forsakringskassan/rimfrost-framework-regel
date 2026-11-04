@@ -2,6 +2,12 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.6.0 (2026-11-04)
+
+### Features
+
+-  Remove replyTo from RegelDataRequest ([b90a0](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/b90a0217b58f659) Lars Persson)  
+
 ## 1.5.0 (2026-11-02)
 
 ### Features
