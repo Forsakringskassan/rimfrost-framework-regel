@@ -23,7 +23,6 @@ public class RegelKafkaMapper
             .handlaggningId(UUID.fromString(request.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(request.getData().getAktivitetId()))
             .processvyUrl(request.getData().getProcessvyUrl())
-            .replyTo(request.getData().getReplyTo())
             .type(request.getType())
             .build();
    }

@@ -20,9 +20,6 @@ public class RegelConsumerTest extends RegelTestBase
    @InjectMock
    RegelMessageHandler regelMessageHandler;
 
-   @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
-   String responseTopic;
-
    @BeforeEach
    public void regelResetState()
    {
@@ -34,8 +31,8 @@ public class RegelConsumerTest extends RegelTestBase
    public void regel_consumer_should_call_regel_message_handler_on_incoming_request() throws InterruptedException
    {
       var handlaggningId = UUID.randomUUID().toString();
-      var expectedPayload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
-      regelKafkaConnector.sendRegelRequest(handlaggningId, responseTopic);
+      var expectedPayload = newRegelRequestMessagePayload(handlaggningId);
+      regelKafkaConnector.sendRegelRequest(handlaggningId);
       TimeUnit.SECONDS.sleep(1);
       Mockito.verify(regelMessageHandler, Mockito.times(1)).consumeRegelRequest(expectedPayload);
    }

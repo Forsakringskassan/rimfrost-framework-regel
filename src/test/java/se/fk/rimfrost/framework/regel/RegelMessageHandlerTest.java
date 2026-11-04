@@ -25,15 +25,12 @@ public class RegelMessageHandlerTest extends RegelTestBase
    @Inject
    RegelMessageHandler regelMessageHandler;
 
-   @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
-   String responseTopic;
-
    @Test
    @DisplayName("FRALL-FR-01.2: Mottagen regelförfrågan delegeras till registrerad regelimplementation")
    public void consume_regel_request_should_call_regel_request_handler()
    {
       var handlaggningId = UUID.randomUUID().toString();
-      var payload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
+      var payload = newRegelRequestMessagePayload(handlaggningId);
       payload.getData().setProcessvyUrl("/process/vah");
 
       regelMessageHandler.consumeRegelRequest(payload);
@@ -45,7 +42,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
    public void consume_regel_request_without_processvy_url_should_call_regel_request_handler()
    {
       var handlaggningId = UUID.randomUUID().toString();
-      var payload = newRegelRequestMessagePayload(handlaggningId, responseTopic);
+      var payload = newRegelRequestMessagePayload(handlaggningId);
 
       regelMessageHandler.consumeRegelRequest(payload);
       Mockito.verify(regelRequestHandler, Mockito.times(1)).handleRegelRequest(createRegelDataRequest(payload));
@@ -58,7 +55,6 @@ public class RegelMessageHandlerTest extends RegelTestBase
             .handlaggningId(UUID.fromString(payload.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(payload.getData().getAktivitetId()))
             .processvyUrl(payload.getData().getProcessvyUrl())
-            .replyTo(payload.getData().getReplyTo())
             .kogitorootprocid(payload.getKogitorootprocid())
             .kogitorootprociid(UUID.fromString(payload.getKogitorootprociid()))
             .kogitoparentprociid(UUID.fromString(payload.getKogitoparentprociid()))
