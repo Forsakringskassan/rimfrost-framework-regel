@@ -76,12 +76,12 @@ public abstract class RegelRequestHandlerBase
             .build();
    }
 
-   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall, String replyTo)
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
    {
       try
       {
          var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
-         regelKafkaProducer.sendRegelResponse(regelResponse, Objects.requireNonNull(replyTo));
+         regelKafkaProducer.sendRegelResponse(regelResponse);
       }
       catch (IllegalStateException e)
       {
@@ -90,13 +90,12 @@ public abstract class RegelRequestHandlerBase
       }
    }
 
-   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation,
-         String replyTo)
+   protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
    {
       try
       {
          var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
-         regelKafkaProducer.sendRegelResponse(regelResponse, Objects.requireNonNull(replyTo));
+         regelKafkaProducer.sendRegelResponse(regelResponse);
       }
       catch (IllegalStateException e)
       {
@@ -149,7 +148,7 @@ public abstract class RegelRequestHandlerBase
    }
 
    protected void sendErrorResponse(UUID handlaggningId, CloudEventData cloudEventData,
-         RegelErrorInformation regelErrorInformation, String replyTo)
+         RegelErrorInformation regelErrorInformation)
    {
       if (handlaggningId == null || cloudEventData == null || regelErrorInformation == null)
       {
@@ -159,7 +158,7 @@ public abstract class RegelRequestHandlerBase
          return;
       }
 
-      sendResponse(handlaggningId, cloudEventData, regelErrorInformation, replyTo);
+      sendResponse(handlaggningId, cloudEventData, regelErrorInformation);
    }
 
    protected RegelErrorInformation createRegelErrorInformation(String felkod, String meddelande)

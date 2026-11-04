@@ -49,7 +49,6 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
             .id(UUID.randomUUID())
             .handlaggningId(UUID.randomUUID())
             .aktivitetId(UUID.randomUUID())
-            .replyTo("test-topic")
             .kogitorootprocid(UUID.randomUUID().toString())
             .kogitorootprociid(UUID.randomUUID())
             .kogitoparentprociid(UUID.randomUUID())
@@ -79,11 +78,11 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
 
    @ParameterizedTest
    @EnumSource(Utfall.class)
-   @DisplayName("FRALL-FR-03.2, FRALL-FR-03.3, FRALL-FR-04.2: Alla utfall stöds och svar skickas till angiven replyTo-kanal")
+   @DisplayName("FRALL-FR-03.2, FRALL-FR-03.3: Alla utfall stöds")
    public void send_regel_response_should_support_all_utfall_values(Utfall utfall)
    {
       var handlaggningId = UUID.randomUUID();
-      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), utfall, responseTopic);
+      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), utfall);
       var responses = regelKafkaConnector.waitForMessages(RegelKafkaConnector.regelResponsesChannel);
       assertEquals(1, responses.size());
 
@@ -97,7 +96,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    }
 
    @Test
-   @DisplayName("FRALL-FR-03.4, FRALL-FR-04.2: Felutfall inkluderar felkod och felmeddelande och utfallet sätts till ERROR")
+   @DisplayName("FRALL-FR-03.4: Felutfall inkluderar felkod och felmeddelande och utfallet sätts till ERROR")
    public void send_regel_response_should_support_regel_error_information()
    {
       var regelErrorInfo = new RegelErrorInformation();
@@ -105,7 +104,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
       regelErrorInfo.setFelmeddelande("Test");
 
       var handlaggningId = UUID.randomUUID();
-      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), regelErrorInfo, responseTopic);
+      testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), regelErrorInfo);
 
       var responses = regelKafkaConnector.waitForMessages(RegelKafkaConnector.regelResponsesChannel);
       assertEquals(1, responses.size());
@@ -128,15 +127,14 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
          return super.createCloudEvent(request);
       }
 
-      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall, String replyTo)
+      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
       {
-         super.sendResponse(handlaggningId, cloudEventData, utfall, replyTo);
+         super.sendResponse(handlaggningId, cloudEventData, utfall);
       }
 
-      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation,
-            String replyTo)
+      public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
       {
-         super.sendResponse(handlaggningId, cloudEventData, errorInformation, replyTo);
+         super.sendResponse(handlaggningId, cloudEventData, errorInformation);
       }
 
       @Override

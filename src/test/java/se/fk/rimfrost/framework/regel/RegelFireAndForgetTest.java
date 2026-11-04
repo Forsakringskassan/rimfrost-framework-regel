@@ -23,19 +23,16 @@ public class RegelFireAndForgetTest extends RegelTestBase
    @Inject
    RegelRequestHandlerBaseTest.TestRegelRequestHandler testRegelRequestHandler;
 
-   @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
-   String responseTopic;
-
    @Test
    @DisplayName("FRALL-FR-04.3: Misslyckad Kafka-sändning loggas utan att ett exception kastas")
    void send_regel_response_should_not_throw_when_producer_fails()
    {
       Mockito.doThrow(new IllegalStateException("Kafka unavailable"))
-            .when(regelKafkaProducer).sendRegelResponse(Mockito.any(), Mockito.any());
+            .when(regelKafkaProducer).sendRegelResponse(Mockito.any());
 
       var handlaggningId = UUID.randomUUID();
       assertDoesNotThrow(
-            () -> testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), Utfall.JA, responseTopic));
+            () -> testRegelRequestHandler.sendResponse(handlaggningId, createCloudEventData(), Utfall.JA));
    }
 
    private static CloudEventData createCloudEventData()

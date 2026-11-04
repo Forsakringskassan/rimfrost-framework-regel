@@ -17,13 +17,12 @@
 
 - **FRALL-FR-03.1** Ramverket ska tillhandahålla ett kontrakt (`RegelRequestHandlerInterface`) som regelimplementationer implementerar för att utföra affärslogik och rapportera utfall.
 - **FRALL-FR-03.2** Ramverket ska stödja följande utfall: `JA`, `NEJ`, `UTREDNING` och `ERROR`.
-- **FRALL-FR-03.3** Vid normalt utfall ska ramverket skicka ett svar på den svarskanal (`replyTo`) som angavs i förfrågan.
+- **FRALL-FR-03.3** Vid normalt utfall ska ramverket skicka ett svar på den svarskanal som konfigurerats.
 - **FRALL-FR-03.4** Vid felutfall ska svaret innehålla en felkod (från `rimfrost-framework-regel-error-codes`) och ett felmeddelande, och utfallet ska sättas till `ERROR`.
 
 ### FRALL-FR-04 — Sändning av regelsvar
 
 - **FRALL-FR-04.1** Svarsmeddelandet ska vara ett CloudEvent-formaterat meddelande och innehålla handläggningsid, utfall samt Kogito-processkorrelationsdata.
-- **FRALL-FR-04.2** Svaret ska skickas dynamiskt till den topic som angavs i `replyTo`-fältet i förfrågan.
 - **FRALL-FR-04.3** Om sändning misslyckas ska felet loggas utan att orsaka ett exception som avbryter processen (fire-and-forget).
 
 ### FRALL-FR-05 — Hjälpfunktioner för yrkande och uppgiftsdata
