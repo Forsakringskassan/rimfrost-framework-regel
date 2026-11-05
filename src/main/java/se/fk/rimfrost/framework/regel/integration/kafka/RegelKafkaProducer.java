@@ -32,6 +32,13 @@ public class RegelKafkaProducer
       LOGGER.info(
             "Sending RegelResponse for handlaggning {}",
             regelResponse.handlaggningId());
-      regelResponseEmitter.send(response);
+      regelResponseEmitter.send(response)
+            .whenComplete((ignored, failure) -> {
+               if (failure != null)
+               {
+                  LOGGER.error("Failed to send regel response for handlaggning. handlaggningId: {}, utfall: {}",
+                        regelResponse.handlaggningId(), regelResponse.utfall(), failure);
+               }
+            });
    }
 }
