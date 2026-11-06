@@ -2,6 +2,13 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.6.1 (2026-11-06)
+
+### Bug Fixes
+
+-  vänta på kvittens från Kafka för regelsvar och kasta vidare fel (FKPOC-1320) ([c1dbd](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/c1dbd8ca00d4d59) julolsso)  
+-  logga regelsvar som Kafka nekar i stället för att tappa dem tyst (FKPOC-1320) ([e09f6](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/e09f6db44fe503c) julolsso)  
+
 ## 1.6.0 (2026-11-04)
 
 ### Features
