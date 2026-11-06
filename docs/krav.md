@@ -23,7 +23,8 @@
 ### FRALL-FR-04 — Sändning av regelsvar
 
 - **FRALL-FR-04.1** Svarsmeddelandet ska vara ett CloudEvent-formaterat meddelande och innehålla handläggningsid, utfall samt Kogito-processkorrelationsdata.
-- **FRALL-FR-04.3** Om sändning misslyckas ska felet loggas utan att orsaka ett exception som avbryter processen (fire-and-forget).
+- **FRALL-FR-04.3** Om sändning misslyckas ska felet loggas och ett exception kastas till anroparen, så att efterföljande steg inte utförs.
+- **FRALL-FR-04.4** Ramverket ska inte vänta längre än en konfigurerbar tid på kvittens från Kafka. Om tiden går ut ska det hanteras som en misslyckad sändning enligt FRALL-FR-04.3.
 
 ### FRALL-FR-05 — Hjälpfunktioner för yrkande och uppgiftsdata
 
