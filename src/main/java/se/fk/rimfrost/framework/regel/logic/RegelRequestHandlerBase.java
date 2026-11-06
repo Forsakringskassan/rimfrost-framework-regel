@@ -78,30 +78,14 @@ public abstract class RegelRequestHandlerBase
 
    protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, Utfall utfall)
    {
-      try
-      {
-         var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
-         regelKafkaProducer.sendRegelResponse(regelResponse);
-      }
-      catch (IllegalStateException e)
-      {
-         LOGGER.error("Failed to send regel response for handlaggning. handlaggningId: {}, utfall: {}", handlaggningId, utfall,
-               e);
-      }
+      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, utfall);
+      regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
    protected void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
    {
-      try
-      {
-         var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
-         regelKafkaProducer.sendRegelResponse(regelResponse);
-      }
-      catch (IllegalStateException e)
-      {
-         LOGGER.error("Failed to send regel response for handlaggning. handlaggningId: {}, regelErrorInformation: {}",
-               handlaggningId, errorInformation, e);
-      }
+      var regelResponse = regelMapper.toRegelResponse(handlaggningId, cloudEventData, errorInformation);
+      regelKafkaProducer.sendRegelResponse(regelResponse);
    }
 
    protected static Response.Status toHttpStatus(HandlaggningException e) {

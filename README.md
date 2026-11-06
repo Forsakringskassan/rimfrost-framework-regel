@@ -41,12 +41,13 @@ Ramverket hanterar följande Kafka-kanaler:
 
 ## Konfiguration
 
-| Property                    | Beskrivning                                                                                                               | Standardvärde                           |
-|-----------------------------|---------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| `application.config.path`   | Sökväg till regelns YAML-konfigurationsfil                                                                                | `src/main/resources/config.yaml`        |
-| `REGEL_CONFIG_PATH` (env)   | Åsidosätter `application.config.path` vid körning                                                                         | —                                       |
-| `kafka.source`              | Identifierar avsändarservice i utgående CloudEvents (`source`-fältet är obligatoriskt enligt CloudEvents-specifikationen) | —                                       |
-| `handlaggning.api.base-url` | Bas-URL till Handläggningstjänstens REST API                                                                              | `http://rimfrost-k8s-handlaggning:8080` |
+| Property                         | Beskrivning                                                                                                               | Standardvärde                           |
+|----------------------------------|---------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| `application.config.path`        | Sökväg till regelns YAML-konfigurationsfil                                                                                | `src/main/resources/config.yaml`        |
+| `REGEL_CONFIG_PATH` (env)        | Åsidosätter `application.config.path` vid körning                                                                         | —                                       |
+| `kafka.source`                   | Identifierar avsändarservice i utgående CloudEvents (`source`-fältet är obligatoriskt enligt CloudEvents-specifikationen) | —                                       |
+| `handlaggning.api.base-url`      | Bas-URL till Handläggningstjänstens REST API                                                                              | `http://rimfrost-k8s-handlaggning:8080` |
+| `rimfrost.regel.publish-timeout` | Max tid att vänta på kvittens från Kafka när ett regelsvar skickas                                                        | `10s`                                   |
 
 ---
 
