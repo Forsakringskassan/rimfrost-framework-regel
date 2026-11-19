@@ -2,6 +2,16 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.6.2 (2026-11-19)
+
+### Bug Fixes
+
+-  bump rimfrost-framework-sid-adapter to 0.0.4 ([6262a](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/6262a2a6421cfc8) Ulf Slunga)  
+-  **deps**  update dependency se.fk.rimfrost.framework.handlaggning:rimfrost-framework-handlaggning-adapter to v1.2.9 ([a878f](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/a878fa99fe0c907) renovate[bot])  
+
+### Dependency updates
+
+- update forsakringskassan/.github digest to cbc0db8 ([45750](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/457507c7906dc47) renovate[bot])  
 ## 1.6.1 (2026-11-06)
 
 ### Bug Fixes
