@@ -13,6 +13,8 @@ public interface RegelDataRequest
 
    UUID aktivitetId();
 
+   String handlaggningInstanceBaseUrl();
+
    @Nullable
    String processvyUrl();
 

@@ -1,6 +1,7 @@
 package se.fk.rimfrost.framework.regel;
 
 import io.quarkus.arc.DefaultBean;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -11,6 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.mockito.Mockito;
+import se.fk.rimfrost.framework.handlaggning.adapter.HandlaggningAdapter;
+import se.fk.rimfrost.framework.handlaggning.exception.HandlaggningException;
+import se.fk.rimfrost.framework.handlaggning.model.Handlaggning;
+import se.fk.rimfrost.framework.handlaggning.model.HandlaggningUpdate;
 import se.fk.rimfrost.framework.regel.error.RegelFelkod;
 import se.fk.rimfrost.framework.regel.logic.RegelRequestHandlerBase;
 import se.fk.rimfrost.framework.regel.logic.dto.ImmutableRegelDataRequest;
@@ -22,12 +28,16 @@ import se.fk.rimfrost.framework.regel.presentation.kafka.RegelRequestHandlerInte
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static se.fk.rimfrost.framework.regel.RegelTestData.HANDLAGGNING_INSTANCE_BASE_URL;
 
 @QuarkusTest
 public class RegelRequestHandlerBaseTest extends RegelTestBase
 {
    @Inject
    TestRegelRequestHandler testRegelRequestHandler;
+
+   @InjectMock
+   HandlaggningAdapter handlaggningAdapter;
 
    @ConfigProperty(name = "mp.messaging.outgoing.regel-responses.topic")
    String responseTopic;
@@ -42,6 +52,38 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
    }
 
    @Test
+   @DisplayName("FRALL-FR-07.1: handlaggningInstanceBaseUrl vidarebefordras till adaptern vid läsning av handläggning")
+   public void get_handlaggning_should_forward_base_url_to_adapter() throws HandlaggningException
+   {
+      var handlaggningId = UUID.randomUUID();
+      var mockHandlaggning = Mockito.mock(Handlaggning.class);
+      Mockito.when(handlaggningAdapter.readHandlaggning(HANDLAGGNING_INSTANCE_BASE_URL, handlaggningId))
+            .thenReturn(mockHandlaggning);
+
+      var result = testRegelRequestHandler.getHandlaggning(
+            HANDLAGGNING_INSTANCE_BASE_URL, handlaggningId, createCloudEventData());
+
+      assertEquals(mockHandlaggning, result);
+      Mockito.verify(handlaggningAdapter).readHandlaggning(HANDLAGGNING_INSTANCE_BASE_URL, handlaggningId);
+   }
+
+   @Test
+   @DisplayName("FRALL-FR-07.1: handlaggningInstanceBaseUrl vidarebefordras till adaptern vid uppdatering av handläggning")
+   public void update_handlaggning_should_forward_base_url_to_adapter() throws HandlaggningException
+   {
+      var handlaggningId = UUID.randomUUID();
+      var mockHandlaggning = Mockito.mock(Handlaggning.class);
+      var handlaggningUpdate = Mockito.mock(HandlaggningUpdate.class);
+      Mockito.when(handlaggningUpdate.handlaggning()).thenReturn(mockHandlaggning);
+      Mockito.when(mockHandlaggning.id()).thenReturn(handlaggningId);
+
+      testRegelRequestHandler.updateHandlaggning(
+            HANDLAGGNING_INSTANCE_BASE_URL, handlaggningUpdate, createCloudEventData(), UUID.randomUUID());
+
+      Mockito.verify(handlaggningAdapter).updateHandlaggning(HANDLAGGNING_INSTANCE_BASE_URL, handlaggningUpdate);
+   }
+
+   @Test
    @DisplayName("FRALL-FR-04.1: Regelsvar formateras som CloudEvent med handläggningsid och Kogito-processkorrelationsdata")
    public void create_cloud_event_should_create_cloud_event_data_from_request_data()
    {
@@ -49,6 +91,7 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
             .id(UUID.randomUUID())
             .handlaggningId(UUID.randomUUID())
             .aktivitetId(UUID.randomUUID())
+            .handlaggningInstanceBaseUrl(HANDLAGGNING_INSTANCE_BASE_URL)
             .kogitorootprocid(UUID.randomUUID().toString())
             .kogitorootprociid(UUID.randomUUID())
             .kogitoparentprociid(UUID.randomUUID())
@@ -135,6 +178,17 @@ public class RegelRequestHandlerBaseTest extends RegelTestBase
       public void sendResponse(UUID handlaggningId, CloudEventData cloudEventData, RegelErrorInformation errorInformation)
       {
          super.sendResponse(handlaggningId, cloudEventData, errorInformation);
+      }
+
+      public Handlaggning getHandlaggning(String baseUrl, UUID handlaggningId, CloudEventData cloudEventData)
+      {
+         return super.getHandlaggning(baseUrl, handlaggningId, cloudEventData);
+      }
+
+      public void updateHandlaggning(String baseUrl, HandlaggningUpdate update,
+            CloudEventData cloudEventData, UUID uppgiftId)
+      {
+         super.updateHandlaggning(baseUrl, update, cloudEventData, uppgiftId);
       }
 
       @Override

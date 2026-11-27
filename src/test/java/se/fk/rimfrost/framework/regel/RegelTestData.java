@@ -4,6 +4,8 @@ import static se.fk.rimfrost.framework.regel.RegelKafkaConnector.regelRequestsCh
 
 public class RegelTestData
 {
+   public static final String HANDLAGGNING_INSTANCE_BASE_URL = "https://handlaggning.example.com";
+
    public static RegelRequestMessagePayload newRegelRequestMessagePayload(
          String handlaggningId, String aktivitetId, String type)
    {
@@ -11,6 +13,7 @@ public class RegelTestData
       RegelRequestMessagePayloadData data = new RegelRequestMessagePayloadData();
       data.setHandlaggningId(handlaggningId);
       data.setAktivitetId(aktivitetId);
+      data.setHandlaggningInstanceBaseUrl(HANDLAGGNING_INSTANCE_BASE_URL);
       payload.setSpecversion(SpecVersion.V1);
       payload.setId("99994567-89ab-4cde-9012-3456789abcde");
       payload.setSource("TestSource-001");

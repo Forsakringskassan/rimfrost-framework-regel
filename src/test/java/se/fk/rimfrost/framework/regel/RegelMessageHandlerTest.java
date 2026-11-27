@@ -54,6 +54,7 @@ public class RegelMessageHandlerTest extends RegelTestBase
             .id(UUID.fromString(payload.getId()))
             .handlaggningId(UUID.fromString(payload.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(payload.getData().getAktivitetId()))
+            .handlaggningInstanceBaseUrl(payload.getData().getHandlaggningInstanceBaseUrl())
             .processvyUrl(payload.getData().getProcessvyUrl())
             .kogitorootprocid(payload.getKogitorootprocid())
             .kogitorootprociid(UUID.fromString(payload.getKogitorootprociid()))

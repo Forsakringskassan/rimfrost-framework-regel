@@ -1,6 +1,7 @@
 package se.fk.rimfrost.framework.regel;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static se.fk.rimfrost.framework.regel.RegelTestData.HANDLAGGNING_INSTANCE_BASE_URL;
 import static se.fk.rimfrost.framework.regel.RegelTestData.newRegelRequestMessagePayload;
 
 import java.util.UUID;
@@ -12,6 +13,27 @@ import se.fk.rimfrost.framework.regel.presentation.kafka.RegelKafkaMapper;
 public class RegelKafkaMapperTest
 {
    private final RegelKafkaMapper mapper = new RegelKafkaMapper();
+
+   @Test
+   @DisplayName("FRALL-FR-07.1: handlaggningInstanceBaseUrl läses från regelanropet och mappas till RegelDataRequest")
+   public void should_map_handlaggning_instance_base_url()
+   {
+      var payload = newRegelRequestMessagePayload(UUID.randomUUID().toString());
+
+      RegelDataRequest request = mapper.toRegelDataRequest(payload);
+
+      assertEquals(HANDLAGGNING_INSTANCE_BASE_URL, request.handlaggningInstanceBaseUrl());
+   }
+
+   @Test
+   @DisplayName("FRALL-FR-07.2: Ett regelanrop utan handlaggningInstanceBaseUrl är ogiltigt")
+   public void should_reject_request_without_handlaggning_instance_base_url()
+   {
+      var payload = newRegelRequestMessagePayload(UUID.randomUUID().toString());
+      payload.getData().setHandlaggningInstanceBaseUrl(null);
+
+      assertThrows(RuntimeException.class, () -> mapper.toRegelDataRequest(payload));
+   }
 
    @Test
    @DisplayName("FRALL-FR-06.1: processvyUrl läses från regelanropet tillsammans med aktivitetId")
