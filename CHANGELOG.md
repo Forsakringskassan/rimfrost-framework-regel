@@ -2,6 +2,14 @@
 
 Changelog of rimfrost-framework-regel.
 
+## 1.7.0 (2026-11-27)
+
+### Features
+
+-  add per-request handlaggningInstanceBaseUrl support (FRALL-FR-07) ([9d149](https://github.com/Forsakringskassan/rimfrost-framework-regel/commit/9d1492c465b4cd1) Ulf Slunga)  
+
+## rimfrost-1_3 (2026-11-19)
+
 ## 1.6.2 (2026-11-19)
 
 ### Bug Fixes
