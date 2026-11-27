@@ -22,6 +22,7 @@ public class RegelKafkaMapper
             .kogitoprocversion(request.getKogitoprocversion())
             .handlaggningId(UUID.fromString(request.getData().getHandlaggningId()))
             .aktivitetId(UUID.fromString(request.getData().getAktivitetId()))
+            .handlaggningInstanceBaseUrl(request.getData().getHandlaggningInstanceBaseUrl())
             .processvyUrl(request.getData().getProcessvyUrl())
             .type(request.getType())
             .build();

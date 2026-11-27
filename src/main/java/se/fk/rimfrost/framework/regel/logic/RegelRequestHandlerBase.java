@@ -154,11 +154,24 @@ public abstract class RegelRequestHandlerBase
       return regelErrorInformation;
    }
 
-   protected Handlaggning getHandlaggning(UUID handlaggningId, CloudEventData cloudEventData)
+   /**
+    * Fetches a {@link Handlaggning} from the handläggning service using the per-request base URL.
+    *
+    * <p>Wraps any {@link HandlaggningException} in a {@link RegelCancelledException} with
+    * felkod {@code RIMFROST_HANDLAGGNING_READ_FAILURE}.</p>
+    *
+    * @param handlaggningInstanceBaseUrl absolute http(s) base URL of the target handläggning instance
+    * @param handlaggningId the ID of the handläggning to fetch
+    * @param cloudEventData cloud event context used in error messages
+    * @return the fetched {@link Handlaggning}
+    * @throws RegelCancelledException if the handläggning service returns an error
+    */
+   protected Handlaggning getHandlaggning(String handlaggningInstanceBaseUrl, UUID handlaggningId,
+         CloudEventData cloudEventData)
    {
       try
       {
-         return handlaggningAdapter.readHandlaggning(handlaggningId);
+         return handlaggningAdapter.readHandlaggning(handlaggningInstanceBaseUrl, handlaggningId);
       }
       catch (HandlaggningException e)
       {
@@ -170,12 +183,24 @@ public abstract class RegelRequestHandlerBase
       }
    }
 
-   protected void updateHandlaggning(HandlaggningUpdate handlaggningUpdate,
+   /**
+    * Sends a {@link HandlaggningUpdate} to the handläggning service using the per-request base URL.
+    *
+    * <p>Wraps any {@link HandlaggningException} in a {@link RegelCancelledException} with
+    * felkod {@code RIMFROST_HANDLAGGNING_WRITE_FAILURE}.</p>
+    *
+    * @param handlaggningInstanceBaseUrl absolute http(s) base URL of the target handläggning instance
+    * @param handlaggningUpdate the update to apply
+    * @param cloudEventData cloud event context used in error messages
+    * @param uppgiftId ID of the uppgift being processed (used in error messages)
+    * @throws RegelCancelledException if the handläggning service returns an error
+    */
+   protected void updateHandlaggning(String handlaggningInstanceBaseUrl, HandlaggningUpdate handlaggningUpdate,
          CloudEventData cloudEventData, UUID uppgiftId)
    {
       try
       {
-         handlaggningAdapter.updateHandlaggning(handlaggningUpdate);
+         handlaggningAdapter.updateHandlaggning(handlaggningInstanceBaseUrl, handlaggningUpdate);
       }
       catch (HandlaggningException e)
       {

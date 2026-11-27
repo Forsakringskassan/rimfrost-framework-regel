@@ -40,6 +40,16 @@
 - **FRALL-FR-06.1** Ramverket ska läsa `processvyUrl` från det inkommande regelanropet och göra det tillgängligt för regeln tillsammans med `aktivitetId`.
 - **FRALL-FR-06.2** Ett regelanrop utan `processvyUrl` är giltigt och hanteras som vanligt. Ett anrop utan `aktivitetId` är fortfarande felaktigt.
 
+### FRALL-FR-07 — Bas-URL till handläggningsinstansen i regelanropet
+
+- **FRALL-FR-07.1** Ramverket ska läsa `handlaggningInstanceBaseUrl` från det inkommande
+  regelanropet och använda det som bas-URL vid anrop mot handläggningstjänsten för den
+  regelkörningen, i stället för den statiskt konfigurerade `handlaggning.api.base-url`.
+  Detta möjliggör routing mot rätt handläggningsinstans i miljöer där flera instanser
+  körs parallellt.
+- **FRALL-FR-07.2** `handlaggningInstanceBaseUrl` är obligatorisk — ett regelanrop utan
+  detta fält är ogiltigt.
+
 ---
 
 ## 2. Icke-funktionella krav
